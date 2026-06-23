@@ -80,6 +80,7 @@ struct MemoryView: View
         }
         .navigationTitle( self.project.title )
         .navigationSubtitle( self.project.decodedPath )
+        .navigationDocument( self.project.resolvedDirectoryURL ?? self.project.folderURL )
         .task( id: self.file.id )
         {
             await self.load()
