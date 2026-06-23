@@ -31,7 +31,7 @@ struct ContentView: View
 
     @State private var model = AppModel()
     @State private var projectPendingTrash: Project?
-    @State private var memoryPendingTrash:  Project?
+    @State private var memoryTrashTarget:   Project?
     @State private var errorMessage:        String?
 
     var body: some View
@@ -135,17 +135,22 @@ struct ContentView: View
 
                 Text( "The entire project folder will be moved to the Trash." )
             }
-            .alert(
-                "Move the memory of \u{201C}\( self.memoryPendingTrash?.displayName ?? "" )\u{201D} to the Trash?",
-                isPresented: Binding( get: { self.memoryPendingTrash != nil }, set: { if $0 == false { self.memoryPendingTrash = nil } } ),
-                presenting:  self.memoryPendingTrash
+            .confirmationDialog(
+                "Move memory to the Trash?",
+                isPresented: Binding( get: { self.memoryTrashTarget != nil }, set: { if $0 == false { self.memoryTrashTarget = nil } } ),
+                presenting:  self.memoryTrashTarget
             )
             {
                 project in
 
-                Button( "Move to Trash", role: .destructive )
+                Button( "This File", role: .destructive )
                 {
-                    self.trashMemory( project )
+                    self.trashSelectedFile()
+                }
+
+                Button( "All Files", role: .destructive )
+                {
+                    self.trashAllMemory( project )
                 }
 
                 Button( "Cancel", role: .cancel ) {}
@@ -154,7 +159,7 @@ struct ContentView: View
             {
                 _ in
 
-                Text( "Only the MEMORY.md file will be moved to the Trash; the project folder is left intact." )
+                Text( "\u{201C}This File\u{201D} moves only the current memory file to the Trash. \u{201C}All Files\u{201D} moves the project's entire memory folder to the Trash, removing it from the list." )
             }
             .alert(
                 "Operation Failed",
@@ -181,18 +186,21 @@ struct ContentView: View
         {
             ToolbarItemGroup( placement: .primaryAction )
             {
-                self.openWithMenu( for: project )
-                    .help( "Open the memory file with another application" )
+                if let file = self.model.selectedMemoryFile
+                {
+                    self.openWithMenu( for: file )
+                        .help( "Open the current memory file with another application" )
+                }
 
                 Button
                 {
-                    self.memoryPendingTrash = project
+                    self.memoryTrashTarget = project
                 }
                 label:
                 {
-                    Label( "Move Memory to Trash", systemImage: "trash" )
+                    Label( "Move to Trash", systemImage: "trash" )
                 }
-                .help( "Move this project's memory file to the Trash" )
+                .help( "Move the current file, or all memory files, to the Trash" )
 
                 Picker( "View Mode", selection: viewMode )
                 {
@@ -267,13 +275,13 @@ struct ContentView: View
     }
 
     @ViewBuilder
-    private func openWithMenu( for project: Project ) -> some View
+    private func openWithMenu( for file: MemoryFile ) -> some View
     {
         Menu
         {
             // Computed lazily here, only when the menu is opened, so the
             // LaunchServices lookup never runs during a normal render pass.
-            let applications = self.applications( toOpen: project.memoryURL )
+            let applications = self.applications( toOpen: file.url )
 
             if applications.isEmpty
             {
@@ -287,7 +295,7 @@ struct ContentView: View
 
                     Button
                     {
-                        self.open( project.memoryURL, with: application )
+                        self.open( file.url, with: application )
                     }
                     label:
                     {
@@ -321,11 +329,29 @@ struct ContentView: View
         }
     }
 
-    private func trashMemory( _ project: Project )
+    private func trashSelectedFile()
+    {
+        guard let file = self.model.selectedMemoryFile
+        else
+        {
+            return
+        }
+
+        do
+        {
+            try self.model.trashFile( file )
+        }
+        catch
+        {
+            self.errorMessage = error.localizedDescription
+        }
+    }
+
+    private func trashAllMemory( _ project: Project )
     {
         do
         {
-            try self.model.trashMemory( project )
+            try self.model.trashAllMemory( project )
         }
         catch
         {

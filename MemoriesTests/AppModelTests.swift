@@ -171,49 +171,61 @@ struct AppModelTests
     }
 
     @Test
-    func trashingTheMemoryTrashesOnlyTheIndexFileAndRemovesTheProject() async throws
+    func trashingAFileRemovesItAndRepointsToTheIndex() async throws
     {
         let root = try TemporaryProjectTree()
 
         try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
-        try root.makeProject( encodedName: "-Users-macmade-Beta", withMemory: true )
+        try root.writeMemoryFile( "note.md", inProject: "-Users-macmade-Alpha" )
 
         var trashed: [ URL ] = []
         let model            = AppModel( projectsDirectory: root.url, trashItem: { trashed.append( $0 ) } )
 
         await model.loadProjects()
 
-        let alpha = try #require( model.projects.first { $0.displayName == "Alpha" } )
+        model.selection = "-Users-macmade-Alpha"
 
-        try model.trashMemory( alpha )
+        await model.loadMemoryFiles()
 
-        #expect( trashed == [ alpha.memoryURL ] )
-        #expect( model.projects.contains { $0.id == alpha.id } == false )
-        #expect( model.projects.count == 1 )
+        let note = try #require( model.memoryFiles.first { $0.name == "note.md" } )
+
+        model.selectedFile = note.id
+
+        try model.trashFile( note )
+
+        #expect( trashed == [ note.url ] )
+        #expect( model.memoryFiles.contains { $0.id == note.id } == false )
+        #expect( model.memoryFiles.count == 1 )
+        #expect( model.selectedMemoryFile?.name == "MEMORY.md" )
     }
 
     @Test
-    func trashingTheMemoryClearsTheSelectionIfSelected() async throws
+    func trashingTheLastRemainingFileDropsTheProject() async throws
     {
         let root = try TemporaryProjectTree()
 
-        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+        try root.writeMemoryFile( "only.md", inProject: "-Users-macmade-Solo" )
 
         let model = AppModel( projectsDirectory: root.url, trashItem: { _ in } )
 
         await model.loadProjects()
 
-        let alpha = try #require( model.projects.first )
+        model.selection = "-Users-macmade-Solo"
 
-        model.selection = alpha.id
+        await model.loadMemoryFiles()
 
-        try model.trashMemory( alpha )
+        let only = try #require( model.memoryFiles.first )
 
+        try model.trashFile( only )
+
+        #expect( model.memoryFiles.isEmpty )
+        #expect( model.selectedFile == nil )
+        #expect( model.projects.contains { $0.id == "-Users-macmade-Solo" } == false )
         #expect( model.selection == nil )
     }
 
     @Test
-    func trashingTheMemoryFailurePropagatesAndKeepsTheProject() async throws
+    func trashingAFileFailurePropagatesAndKeepsTheFile() async throws
     {
         struct TrashError: Error {}
 
@@ -225,14 +237,45 @@ struct AppModelTests
 
         await model.loadProjects()
 
-        let alpha = try #require( model.projects.first )
+        model.selection = "-Users-macmade-Alpha"
+
+        await model.loadMemoryFiles()
+
+        let file = try #require( model.memoryFiles.first )
 
         #expect( throws: TrashError.self )
         {
-            try model.trashMemory( alpha )
+            try model.trashFile( file )
         }
 
-        #expect( model.projects.count == 1 )
+        #expect( model.memoryFiles.count == 1 )
+    }
+
+    @Test
+    func trashingAllMemoryTrashesTheFolderAndDropsTheProject() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+        try root.writeMemoryFile( "note.md", inProject: "-Users-macmade-Alpha" )
+
+        var trashed: [ URL ] = []
+        let model            = AppModel( projectsDirectory: root.url, trashItem: { trashed.append( $0 ) } )
+
+        await model.loadProjects()
+
+        model.selection = "-Users-macmade-Alpha"
+
+        await model.loadMemoryFiles()
+
+        let alpha = try #require( model.selectedProject )
+
+        try model.trashAllMemory( alpha )
+
+        #expect( trashed == [ alpha.memoryDirectoryURL ] )
+        #expect( model.memoryFiles.isEmpty )
+        #expect( model.selectedFile == nil )
+        #expect( model.projects.contains { $0.id == alpha.id } == false )
     }
 
     @Test
