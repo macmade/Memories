@@ -65,7 +65,7 @@ enum MemoryDiscovery
 
             let git = base.resolvedDirectoryURL.flatMap { gitInspector.info( forDirectory: $0 ) }
 
-            return Project( folderURL: url, decodedPath: base.decodedPath, repositoryName: git?.repositoryName, branch: git?.branch )
+            return Project( folderURL: url, decodedPath: base.decodedPath, repositoryName: git?.repositoryName, branch: git?.branch, isGitRepository: git != nil )
         }
 
         return projects.sorted

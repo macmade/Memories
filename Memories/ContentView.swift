@@ -100,6 +100,7 @@ struct ContentView: View
                 ToolbarItemGroup( placement: .primaryAction )
                 {
                     self.openWithMenu( for: project )
+                        .help( "Open the memory file with another application" )
 
                     Button
                     {
@@ -109,6 +110,7 @@ struct ContentView: View
                     {
                         Label( "Move Memory to Trash", systemImage: "trash" )
                     }
+                    .help( "Move this project's memory file to the Trash" )
 
                     Picker( "View Mode", selection: $model.viewMode )
                     {
@@ -116,10 +118,13 @@ struct ContentView: View
                         {
                             mode in
 
-                            Label( mode.title, systemImage: mode.systemImage ).tag( mode )
+                            Label( mode.title, systemImage: mode.systemImage )
+                                .help( mode == .preview ? "Show the rendered Markdown preview" : "Show the raw Markdown source" )
+                                .tag( mode )
                         }
                     }
                     .pickerStyle( .segmented )
+                    .help( "Switch between the rendered preview and the Markdown source" )
                 }
             }
         }
@@ -193,17 +198,20 @@ struct ContentView: View
             {
                 NSWorkspace.shared.open( directory )
             }
+            .help( "Open the project's directory in Finder" )
         }
 
         Button( "Reveal in Finder" )
         {
             NSWorkspace.shared.activateFileViewerSelecting( [ project.folderURL ] )
         }
+        .help( "Reveal the Claude project folder in Finder" )
 
         Button( "Move to Trash", role: .destructive )
         {
             self.projectPendingTrash = project
         }
+        .help( "Move the entire project folder to the Trash" )
     }
 
     @ViewBuilder

@@ -33,8 +33,9 @@ struct ProjectRow: View
     {
         HStack( spacing: 10 )
         {
-            Image( systemName: "folder" )
+            Image( systemName: self.project.iconSystemName )
                 .foregroundStyle( .tint )
+                .help( self.project.isGitRepository ? "Git repository" : "Directory" )
 
             VStack( alignment: .leading, spacing: 1 )
             {
@@ -44,8 +45,9 @@ struct ProjectRow: View
                     .font( .caption )
                     .foregroundStyle( .secondary )
                     .lineLimit( 1 )
-                    .truncationMode( .middle )
+                    .truncationMode( .head )
             }
+            .help( self.project.decodedPath )
 
             if let branch = self.project.branch
             {
@@ -67,6 +69,7 @@ struct ProjectRow: View
             .padding( .vertical, 2 )
             .background( Capsule().fill( Color.secondary.opacity( 0.18 ) ) )
             .foregroundStyle( .secondary )
+            .help( "Current branch: \( branch )" )
     }
 }
 

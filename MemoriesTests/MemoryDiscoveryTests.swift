@@ -69,6 +69,20 @@ struct MemoryDiscoveryTests
     }
 
     @Test
+    func iconReflectsWhetherTheProjectIsAGitRepository() throws
+    {
+        let folder = URL( fileURLWithPath: "/private/tmp/projects/-Users-macmade-Foo", isDirectory: true )
+
+        let plain = Project( folderURL: folder )
+        let git   = Project( folderURL: folder, repositoryName: "Foo", branch: "main", isGitRepository: true )
+
+        #expect( plain.isGitRepository == false )
+        #expect( plain.iconSystemName == "folder" )
+        #expect( git.isGitRepository )
+        #expect( git.iconSystemName == "shippingbox" )
+    }
+
+    @Test
     func resolvedDirectoryURLIsTheRealPathWhenItExists() throws
     {
         let directory = FileManager.default.temporaryDirectory.appending( path: "MemoriesTests-real-\( UUID().uuidString )", directoryHint: .isDirectory )
