@@ -33,5 +33,12 @@ struct MemoriesApp: App
         {
             ContentView()
         }
+        .commands
+        {
+            CommandGroup( after: CommandGroupPlacement.sidebar )
+            {
+                ViewCommands()
+            }
+        }
     }
 }
