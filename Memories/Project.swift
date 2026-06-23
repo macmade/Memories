@@ -49,11 +49,14 @@ struct Project: Identifiable, Hashable, Sendable
     var id: String { self.encodedName }
 
     /// Builds a project from its directory under `~/.claude/projects/`.
-    init( folderURL: URL )
+    ///
+    /// `decodedPath` is the resolved real filesystem path; when omitted it falls
+    /// back to naive `-` → `/` decoding of the directory name.
+    init( folderURL: URL, decodedPath: String? = nil )
     {
         self.folderURL   = folderURL
         self.encodedName = folderURL.lastPathComponent
-        self.decodedPath = Project.decodePath( self.encodedName )
+        self.decodedPath = decodedPath ?? Project.decodePath( self.encodedName )
         self.displayName = URL( fileURLWithPath: self.decodedPath ).lastPathComponent
         self.memoryURL   = folderURL.appending( path: "memory", directoryHint: .isDirectory ).appending( path: "MEMORY.md" )
     }

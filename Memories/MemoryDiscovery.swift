@@ -38,7 +38,7 @@ enum MemoryDiscovery
     ///
     /// The result is sorted by display name, case-insensitively. A missing or
     /// unreadable directory yields an empty array rather than an error.
-    static func discoverProjects( in projectsDirectory: URL = MemoryDiscovery.defaultProjectsDirectory, fileManager: FileManager = .default ) -> [ Project ]
+    static func discoverProjects( in projectsDirectory: URL = MemoryDiscovery.defaultProjectsDirectory, fileManager: FileManager = .default, resolver: ProjectPathResolver = ProjectPathResolver() ) -> [ Project ]
     {
         let entries = ( try? fileManager.contentsOfDirectory( at: projectsDirectory, includingPropertiesForKeys: [ .isDirectoryKey ], options: [ .skipsHiddenFiles ] ) ) ?? []
 
@@ -52,7 +52,7 @@ enum MemoryDiscovery
                 return nil
             }
 
-            let project = Project( folderURL: url )
+            let project = Project( folderURL: url, decodedPath: resolver.resolvedPath( forFolder: url ) )
 
             guard fileManager.fileExists( atPath: project.memoryURL.path )
             else

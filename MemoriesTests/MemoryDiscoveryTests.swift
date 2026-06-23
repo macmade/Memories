@@ -132,6 +132,22 @@ struct MemoryDiscoveryTests
 
         #expect( MemoryDiscovery.discoverProjects( in: missing ).isEmpty )
     }
+
+    @Test
+    func discoveryAppliesTheResolvedPathToProjects() throws
+    {
+        let root = try TemporaryTree()
+
+        try root.makeProject( encodedName: "-a-b-c", withMemory: true )
+
+        let resolver = ProjectPathResolver( registryPaths: [ "/a-b/c" ] )
+        let projects = MemoryDiscovery.discoverProjects( in: root.url, resolver: resolver )
+
+        let project = try #require( projects.first )
+
+        #expect( project.decodedPath == "/a-b/c" )
+        #expect( project.displayName == "c" )
+    }
 }
 
 /// A self-cleaning temporary directory used to build project-tree fixtures.
