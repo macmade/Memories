@@ -27,7 +27,8 @@ import SwiftUI
 /// The detail pane previewing a project's `MEMORY.md` index.
 struct MemoryView: View
 {
-    let project: Project
+    let project:  Project
+    let viewMode: MemoryViewMode
 
     @State private var state = MemoryLoadState.loading
 
@@ -43,13 +44,7 @@ struct MemoryView: View
 
                 case .loaded( let text ):
 
-                    ScrollView
-                    {
-                        Text( text )
-                            .textSelection( .enabled )
-                            .frame( maxWidth: .infinity, alignment: .leading )
-                            .padding()
-                    }
+                    self.content( for: text )
 
                 case .failed( let message ):
 
@@ -61,6 +56,28 @@ struct MemoryView: View
         .task( id: self.project.id )
         {
             await self.load()
+        }
+    }
+
+    @ViewBuilder
+    private func content( for text: String ) -> some View
+    {
+        switch self.viewMode
+        {
+            case .preview:
+
+                MarkdownTextView( attributedString: MarkdownRenderer.attributedString( from: text ) )
+
+            case .source:
+
+                ScrollView
+                {
+                    Text( text )
+                        .font( .system( .body, design: .monospaced ) )
+                        .textSelection( .enabled )
+                        .frame( maxWidth: .infinity, alignment: .leading )
+                        .padding()
+                }
         }
     }
 

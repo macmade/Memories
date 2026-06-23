@@ -22,55 +22,46 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
+import AppKit
 import SwiftUI
 
-struct ContentView: View
+/// A read-only, selectable `NSTextView` for displaying a rendered attributed
+/// string with native scrolling.
+struct MarkdownTextView: NSViewRepresentable
 {
-    @State private var model = AppModel()
+    let attributedString: NSAttributedString
 
-    var body: some View
+    func makeNSView( context: Context ) -> NSScrollView
     {
-        @Bindable var model = self.model
+        let scrollView = NSTextView.scrollableTextView()
 
-        NavigationSplitView
-        {
-            List( selection: $model.selection )
-            {
-                ForEach( self.model.projects )
-                {
-                    project in
+        scrollView.drawsBackground      = false
+        scrollView.hasVerticalScroller  = true
+        scrollView.autohidesScrollers   = true
 
-                    ProjectRow( project: project ).tag( project.id )
-                }
-            }
-            .overlay
-            {
-                if self.model.projects.isEmpty
-                {
-                    ContentUnavailableView( "No Projects", systemImage: "tray", description: Text( "No Claude projects with a memory index were found." ) )
-                }
-            }
-            .navigationTitle( "Memories" )
-        }
-        detail:
+        if let textView = scrollView.documentView as? NSTextView
         {
-            if let project = self.model.selectedProject
-            {
-                MemoryView( project: project, viewMode: self.model.viewMode )
-            }
-            else
-            {
-                ContentUnavailableView( "No Selection", systemImage: "sidebar.left", description: Text( "Select a project to preview its memory." ) )
-            }
+            textView.isEditable             = false
+            textView.isSelectable           = true
+            textView.drawsBackground        = false
+            textView.textContainerInset     = NSSize( width: 16, height: 16 )
+            textView.isVerticallyResizable   = true
+            textView.isHorizontallyResizable = false
+            textView.textContainer?.widthTracksTextView = true
+            textView.textContainer?.lineFragmentPadding  = 0
         }
-        .task
-        {
-            await self.model.loadProjects()
-        }
+
+        return scrollView
     }
-}
 
-#Preview
-{
-    ContentView()
+    func updateNSView( _ scrollView: NSScrollView, context: Context )
+    {
+        guard let textView = scrollView.documentView as? NSTextView
+        else
+        {
+            return
+        }
+
+        textView.textStorage?.setAttributedString( self.attributedString )
+    }
 }

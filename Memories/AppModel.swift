@@ -36,6 +36,9 @@ final class AppModel
     /// The identity of the currently selected project, if any.
     var selection: Project.ID?
 
+    /// How the detail view presents the selected memory.
+    var viewMode = MemoryViewMode.preview
+
     /// The directory scanned for projects.
     let projectsDirectory: URL
 

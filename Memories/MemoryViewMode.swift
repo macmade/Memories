@@ -22,55 +22,36 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-import SwiftUI
+import Foundation
 
-struct ContentView: View
+/// How the detail view presents a memory index.
+enum MemoryViewMode: String, CaseIterable, Identifiable, Sendable
 {
-    @State private var model = AppModel()
+    /// The Markdown source is rendered for reading.
+    case preview
 
-    var body: some View
+    /// The raw Markdown source is shown verbatim.
+    case source
+
+    var id: String { self.rawValue }
+
+    /// A short, human-readable label for the mode.
+    var title: String
     {
-        @Bindable var model = self.model
-
-        NavigationSplitView
+        switch self
         {
-            List( selection: $model.selection )
-            {
-                ForEach( self.model.projects )
-                {
-                    project in
-
-                    ProjectRow( project: project ).tag( project.id )
-                }
-            }
-            .overlay
-            {
-                if self.model.projects.isEmpty
-                {
-                    ContentUnavailableView( "No Projects", systemImage: "tray", description: Text( "No Claude projects with a memory index were found." ) )
-                }
-            }
-            .navigationTitle( "Memories" )
-        }
-        detail:
-        {
-            if let project = self.model.selectedProject
-            {
-                MemoryView( project: project, viewMode: self.model.viewMode )
-            }
-            else
-            {
-                ContentUnavailableView( "No Selection", systemImage: "sidebar.left", description: Text( "Select a project to preview its memory." ) )
-            }
-        }
-        .task
-        {
-            await self.model.loadProjects()
+            case .preview: return "Preview"
+            case .source:  return "Source"
         }
     }
-}
 
-#Preview
-{
-    ContentView()
+    /// The SF Symbol representing the mode.
+    var systemImage: String
+    {
+        switch self
+        {
+            case .preview: return "doc.richtext"
+            case .source:  return "chevron.left.forwardslash.chevron.right"
+        }
+    }
 }

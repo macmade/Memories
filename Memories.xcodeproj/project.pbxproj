@@ -15,11 +15,15 @@
 		05F1000C2FEA800000000001 /* ProjectRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F1000B2FEA800000000001 /* ProjectRow.swift */; };
 		05F100102FEA800000000001 /* MemoryLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F1000F2FEA800000000001 /* MemoryLoader.swift */; };
 		05F100122FEA800000000001 /* MemoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100112FEA800000000001 /* MemoryView.swift */; };
+		05F100162FEA800000000001 /* MarkdownRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100152FEA800000000001 /* MarkdownRenderer.swift */; };
+		05F100182FEA800000000001 /* MemoryViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100172FEA800000000001 /* MemoryViewMode.swift */; };
+		05F1001A2FEA800000000001 /* MarkdownTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100192FEA800000000001 /* MarkdownTextView.swift */; };
 		05E9759D2FEA719E0078F616 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05E975972FEA719E0078F616 /* Assets.xcassets */; };
 		05E975A02FEA71A30078F616 /* MemoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E9759E2FEA71A30078F616 /* MemoriesTests.swift */; };
 		05F100022FEA800000000001 /* MemoryDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100012FEA800000000001 /* MemoryDiscoveryTests.swift */; };
 		05F100082FEA800000000001 /* AppModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100072FEA800000000001 /* AppModelTests.swift */; };
 		05F1000E2FEA800000000001 /* MemoryLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F1000D2FEA800000000001 /* MemoryLoaderTests.swift */; };
+		05F100142FEA800000000001 /* MarkdownRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100132FEA800000000001 /* MarkdownRendererTests.swift */; };
 		05E975A42FEA71AD0078F616 /* MemoriesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E975A12FEA71AD0078F616 /* MemoriesUITests.swift */; };
 		05E975A52FEA71AD0078F616 /* MemoriesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E975A22FEA71AD0078F616 /* MemoriesUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
@@ -54,10 +58,14 @@
 		05F1000B2FEA800000000001 /* ProjectRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectRow.swift; sourceTree = "<group>"; };
 		05F1000F2FEA800000000001 /* MemoryLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryLoader.swift; sourceTree = "<group>"; };
 		05F100112FEA800000000001 /* MemoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryView.swift; sourceTree = "<group>"; };
+		05F100152FEA800000000001 /* MarkdownRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownRenderer.swift; sourceTree = "<group>"; };
+		05F100172FEA800000000001 /* MemoryViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryViewMode.swift; sourceTree = "<group>"; };
+		05F100192FEA800000000001 /* MarkdownTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextView.swift; sourceTree = "<group>"; };
 		05E9759E2FEA71A30078F616 /* MemoriesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesTests.swift; sourceTree = "<group>"; };
 		05F100012FEA800000000001 /* MemoryDiscoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryDiscoveryTests.swift; sourceTree = "<group>"; };
 		05F100072FEA800000000001 /* AppModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelTests.swift; sourceTree = "<group>"; };
 		05F1000D2FEA800000000001 /* MemoryLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryLoaderTests.swift; sourceTree = "<group>"; };
+		05F100132FEA800000000001 /* MarkdownRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownRendererTests.swift; sourceTree = "<group>"; };
 		05E975A12FEA71AD0078F616 /* MemoriesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesUITests.swift; sourceTree = "<group>"; };
 		05E975A22FEA71AD0078F616 /* MemoriesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		05E975A62FEA73070078F616 /* CODE_OF_CONDUCT.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CODE_OF_CONDUCT.md; sourceTree = "<group>"; };
@@ -172,6 +180,9 @@
 				05F1000B2FEA800000000001 /* ProjectRow.swift */,
 				05F1000F2FEA800000000001 /* MemoryLoader.swift */,
 				05F100112FEA800000000001 /* MemoryView.swift */,
+				05F100152FEA800000000001 /* MarkdownRenderer.swift */,
+				05F100172FEA800000000001 /* MemoryViewMode.swift */,
+				05F100192FEA800000000001 /* MarkdownTextView.swift */,
 			);
 			path = Memories;
 			sourceTree = "<group>";
@@ -183,6 +194,7 @@
 				05F100012FEA800000000001 /* MemoryDiscoveryTests.swift */,
 				05F100072FEA800000000001 /* AppModelTests.swift */,
 				05F1000D2FEA800000000001 /* MemoryLoaderTests.swift */,
+				05F100132FEA800000000001 /* MarkdownRendererTests.swift */,
 			);
 			path = MemoriesTests;
 			sourceTree = "<group>";
@@ -466,6 +478,9 @@
 				05F1000C2FEA800000000001 /* ProjectRow.swift in Sources */,
 				05F100102FEA800000000001 /* MemoryLoader.swift in Sources */,
 				05F100122FEA800000000001 /* MemoryView.swift in Sources */,
+				05F100162FEA800000000001 /* MarkdownRenderer.swift in Sources */,
+				05F100182FEA800000000001 /* MemoryViewMode.swift in Sources */,
+				05F1001A2FEA800000000001 /* MarkdownTextView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,6 +492,7 @@
 				05F100022FEA800000000001 /* MemoryDiscoveryTests.swift in Sources */,
 				05F100082FEA800000000001 /* AppModelTests.swift in Sources */,
 				05F1000E2FEA800000000001 /* MemoryLoaderTests.swift in Sources */,
+				05F100142FEA800000000001 /* MarkdownRendererTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

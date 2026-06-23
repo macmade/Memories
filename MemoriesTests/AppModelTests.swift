@@ -96,6 +96,14 @@ struct AppModelTests
 
         #expect( model.selectedProject == nil )
     }
+
+    @Test
+    func viewModeDefaultsToPreview() async throws
+    {
+        let model = AppModel( projectsDirectory: FileManager.default.temporaryDirectory )
+
+        #expect( model.viewMode == .preview )
+    }
 }
 
 /// A self-cleaning temporary directory used to build project-tree fixtures.
