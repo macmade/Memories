@@ -22,11 +22,14 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
+import AppKit
 import SwiftUI
 
 struct ContentView: View
 {
     @State private var model = AppModel()
+    @State private var projectPendingTrash: Project?
+    @State private var errorMessage:        String?
 
     var body: some View
     {
@@ -40,7 +43,12 @@ struct ContentView: View
                 {
                     project in
 
-                    ProjectRow( project: project ).tag( project.id )
+                    ProjectRow( project: project )
+                        .tag( project.id )
+                        .contextMenu
+                        {
+                            self.contextMenu( for: project )
+                        }
                 }
             }
             .overlay
@@ -66,6 +74,69 @@ struct ContentView: View
         .task
         {
             await self.model.loadProjects()
+        }
+        .alert(
+            "Move \u{201C}\( self.projectPendingTrash?.displayName ?? "" )\u{201D} to the Trash?",
+            isPresented: Binding( get: { self.projectPendingTrash != nil }, set: { if $0 == false { self.projectPendingTrash = nil } } ),
+            presenting:  self.projectPendingTrash
+        )
+        {
+            project in
+
+            Button( "Move to Trash", role: .destructive )
+            {
+                self.trash( project )
+            }
+
+            Button( "Cancel", role: .cancel ) {}
+        }
+        message:
+        {
+            _ in
+
+            Text( "The entire project folder will be moved to the Trash." )
+        }
+        .alert(
+            "Operation Failed",
+            isPresented: Binding( get: { self.errorMessage != nil }, set: { if $0 == false { self.errorMessage = nil } } ),
+            presenting:  self.errorMessage
+        )
+        {
+            _ in
+
+            Button( "OK", role: .cancel ) {}
+        }
+        message:
+        {
+            message in
+
+            Text( message )
+        }
+    }
+
+    @ViewBuilder
+    private func contextMenu( for project: Project ) -> some View
+    {
+        Button( "Reveal in Finder" )
+        {
+            NSWorkspace.shared.activateFileViewerSelecting( [ project.folderURL ] )
+        }
+
+        Button( "Move to Trash", role: .destructive )
+        {
+            self.projectPendingTrash = project
+        }
+    }
+
+    private func trash( _ project: Project )
+    {
+        do
+        {
+            try self.model.trashProject( project )
+        }
+        catch
+        {
+            self.errorMessage = error.localizedDescription
         }
     }
 }

@@ -104,6 +104,71 @@ struct AppModelTests
 
         #expect( model.viewMode == .preview )
     }
+
+    @Test
+    func trashingRemovesTheProjectAndTrashesItsFolder() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+        try root.makeProject( encodedName: "-Users-macmade-Beta", withMemory: true )
+
+        var trashed: [ URL ] = []
+        let model            = AppModel( projectsDirectory: root.url, trashItem: { trashed.append( $0 ) } )
+
+        await model.loadProjects()
+
+        let alpha = try #require( model.projects.first { $0.displayName == "Alpha" } )
+
+        try model.trashProject( alpha )
+
+        #expect( model.projects.contains { $0.id == alpha.id } == false )
+        #expect( model.projects.count == 1 )
+        #expect( trashed == [ alpha.folderURL ] )
+    }
+
+    @Test
+    func trashingTheSelectedProjectClearsTheSelection() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+
+        let model = AppModel( projectsDirectory: root.url, trashItem: { _ in } )
+
+        await model.loadProjects()
+
+        let alpha = try #require( model.projects.first )
+
+        model.selection = alpha.id
+
+        try model.trashProject( alpha )
+
+        #expect( model.selection == nil )
+    }
+
+    @Test
+    func trashingFailurePropagatesAndKeepsTheProject() async throws
+    {
+        struct TrashError: Error {}
+
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+
+        let model = AppModel( projectsDirectory: root.url, trashItem: { _ in throw TrashError() } )
+
+        await model.loadProjects()
+
+        let alpha = try #require( model.projects.first )
+
+        #expect( throws: TrashError.self )
+        {
+            try model.trashProject( alpha )
+        }
+
+        #expect( model.projects.count == 1 )
+    }
 }
 
 /// A self-cleaning temporary directory used to build project-tree fixtures.

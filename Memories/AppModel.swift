@@ -42,15 +42,36 @@ final class AppModel
     /// The directory scanned for projects.
     let projectsDirectory: URL
 
+    /// Moves an item to the Trash. Injectable so tests need not touch the real
+    /// Trash; defaults to `FileManager.trashItem(at:resultingItemURL:)`.
+    private let trashItem: ( URL ) throws -> Void
+
     /// The currently selected project, resolved from ``selection``.
     var selectedProject: Project?
     {
         self.projects.first { $0.id == self.selection }
     }
 
-    init( projectsDirectory: URL = MemoryDiscovery.defaultProjectsDirectory )
+    init( projectsDirectory: URL = MemoryDiscovery.defaultProjectsDirectory, trashItem: @escaping ( URL ) throws -> Void = { try FileManager.default.trashItem( at: $0, resultingItemURL: nil ) } )
     {
         self.projectsDirectory = projectsDirectory
+        self.trashItem         = trashItem
+    }
+
+    /// Moves a project's entire folder to the Trash, then drops it from the
+    /// list and clears the selection if it pointed at the trashed project.
+    ///
+    /// Throws if the trash operation fails, leaving the list unchanged.
+    func trashProject( _ project: Project ) throws
+    {
+        try self.trashItem( project.folderURL )
+
+        self.projects.removeAll { $0.id == project.id }
+
+        if self.selection == project.id
+        {
+            self.selection = nil
+        }
     }
 
     /// Discovers the projects under ``projectsDirectory`` off the main actor and
