@@ -24,45 +24,45 @@
 
 import SwiftUI
 
-@main
-struct MemoriesApp: App
+/// The contents of the custom About window: the app icon beside its name,
+/// version and copyright, all read from the bundle's Info dictionary.
+struct AboutView: View
 {
-    @Environment( \.openWindow ) private var openWindow
-
-    var body: some Scene
+    /// The view's content.
+    var body: some View
     {
-        WindowGroup
+        HStack
         {
-            ContentView()
-        }
-        .commands
-        {
-            CommandGroup( replacing: CommandGroupPlacement.appInfo )
-            {
-                Button( "About \( Bundle.main.title )\u{2026}" )
-                {
-                    self.openWindow( id: "AboutWindow" )
-                }
-            }
+            Image( nsImage: NSImage( named: NSImage.applicationIconName ) ?? NSImage() )
+                .resizable()
+                .frame( width: 200, height: 200 )
 
-            CommandGroup( after: CommandGroupPlacement.sidebar )
+            VStack( alignment: .leading )
             {
-                ViewCommands()
-            }
-        }
+                Spacer()
 
-        Window( "About \( Bundle.main.title )", id: "AboutWindow" )
-        {
-            AboutView()
-                .padding()
-                .fixedSize()
+                Text( Bundle.main.title )
+                    .font( .largeTitle )
+
+                Text( Bundle.main.version )
+                    .font( .title3 )
+                    .foregroundStyle( .secondary )
+
+                Spacer()
+
+                Text( Bundle.main.copyright )
+                    .foregroundStyle( .secondary )
+
+                Spacer()
+            }
+            .padding( .trailing )
         }
-        .windowStyle( .hiddenTitleBar )
-        .windowResizability( .contentSize )
-        .restorationBehavior( .disabled )
-        // Open centered on screen rather than cascaded as an "additional" window.
-        // This is only the initial default: while the window is open, re-issuing
-        // the About command just brings it forward without moving it.
-        .defaultPosition( .center )
+        .frame( maxHeight: 200 )
     }
+}
+
+#Preview
+{
+    AboutView()
+        .padding()
 }

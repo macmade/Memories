@@ -22,47 +22,39 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-import SwiftUI
+import Foundation
 
-@main
-struct MemoriesApp: App
+/// Convenience accessors for the values displayed in the About window.
+extension Bundle
 {
-    @Environment( \.openWindow ) private var openWindow
-
-    var body: some Scene
+    /// The bundle's display name (`CFBundleName`), or `"--"` when unset.
+    var title: String
     {
-        WindowGroup
-        {
-            ContentView()
-        }
-        .commands
-        {
-            CommandGroup( replacing: CommandGroupPlacement.appInfo )
-            {
-                Button( "About \( Bundle.main.title )\u{2026}" )
-                {
-                    self.openWindow( id: "AboutWindow" )
-                }
-            }
+        Bundle.main.object( forInfoDictionaryKey: "CFBundleName" ) as? String ?? "--"
+    }
 
-            CommandGroup( after: CommandGroupPlacement.sidebar )
-            {
-                ViewCommands()
-            }
+    /// The human-readable copyright string (`NSHumanReadableCopyright`), or
+    /// `"--"` when unset.
+    var copyright: String
+    {
+        Bundle.main.object( forInfoDictionaryKey: "NSHumanReadableCopyright" ) as? String ?? "--"
+    }
+
+    /// The marketing version, with the build number appended in parentheses when
+    /// available (e.g. `"1.2 (45)"`), or `"--"` when no version is set.
+    var version: String
+    {
+        guard let version = Bundle.main.object( forInfoDictionaryKey: "CFBundleShortVersionString" ) as? String
+        else
+        {
+            return "--"
         }
 
-        Window( "About \( Bundle.main.title )", id: "AboutWindow" )
+        if let bundleVersion = Bundle.main.object( forInfoDictionaryKey: "CFBundleVersion" ) as? String
         {
-            AboutView()
-                .padding()
-                .fixedSize()
+            return "\( version ) (\( bundleVersion ))"
         }
-        .windowStyle( .hiddenTitleBar )
-        .windowResizability( .contentSize )
-        .restorationBehavior( .disabled )
-        // Open centered on screen rather than cascaded as an "additional" window.
-        // This is only the initial default: while the window is open, re-issuing
-        // the About command just brings it forward without moving it.
-        .defaultPosition( .center )
+
+        return version
     }
 }

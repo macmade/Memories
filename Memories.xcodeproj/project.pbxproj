@@ -21,6 +21,8 @@
 		05F1001E2FEA800000000001 /* ProjectPathResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F1001D2FEA800000000001 /* ProjectPathResolver.swift */; };
 		05F100222FEA800000000001 /* GitInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100212FEA800000000001 /* GitInspector.swift */; };
 		05F100242FEA800000000001 /* ViewCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100232FEA800000000001 /* ViewCommands.swift */; };
+		05F100262FEA800000000001 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100252FEA800000000001 /* AboutView.swift */; };
+		05F100282FEA800000000001 /* NSBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100272FEA800000000001 /* NSBundle.swift */; };
 		05E9759D2FEA719E0078F616 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05E975972FEA719E0078F616 /* Assets.xcassets */; };
 		05E975A02FEA71A30078F616 /* MemoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E9759E2FEA71A30078F616 /* MemoriesTests.swift */; };
 		05F100022FEA800000000001 /* MemoryDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100012FEA800000000001 /* MemoryDiscoveryTests.swift */; };
@@ -69,6 +71,8 @@
 		05F1001D2FEA800000000001 /* ProjectPathResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectPathResolver.swift; sourceTree = "<group>"; };
 		05F100212FEA800000000001 /* GitInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitInspector.swift; sourceTree = "<group>"; };
 		05F100232FEA800000000001 /* ViewCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCommands.swift; sourceTree = "<group>"; };
+		05F100252FEA800000000001 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		05F100272FEA800000000001 /* NSBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSBundle.swift; sourceTree = "<group>"; };
 		05E9759E2FEA71A30078F616 /* MemoriesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesTests.swift; sourceTree = "<group>"; };
 		05F100012FEA800000000001 /* MemoryDiscoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryDiscoveryTests.swift; sourceTree = "<group>"; };
 		05F100072FEA800000000001 /* AppModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelTests.swift; sourceTree = "<group>"; };
@@ -196,6 +200,8 @@
 				05F1001D2FEA800000000001 /* ProjectPathResolver.swift */,
 				05F100212FEA800000000001 /* GitInspector.swift */,
 				05F100232FEA800000000001 /* ViewCommands.swift */,
+				05F100252FEA800000000001 /* AboutView.swift */,
+				05F100272FEA800000000001 /* NSBundle.swift */,
 			);
 			path = Memories;
 			sourceTree = "<group>";
@@ -499,6 +505,8 @@
 				05F1001E2FEA800000000001 /* ProjectPathResolver.swift in Sources */,
 				05F100222FEA800000000001 /* GitInspector.swift in Sources */,
 				05F100242FEA800000000001 /* ViewCommands.swift in Sources */,
+				05F100262FEA800000000001 /* AboutView.swift in Sources */,
+				05F100282FEA800000000001 /* NSBundle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
