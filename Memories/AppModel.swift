@@ -66,6 +66,25 @@ final class AppModel
     {
         try self.trashItem( project.folderURL )
 
+        self.forget( project )
+    }
+
+    /// Moves only a project's `MEMORY.md` index file to the Trash, leaving the
+    /// folder intact. The project no longer has a memory index, so it is
+    /// dropped from the list and the selection cleared if it pointed at it.
+    ///
+    /// Throws if the trash operation fails, leaving the list unchanged.
+    func trashMemory( _ project: Project ) throws
+    {
+        try self.trashItem( project.memoryURL )
+
+        self.forget( project )
+    }
+
+    /// Removes a project from the list and clears the selection if it pointed
+    /// at it.
+    private func forget( _ project: Project )
+    {
         self.projects.removeAll { $0.id == project.id }
 
         if self.selection == project.id

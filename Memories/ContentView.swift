@@ -29,6 +29,7 @@ struct ContentView: View
 {
     @State private var model = AppModel()
     @State private var projectPendingTrash: Project?
+    @State private var memoryPendingTrash:  Project?
     @State private var errorMessage:        String?
 
     var body: some View
@@ -75,6 +76,36 @@ struct ContentView: View
         {
             await self.model.loadProjects()
         }
+        .toolbar
+        {
+            if let project = self.model.selectedProject
+            {
+                ToolbarItemGroup( placement: .primaryAction )
+                {
+                    self.openWithMenu( for: project )
+
+                    Button
+                    {
+                        self.memoryPendingTrash = project
+                    }
+                    label:
+                    {
+                        Label( "Move Memory to Trash", systemImage: "trash" )
+                    }
+
+                    Picker( "View Mode", selection: $model.viewMode )
+                    {
+                        ForEach( MemoryViewMode.allCases )
+                        {
+                            mode in
+
+                            Label( mode.title, systemImage: mode.systemImage ).tag( mode )
+                        }
+                    }
+                    .pickerStyle( .segmented )
+                }
+            }
+        }
         .alert(
             "Move \u{201C}\( self.projectPendingTrash?.displayName ?? "" )\u{201D} to the Trash?",
             isPresented: Binding( get: { self.projectPendingTrash != nil }, set: { if $0 == false { self.projectPendingTrash = nil } } ),
@@ -95,6 +126,27 @@ struct ContentView: View
             _ in
 
             Text( "The entire project folder will be moved to the Trash." )
+        }
+        .alert(
+            "Move the memory of \u{201C}\( self.memoryPendingTrash?.displayName ?? "" )\u{201D} to the Trash?",
+            isPresented: Binding( get: { self.memoryPendingTrash != nil }, set: { if $0 == false { self.memoryPendingTrash = nil } } ),
+            presenting:  self.memoryPendingTrash
+        )
+        {
+            project in
+
+            Button( "Move to Trash", role: .destructive )
+            {
+                self.trashMemory( project )
+            }
+
+            Button( "Cancel", role: .cancel ) {}
+        }
+        message:
+        {
+            _ in
+
+            Text( "Only the MEMORY.md file will be moved to the Trash; the project folder is left intact." )
         }
         .alert(
             "Operation Failed",
@@ -128,6 +180,47 @@ struct ContentView: View
         }
     }
 
+    @ViewBuilder
+    private func openWithMenu( for project: Project ) -> some View
+    {
+        let applications = self.applications( toOpen: project.memoryURL )
+
+        Menu
+        {
+            if applications.isEmpty
+            {
+                Text( "No Applications" )
+            }
+            else
+            {
+                ForEach( applications, id: \.self )
+                {
+                    application in
+
+                    Button
+                    {
+                        self.open( project.memoryURL, with: application )
+                    }
+                    label:
+                    {
+                        Label
+                        {
+                            Text( self.applicationName( application ) )
+                        }
+                        icon:
+                        {
+                            Image( nsImage: NSWorkspace.shared.icon( forFile: application.path ) )
+                        }
+                    }
+                }
+            }
+        }
+        label:
+        {
+            Label( "Open With", systemImage: "arrow.up.forward.app" )
+        }
+    }
+
     private func trash( _ project: Project )
     {
         do
@@ -138,6 +231,39 @@ struct ContentView: View
         {
             self.errorMessage = error.localizedDescription
         }
+    }
+
+    private func trashMemory( _ project: Project )
+    {
+        do
+        {
+            try self.model.trashMemory( project )
+        }
+        catch
+        {
+            self.errorMessage = error.localizedDescription
+        }
+    }
+
+    /// The applications able to open the given file, de-duplicated and sorted
+    /// by display name.
+    private func applications( toOpen url: URL ) -> [ URL ]
+    {
+        var seen = Set<URL>()
+
+        return NSWorkspace.shared.urlsForApplications( toOpen: url )
+            .filter { seen.insert( $0 ).inserted }
+            .sorted { self.applicationName( $0 ).localizedCaseInsensitiveCompare( self.applicationName( $1 ) ) == .orderedAscending }
+    }
+
+    private func applicationName( _ url: URL ) -> String
+    {
+        FileManager.default.displayName( atPath: url.path )
+    }
+
+    private func open( _ url: URL, with application: URL )
+    {
+        NSWorkspace.shared.open( [ url ], withApplicationAt: application, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil )
     }
 }
 
