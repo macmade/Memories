@@ -10,7 +10,34 @@ Memories
 
 ### About
 
-A macOS app to manage Claude Code memories.
+Memories is a macOS app for browsing and managing the memory files that
+Claude Code keeps for your projects.
+
+Claude Code stores per-project notes as Markdown files under `~/.claude`, which
+are awkward to read directly from the filesystem. Memories lists them in one
+window so you can review what's stored and remove what you no longer need.
+
+![Screenshot](Assets/screenshot.png)
+
+### Features
+
+- Lists all Claude Code projects that have stored memory, found automatically
+  with no configuration. The list refreshes when the app becomes active.
+
+- Shows the repository name and current branch for projects that are Git
+  repositories, along with the full project path.
+
+- Displays each memory file as rendered Markdown, with a toggle to view the raw
+  source.
+
+- Switches between a project's memory files from a floating menu. Links within a
+  note open the referenced memory file; external links open in the browser.
+
+- Opens a memory file in another application, or reveals the project folder in
+  the Finder.
+
+- Moves a single memory file, a project's whole memory folder, or a project's
+  Claude folder to the Trash. The real project on disk is left untouched.
 
 ### Cloning
 
