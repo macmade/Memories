@@ -96,7 +96,18 @@ struct MarkdownTextView: NSViewRepresentable
 
         context.coordinator.onOpenFile = self.onOpenFile
 
-        textView.textStorage?.setAttributedString( self.attributedString )
+        // SwiftUI calls this on every re-render of the enclosing view (e.g. the
+        // floating file switcher's visibility timer, or hover tracking). Resetting
+        // the text storage clears the user's selection, so only replace it when
+        // the rendered content has actually changed. The comparison is against the
+        // last string we applied rather than the live text storage, which the text
+        // system mutates after assignment (so comparing against it never matches).
+        if context.coordinator.appliedString?.isEqual( self.attributedString ) != true
+        {
+            textView.textStorage?.setAttributedString( self.attributedString )
+
+            context.coordinator.appliedString = self.attributedString
+        }
     }
 
     /// Routes clicked links: in-app memory-file links navigate within the app,
@@ -104,6 +115,10 @@ struct MarkdownTextView: NSViewRepresentable
     final class Coordinator: NSObject, NSTextViewDelegate
     {
         var onOpenFile: ( MemoryFile.ID ) -> Void
+
+        /// The last attributed string applied to the text view. Used to skip
+        /// redundant resets that would otherwise clear the user's selection.
+        var appliedString: NSAttributedString?
 
         init( onOpenFile: @escaping ( MemoryFile.ID ) -> Void )
         {

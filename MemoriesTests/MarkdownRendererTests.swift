@@ -141,6 +141,15 @@ struct MarkdownRendererTests
         #expect( link == URL( string: "https://xs-labs.com" ) )
     }
 
+    @Test
+    func renderingTheSameSourceTwiceProducesEqualOutput() throws
+    {
+        let a = MarkdownRenderer.attributedString( from: "# Title\n\nBody with **bold**, `code`, and [a link](https://xs-labs.com)." )
+        let b = MarkdownRenderer.attributedString( from: "# Title\n\nBody with **bold**, `code`, and [a link](https://xs-labs.com)." )
+
+        #expect( a.isEqual( b ) )
+    }
+
     // MARK: - Memory-file links
 
     @Test
