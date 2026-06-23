@@ -46,12 +46,7 @@ struct ContentView: View
                 {
                     project in
 
-                    ProjectRow( project: project )
-                        .tag( project.id )
-                        .contextMenu
-                        {
-                            self.contextMenu( for: project )
-                        }
+                    self.sidebarRow( for: project )
                 }
             }
             .overlay
@@ -190,6 +185,17 @@ struct ContentView: View
     }
 
     @ViewBuilder
+    private func sidebarRow( for project: Project ) -> some View
+    {
+        ProjectRow( project: project, isSelected: self.model.selection == project.id )
+            .tag( project.id )
+            .contextMenu
+            {
+                self.contextMenu( for: project )
+            }
+    }
+
+    @ViewBuilder
     private func contextMenu( for project: Project ) -> some View
     {
         if let directory = project.resolvedDirectoryURL
@@ -217,10 +223,12 @@ struct ContentView: View
     @ViewBuilder
     private func openWithMenu( for project: Project ) -> some View
     {
-        let applications = self.applications( toOpen: project.memoryURL )
-
         Menu
         {
+            // Computed lazily here, only when the menu is opened, so the
+            // LaunchServices lookup never runs during a normal render pass.
+            let applications = self.applications( toOpen: project.memoryURL )
+
             if applications.isEmpty
             {
                 Text( "No Applications" )

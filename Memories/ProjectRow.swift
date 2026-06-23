@@ -27,14 +27,45 @@ import SwiftUI
 /// A single sidebar row presenting a project's name and decoded path.
 struct ProjectRow: View
 {
-    let project: Project
+    @Environment( \.controlActiveState ) private var controlActiveState
+
+    let project:    Project
+    var isSelected: Bool = false
+
+    /// The icon turns white when its row is the active selection, otherwise it
+    /// keeps the tint colour. The selection highlight is only prominent while
+    /// the window is active, so an inactive window keeps the tint.
+    private var iconStyle: AnyShapeStyle
+    {
+        self.isActiveSelection ? AnyShapeStyle( .white ) : AnyShapeStyle( .tint )
+    }
+
+    /// Whether the row is the active, prominently-highlighted selection.
+    private var isActiveSelection: Bool
+    {
+        self.isSelected && self.controlActiveState != .inactive
+    }
+
+    /// The badge capsule fill: solid white on the active selection, otherwise a
+    /// faint secondary tint.
+    private var badgeCapsuleStyle: AnyShapeStyle
+    {
+        self.isActiveSelection ? AnyShapeStyle( .white ) : AnyShapeStyle( Color.secondary.opacity( 0.18 ) )
+    }
+
+    /// The badge icon and text colour: the tint on the white capsule of the
+    /// active selection, otherwise the secondary colour.
+    private var badgeForegroundStyle: AnyShapeStyle
+    {
+        self.isActiveSelection ? AnyShapeStyle( .tint ) : AnyShapeStyle( .secondary )
+    }
 
     var body: some View
     {
         HStack( spacing: 10 )
         {
             Image( systemName: self.project.iconSystemName )
-                .foregroundStyle( .tint )
+                .foregroundStyle( self.iconStyle )
                 .help( self.project.isGitRepository ? "Git repository" : "Directory" )
 
             VStack( alignment: .leading, spacing: 1 )
@@ -67,8 +98,8 @@ struct ProjectRow: View
             .lineLimit( 1 )
             .padding( .horizontal, 6 )
             .padding( .vertical, 2 )
-            .background( Capsule().fill( Color.secondary.opacity( 0.18 ) ) )
-            .foregroundStyle( .secondary )
+            .background( Capsule().fill( self.badgeCapsuleStyle ) )
+            .foregroundStyle( self.badgeForegroundStyle )
             .help( "Current branch: \( branch )" )
     }
 }
