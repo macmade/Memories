@@ -17,7 +17,7 @@ Claude Code stores per-project notes as Markdown files under `~/.claude`, which
 are awkward to read directly from the filesystem. Memories lists them in one
 window so you can review what's stored and remove what you no longer need.
 
-![Screenshot](Assets/screenshot.png)
+![Screenshot](Assets/Screenshot.png)
 
 ### Features
 
