@@ -32,20 +32,42 @@ struct FileSwitcherBar: View
 
     @Binding var selection: MemoryFile.ID?
 
+    private var currentName: String
+    {
+        self.files.first { $0.id == self.selection }?.name ?? "Memory"
+    }
+
     var body: some View
     {
-        Picker( "Memory File", selection: self.$selection )
+        Menu
         {
             ForEach( self.files )
             {
                 file in
 
-                Label( file.name, systemImage: file.isIndex ? "doc.text.magnifyingglass" : "doc.text" )
-                    .tag( file.id as MemoryFile.ID? )
+                Button
+                {
+                    self.selection = file.id
+                }
+                label:
+                {
+                    if file.id == self.selection
+                    {
+                        Label( file.name, systemImage: "checkmark" )
+                    }
+                    else
+                    {
+                        Text( file.name )
+                    }
+                }
             }
         }
-        .labelsHidden()
-        .pickerStyle( .menu )
+        label:
+        {
+            Label( self.currentName, systemImage: "doc.text" )
+        }
+        .menuStyle( .button )
+        .buttonStyle( .plain )
         .fixedSize()
         .padding( .horizontal, 14 )
         .padding( .vertical, 8 )
