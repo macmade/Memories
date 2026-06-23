@@ -40,7 +40,15 @@ enum MarkdownRenderer
 {
     /// Parses `markdown` and converts it into a fully styled attributed string,
     /// falling back to the raw text if parsing fails.
-    static func attributedString( from markdown: String ) -> NSAttributedString
+    ///
+    /// Links are resolved against the memory the text comes from: a relative
+    /// (file) link is kept only when it points at one of `memoryFiles`,
+    /// resolved against `baseDirectory` (the directory of the current file).
+    /// Such a link carries the matched file's own URL as its destination, so a
+    /// click can be routed back to that file. Relative links with no matching
+    /// file are dropped (the text stays, the link does not). Links with a
+    /// non-`file` scheme (`http`, `https`, `mailto`, …) are always kept.
+    static func attributedString( from markdown: String, baseDirectory: URL? = nil, memoryFiles: [ MemoryFile ] = [] ) -> NSAttributedString
     {
         let options = AttributedString.MarkdownParsingOptions(
             allowsExtendedAttributes: true,
@@ -54,7 +62,7 @@ enum MarkdownRenderer
             return NSAttributedString( string: markdown )
         }
 
-        return MarkdownConverter().convert( parsed )
+        return MarkdownConverter( baseDirectory: baseDirectory, memoryFiles: memoryFiles ).convert( parsed )
     }
 }
 
@@ -64,6 +72,14 @@ private struct MarkdownConverter
 {
     let bodySize  = NSFont.preferredFont( forTextStyle: .body ).pointSize
     let textColor = NSColor.labelColor
+
+    /// The directory of the file being rendered, used to resolve relative
+    /// (file) links. `nil` means relative links cannot be resolved and are
+    /// therefore dropped.
+    let baseDirectory: URL?
+
+    /// The memory files a relative link may legitimately point at.
+    let memoryFiles: [ MemoryFile ]
 
     /// A contiguous range of runs sharing the same innermost block.
     private struct Block
@@ -146,9 +162,9 @@ private struct MarkdownConverter
                 .paragraphStyle:  self.paragraphStyle( for: block.intent ),
             ]
 
-            if let link = run.link
+            if let link = run.link, let destination = self.resolvedLink( link )
             {
-                attributes[ .link ]            = link
+                attributes[ .link ]            = destination
                 attributes[ .foregroundColor ] = NSColor.linkColor
                 attributes[ .underlineStyle ]  = NSUnderlineStyle.single.rawValue
             }
@@ -157,6 +173,31 @@ private struct MarkdownConverter
         }
 
         return result
+    }
+
+    /// The destination to attach to a parsed `link`, or `nil` when the link
+    /// should be dropped and its text rendered plainly.
+    ///
+    /// Non-`file` schemes (`http`, `https`, `mailto`, …) pass through unchanged.
+    /// A relative file reference is resolved against ``baseDirectory`` and kept
+    /// only when it matches one of ``memoryFiles``, in which case that file's
+    /// own URL is returned so a click can be routed back to it.
+    private func resolvedLink( _ link: URL ) -> URL?
+    {
+        if let scheme = link.scheme, scheme != "file"
+        {
+            return link
+        }
+
+        guard let baseDirectory = self.baseDirectory
+        else
+        {
+            return nil
+        }
+
+        let resolved = baseDirectory.appendingPathComponent( link.relativePath ).standardizedFileURL
+
+        return self.memoryFiles.first { $0.url.standardizedFileURL == resolved }?.url
     }
 
     // MARK: - Fonts

@@ -25,11 +25,42 @@
 import AppKit
 import SwiftUI
 
+/// Decides what a clicked Markdown link should do.
+///
+/// The renderer guarantees that a `.link` carrying a `file` URL is always a
+/// known memory file (relative links that do not resolve to one are dropped),
+/// so the only distinction left at click time is file versus everything else.
+enum MarkdownLinkRouter
+{
+    enum Route: Equatable
+    {
+        /// Navigate to the memory file with this identity (its path).
+        case openMemoryFile( MemoryFile.ID )
+
+        /// Let the system open the link (a web or other external destination).
+        case external
+    }
+
+    static func route( _ url: URL ) -> Route
+    {
+        url.isFileURL ? .openMemoryFile( url.path ) : .external
+    }
+}
+
 /// A read-only, selectable `NSTextView` for displaying a rendered attributed
 /// string with native scrolling.
 struct MarkdownTextView: NSViewRepresentable
 {
     let attributedString: NSAttributedString
+
+    /// Invoked when the user clicks an in-app link to another memory file,
+    /// with that file's identity. External links are left to the system.
+    var onOpenFile: ( MemoryFile.ID ) -> Void = { _ in }
+
+    func makeCoordinator() -> Coordinator
+    {
+        Coordinator( onOpenFile: self.onOpenFile )
+    }
 
     func makeNSView( context: Context ) -> NSScrollView
     {
@@ -49,6 +80,7 @@ struct MarkdownTextView: NSViewRepresentable
             textView.isHorizontallyResizable = false
             textView.textContainer?.widthTracksTextView = true
             textView.textContainer?.lineFragmentPadding  = 0
+            textView.delegate                = context.coordinator
         }
 
         return scrollView
@@ -62,6 +94,42 @@ struct MarkdownTextView: NSViewRepresentable
             return
         }
 
+        context.coordinator.onOpenFile = self.onOpenFile
+
         textView.textStorage?.setAttributedString( self.attributedString )
+    }
+
+    /// Routes clicked links: in-app memory-file links navigate within the app,
+    /// everything else falls through to the system's default handling.
+    final class Coordinator: NSObject, NSTextViewDelegate
+    {
+        var onOpenFile: ( MemoryFile.ID ) -> Void
+
+        init( onOpenFile: @escaping ( MemoryFile.ID ) -> Void )
+        {
+            self.onOpenFile = onOpenFile
+        }
+
+        func textView( _ textView: NSTextView, clickedOnLink link: Any, at charIndex: Int ) -> Bool
+        {
+            guard let url = link as? URL
+            else
+            {
+                return false
+            }
+
+            switch MarkdownLinkRouter.route( url )
+            {
+                case .openMemoryFile( let id ):
+
+                    self.onOpenFile( id )
+
+                    return true
+
+                case .external:
+
+                    return false
+            }
+        }
     }
 }

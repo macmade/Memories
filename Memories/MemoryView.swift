@@ -124,7 +124,10 @@ struct MemoryView: View
         {
             case .preview:
 
-                MarkdownTextView( attributedString: MarkdownRenderer.attributedString( from: text ) )
+                MarkdownTextView(
+                    attributedString: MarkdownRenderer.attributedString( from: text, baseDirectory: self.file.url.deletingLastPathComponent(), memoryFiles: self.files ),
+                    onOpenFile:       { self.selection = $0 }
+                )
 
             case .source:
 

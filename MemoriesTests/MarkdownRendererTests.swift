@@ -141,6 +141,60 @@ struct MarkdownRendererTests
         #expect( link == URL( string: "https://xs-labs.com" ) )
     }
 
+    // MARK: - Memory-file links
+
+    @Test
+    func linkToAnExistingMemoryFileResolvesToThatFilesURL() throws
+    {
+        let base   = URL( fileURLWithPath: "/projects/demo/memory" )
+        let target = MemoryFile( url: base.appendingPathComponent( "notes.md" ) )
+
+        let rendered = MarkdownRenderer.attributedString( from: "see [the notes](notes.md) now", baseDirectory: base, memoryFiles: [ target ] )
+
+        let range = ( rendered.string as NSString ).range( of: "the notes" )
+        let link  = try #require( rendered.attributes( at: range.location, effectiveRange: nil )[ .link ] as? URL )
+
+        #expect( link == target.url )
+    }
+
+    @Test
+    func relativeParentPathsResolveAgainstTheBaseDirectory() throws
+    {
+        let base   = URL( fileURLWithPath: "/projects/demo/memory/sub" )
+        let target = MemoryFile( url: URL( fileURLWithPath: "/projects/demo/memory/top.md" ) )
+
+        let rendered = MarkdownRenderer.attributedString( from: "see [top](../top.md) now", baseDirectory: base, memoryFiles: [ target ] )
+
+        let range = ( rendered.string as NSString ).range( of: "top" )
+        let link  = try #require( rendered.attributes( at: range.location, effectiveRange: nil )[ .link ] as? URL )
+
+        #expect( link == target.url )
+    }
+
+    @Test
+    func linkToAMissingMemoryFileIsRenderedAsPlainText() throws
+    {
+        let base = URL( fileURLWithPath: "/projects/demo/memory" )
+
+        let rendered = MarkdownRenderer.attributedString( from: "see [the notes](ghost.md) now", baseDirectory: base, memoryFiles: [] )
+
+        let range = ( rendered.string as NSString ).range( of: "the notes" )
+
+        #expect( rendered.string.contains( "the notes" ) )
+        #expect( rendered.attributes( at: range.location, effectiveRange: nil )[ .link ] == nil )
+    }
+
+    @Test
+    func externalLinksAreKeptEvenWithMemoryContext() throws
+    {
+        let rendered = MarkdownRenderer.attributedString( from: "see [the site](https://xs-labs.com) now", baseDirectory: URL( fileURLWithPath: "/projects/demo/memory" ), memoryFiles: [] )
+
+        let range = ( rendered.string as NSString ).range( of: "the site" )
+        let link  = try #require( rendered.attributes( at: range.location, effectiveRange: nil )[ .link ] as? URL )
+
+        #expect( link == URL( string: "https://xs-labs.com" ) )
+    }
+
     private func font( for substring: String, in attributed: NSAttributedString ) -> NSFont?
     {
         let range = ( attributed.string as NSString ).range( of: substring )
