@@ -181,6 +181,7 @@ struct ContentView: View
 
             Text( message )
         }
+        .frame( minWidth: 700, minHeight: 450 )
     }
 
     @ViewBuilder
