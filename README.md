@@ -10,7 +10,7 @@ Memories
 
 ### About
 
-...
+A macOS app to manage Claude Code memories.
 
 ### Cloning
 
