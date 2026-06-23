@@ -234,6 +234,45 @@ struct AppModelTests
 
         #expect( model.projects.count == 1 )
     }
+
+    @Test
+    func reloadingClearsTheSelectionWhenTheSelectedProjectDisappears() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+        try root.makeProject( encodedName: "-Users-macmade-Beta", withMemory: true )
+
+        let model = AppModel( projectsDirectory: root.url )
+
+        await model.loadProjects()
+
+        model.selection = "-Users-macmade-Beta"
+
+        try FileManager.default.removeItem( at: root.url.appending( path: "-Users-macmade-Beta", directoryHint: .isDirectory ) )
+
+        await model.loadProjects()
+
+        #expect( model.selection == nil )
+    }
+
+    @Test
+    func reloadingKeepsTheSelectionWhenTheSelectedProjectRemains() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+
+        let model = AppModel( projectsDirectory: root.url )
+
+        await model.loadProjects()
+
+        model.selection = "-Users-macmade-Alpha"
+
+        await model.loadProjects()
+
+        #expect( model.selection == "-Users-macmade-Alpha" )
+    }
 }
 
 /// A self-cleaning temporary directory used to build project-tree fixtures.

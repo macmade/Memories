@@ -27,6 +27,8 @@ import SwiftUI
 
 struct ContentView: View
 {
+    @Environment( \.scenePhase ) private var scenePhase
+
     @State private var model = AppModel()
     @State private var projectPendingTrash: Project?
     @State private var memoryPendingTrash:  Project?
@@ -75,6 +77,21 @@ struct ContentView: View
         .task
         {
             await self.model.loadProjects()
+        }
+        .onChange( of: self.scenePhase )
+        {
+            _, phase in
+
+            guard phase == .active
+            else
+            {
+                return
+            }
+
+            Task
+            {
+                await self.model.loadProjects()
+            }
         }
         .toolbar
         {

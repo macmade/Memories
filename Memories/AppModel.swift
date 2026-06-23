@@ -105,5 +105,10 @@ final class AppModel
         .value
 
         self.projects = projects
+
+        if let selection = self.selection, projects.contains( where: { $0.id == selection } ) == false
+        {
+            self.selection = nil
+        }
     }
 }
