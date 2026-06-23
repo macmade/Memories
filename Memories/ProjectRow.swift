@@ -24,46 +24,37 @@
 
 import SwiftUI
 
-struct ContentView: View
+/// A single sidebar row presenting a project's name and decoded path.
+struct ProjectRow: View
 {
-    @State private var model = AppModel()
+    let project: Project
 
     var body: some View
     {
-        @Bindable var model = self.model
+        HStack( spacing: 10 )
+        {
+            Image( systemName: "folder" )
+                .foregroundStyle( .tint )
 
-        NavigationSplitView
-        {
-            List( selection: $model.selection )
+            VStack( alignment: .leading, spacing: 1 )
             {
-                ForEach( self.model.projects )
-                {
-                    project in
+                Text( self.project.displayName )
 
-                    ProjectRow( project: project ).tag( project.id )
-                }
+                Text( self.project.decodedPath )
+                    .font( .caption )
+                    .foregroundStyle( .secondary )
+                    .lineLimit( 1 )
+                    .truncationMode( .middle )
             }
-            .overlay
-            {
-                if self.model.projects.isEmpty
-                {
-                    ContentUnavailableView( "No Projects", systemImage: "tray", description: Text( "No Claude projects with a memory index were found." ) )
-                }
-            }
-            .navigationTitle( "Memories" )
         }
-        detail:
-        {
-            ContentUnavailableView( "No Selection", systemImage: "sidebar.left", description: Text( "Select a project to preview its memory." ) )
-        }
-        .task
-        {
-            await self.model.loadProjects()
-        }
+        .padding( .vertical, 2 )
     }
 }
 
 #Preview
 {
-    ContentView()
+    List
+    {
+        ProjectRow( project: Project( folderURL: URL( fileURLWithPath: "/tmp/-Users-macmade-Documents-Macmade-GitHub-Memories", isDirectory: true ) ) )
+    }
 }

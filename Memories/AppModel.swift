@@ -22,48 +22,39 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-import SwiftUI
+import Foundation
+import Observation
 
-struct ContentView: View
+/// The app-wide model holding the discovered projects and the current selection.
+@MainActor
+@Observable
+final class AppModel
 {
-    @State private var model = AppModel()
+    /// The discovered projects, sorted by display name.
+    private( set ) var projects: [ Project ] = []
 
-    var body: some View
+    /// The identity of the currently selected project, if any.
+    var selection: Project.ID?
+
+    /// The directory scanned for projects.
+    let projectsDirectory: URL
+
+    init( projectsDirectory: URL = MemoryDiscovery.defaultProjectsDirectory )
     {
-        @Bindable var model = self.model
-
-        NavigationSplitView
-        {
-            List( selection: $model.selection )
-            {
-                ForEach( self.model.projects )
-                {
-                    project in
-
-                    ProjectRow( project: project ).tag( project.id )
-                }
-            }
-            .overlay
-            {
-                if self.model.projects.isEmpty
-                {
-                    ContentUnavailableView( "No Projects", systemImage: "tray", description: Text( "No Claude projects with a memory index were found." ) )
-                }
-            }
-            .navigationTitle( "Memories" )
-        }
-        detail:
-        {
-            ContentUnavailableView( "No Selection", systemImage: "sidebar.left", description: Text( "Select a project to preview its memory." ) )
-        }
-        .task
-        {
-            await self.model.loadProjects()
-        }
+        self.projectsDirectory = projectsDirectory
     }
-}
 
-#Preview
-{
-    ContentView()
+    /// Discovers the projects under ``projectsDirectory`` off the main actor and
+    /// publishes the result.
+    func loadProjects() async
+    {
+        let directory = self.projectsDirectory
+        let projects  = await Task.detached
+        {
+            MemoryDiscovery.discoverProjects( in: directory )
+        }
+        .value
+
+        self.projects = projects
+    }
 }

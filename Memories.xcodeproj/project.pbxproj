@@ -11,9 +11,12 @@
 		05E9759C2FEA719E0078F616 /* MemoriesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E975992FEA719E0078F616 /* MemoriesApp.swift */; };
 		05F100042FEA800000000001 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100032FEA800000000001 /* Project.swift */; };
 		05F100062FEA800000000001 /* MemoryDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100052FEA800000000001 /* MemoryDiscovery.swift */; };
+		05F1000A2FEA800000000001 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100092FEA800000000001 /* AppModel.swift */; };
+		05F1000C2FEA800000000001 /* ProjectRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F1000B2FEA800000000001 /* ProjectRow.swift */; };
 		05E9759D2FEA719E0078F616 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05E975972FEA719E0078F616 /* Assets.xcassets */; };
 		05E975A02FEA71A30078F616 /* MemoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E9759E2FEA71A30078F616 /* MemoriesTests.swift */; };
 		05F100022FEA800000000001 /* MemoryDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100012FEA800000000001 /* MemoryDiscoveryTests.swift */; };
+		05F100082FEA800000000001 /* AppModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100072FEA800000000001 /* AppModelTests.swift */; };
 		05E975A42FEA71AD0078F616 /* MemoriesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E975A12FEA71AD0078F616 /* MemoriesUITests.swift */; };
 		05E975A52FEA71AD0078F616 /* MemoriesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E975A22FEA71AD0078F616 /* MemoriesUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
@@ -44,8 +47,11 @@
 		05E975992FEA719E0078F616 /* MemoriesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesApp.swift; sourceTree = "<group>"; };
 		05F100032FEA800000000001 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		05F100052FEA800000000001 /* MemoryDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryDiscovery.swift; sourceTree = "<group>"; };
+		05F100092FEA800000000001 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		05F1000B2FEA800000000001 /* ProjectRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectRow.swift; sourceTree = "<group>"; };
 		05E9759E2FEA71A30078F616 /* MemoriesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesTests.swift; sourceTree = "<group>"; };
 		05F100012FEA800000000001 /* MemoryDiscoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryDiscoveryTests.swift; sourceTree = "<group>"; };
+		05F100072FEA800000000001 /* AppModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelTests.swift; sourceTree = "<group>"; };
 		05E975A12FEA71AD0078F616 /* MemoriesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesUITests.swift; sourceTree = "<group>"; };
 		05E975A22FEA71AD0078F616 /* MemoriesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		05E975A62FEA73070078F616 /* CODE_OF_CONDUCT.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CODE_OF_CONDUCT.md; sourceTree = "<group>"; };
@@ -156,6 +162,8 @@
 				05E975992FEA719E0078F616 /* MemoriesApp.swift */,
 				05F100032FEA800000000001 /* Project.swift */,
 				05F100052FEA800000000001 /* MemoryDiscovery.swift */,
+				05F100092FEA800000000001 /* AppModel.swift */,
+				05F1000B2FEA800000000001 /* ProjectRow.swift */,
 			);
 			path = Memories;
 			sourceTree = "<group>";
@@ -165,6 +173,7 @@
 			children = (
 				05E9759E2FEA71A30078F616 /* MemoriesTests.swift */,
 				05F100012FEA800000000001 /* MemoryDiscoveryTests.swift */,
+				05F100072FEA800000000001 /* AppModelTests.swift */,
 			);
 			path = MemoriesTests;
 			sourceTree = "<group>";
@@ -444,6 +453,8 @@
 				05E9759C2FEA719E0078F616 /* MemoriesApp.swift in Sources */,
 				05F100042FEA800000000001 /* Project.swift in Sources */,
 				05F100062FEA800000000001 /* MemoryDiscovery.swift in Sources */,
+				05F1000A2FEA800000000001 /* AppModel.swift in Sources */,
+				05F1000C2FEA800000000001 /* ProjectRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +464,7 @@
 			files = (
 				05E975A02FEA71A30078F616 /* MemoriesTests.swift in Sources */,
 				05F100022FEA800000000001 /* MemoryDiscoveryTests.swift in Sources */,
+				05F100082FEA800000000001 /* AppModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
