@@ -51,7 +51,7 @@ struct MemoryView: View
                     ContentUnavailableView( "Unable to Read Memory", systemImage: "exclamationmark.triangle", description: Text( message ) )
             }
         }
-        .navigationTitle( self.project.displayName )
+        .navigationTitle( self.project.title )
         .navigationSubtitle( self.project.decodedPath )
         .task( id: self.project.id )
         {

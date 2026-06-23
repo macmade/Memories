@@ -46,7 +46,22 @@ struct Project: Identifiable, Hashable, Sendable
     /// The `memory/MEMORY.md` index file inside the project directory.
     let memoryURL: URL
 
+    /// The repository name from the `origin` remote, when the project is a git
+    /// repository with an origin; otherwise `nil`.
+    let repositoryName: String?
+
+    /// The checked-out git branch, when the project is a git repository on a
+    /// branch; otherwise `nil`.
+    let branch: String?
+
     var id: String { self.encodedName }
+
+    /// The name shown for the project: the repository name when available,
+    /// otherwise the last component of the decoded path.
+    var title: String
+    {
+        self.repositoryName ?? self.displayName
+    }
 
     /// The real project directory on disk, or `nil` when the decoded path could
     /// not be resolved to an existing directory (e.g. it fell back to naive
@@ -70,13 +85,15 @@ struct Project: Identifiable, Hashable, Sendable
     ///
     /// `decodedPath` is the resolved real filesystem path; when omitted it falls
     /// back to naive `-` → `/` decoding of the directory name.
-    init( folderURL: URL, decodedPath: String? = nil )
+    init( folderURL: URL, decodedPath: String? = nil, repositoryName: String? = nil, branch: String? = nil )
     {
-        self.folderURL   = folderURL
-        self.encodedName = folderURL.lastPathComponent
-        self.decodedPath = decodedPath ?? Project.decodePath( self.encodedName )
-        self.displayName = URL( fileURLWithPath: self.decodedPath ).lastPathComponent
-        self.memoryURL   = folderURL.appending( path: "memory", directoryHint: .isDirectory ).appending( path: "MEMORY.md" )
+        self.folderURL      = folderURL
+        self.encodedName    = folderURL.lastPathComponent
+        self.decodedPath    = decodedPath ?? Project.decodePath( self.encodedName )
+        self.displayName    = URL( fileURLWithPath: self.decodedPath ).lastPathComponent
+        self.memoryURL      = folderURL.appending( path: "memory", directoryHint: .isDirectory ).appending( path: "MEMORY.md" )
+        self.repositoryName = repositoryName
+        self.branch         = branch
     }
 
     /// Decodes an encoded project directory name back into a filesystem path.

@@ -38,7 +38,7 @@ struct ProjectRow: View
 
             VStack( alignment: .leading, spacing: 1 )
             {
-                Text( self.project.displayName )
+                Text( self.project.title )
 
                 Text( self.project.decodedPath )
                     .font( .caption )
@@ -46,8 +46,27 @@ struct ProjectRow: View
                     .lineLimit( 1 )
                     .truncationMode( .middle )
             }
+
+            if let branch = self.project.branch
+            {
+                Spacer( minLength: 6 )
+
+                self.branchBadge( branch )
+            }
         }
         .padding( .vertical, 2 )
+    }
+
+    private func branchBadge( _ branch: String ) -> some View
+    {
+        Label( branch, systemImage: "arrow.triangle.branch" )
+            .labelStyle( .titleAndIcon )
+            .font( .caption2 )
+            .lineLimit( 1 )
+            .padding( .horizontal, 6 )
+            .padding( .vertical, 2 )
+            .background( Capsule().fill( Color.secondary.opacity( 0.18 ) ) )
+            .foregroundStyle( .secondary )
     }
 }
 

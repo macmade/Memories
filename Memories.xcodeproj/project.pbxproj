@@ -19,6 +19,7 @@
 		05F100182FEA800000000001 /* MemoryViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100172FEA800000000001 /* MemoryViewMode.swift */; };
 		05F1001A2FEA800000000001 /* MarkdownTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100192FEA800000000001 /* MarkdownTextView.swift */; };
 		05F1001E2FEA800000000001 /* ProjectPathResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F1001D2FEA800000000001 /* ProjectPathResolver.swift */; };
+		05F100222FEA800000000001 /* GitInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100212FEA800000000001 /* GitInspector.swift */; };
 		05E9759D2FEA719E0078F616 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05E975972FEA719E0078F616 /* Assets.xcassets */; };
 		05E975A02FEA71A30078F616 /* MemoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E9759E2FEA71A30078F616 /* MemoriesTests.swift */; };
 		05F100022FEA800000000001 /* MemoryDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100012FEA800000000001 /* MemoryDiscoveryTests.swift */; };
@@ -26,6 +27,7 @@
 		05F1000E2FEA800000000001 /* MemoryLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F1000D2FEA800000000001 /* MemoryLoaderTests.swift */; };
 		05F100142FEA800000000001 /* MarkdownRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100132FEA800000000001 /* MarkdownRendererTests.swift */; };
 		05F1001C2FEA800000000001 /* ProjectPathResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F1001B2FEA800000000001 /* ProjectPathResolverTests.swift */; };
+		05F100202FEA800000000001 /* GitInspectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F1001F2FEA800000000001 /* GitInspectorTests.swift */; };
 		05E975A42FEA71AD0078F616 /* MemoriesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E975A12FEA71AD0078F616 /* MemoriesUITests.swift */; };
 		05E975A52FEA71AD0078F616 /* MemoriesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E975A22FEA71AD0078F616 /* MemoriesUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
@@ -64,12 +66,14 @@
 		05F100172FEA800000000001 /* MemoryViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryViewMode.swift; sourceTree = "<group>"; };
 		05F100192FEA800000000001 /* MarkdownTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextView.swift; sourceTree = "<group>"; };
 		05F1001D2FEA800000000001 /* ProjectPathResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectPathResolver.swift; sourceTree = "<group>"; };
+		05F100212FEA800000000001 /* GitInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitInspector.swift; sourceTree = "<group>"; };
 		05E9759E2FEA71A30078F616 /* MemoriesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesTests.swift; sourceTree = "<group>"; };
 		05F100012FEA800000000001 /* MemoryDiscoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryDiscoveryTests.swift; sourceTree = "<group>"; };
 		05F100072FEA800000000001 /* AppModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelTests.swift; sourceTree = "<group>"; };
 		05F1000D2FEA800000000001 /* MemoryLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryLoaderTests.swift; sourceTree = "<group>"; };
 		05F100132FEA800000000001 /* MarkdownRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownRendererTests.swift; sourceTree = "<group>"; };
 		05F1001B2FEA800000000001 /* ProjectPathResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectPathResolverTests.swift; sourceTree = "<group>"; };
+		05F1001F2FEA800000000001 /* GitInspectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitInspectorTests.swift; sourceTree = "<group>"; };
 		05E975A12FEA71AD0078F616 /* MemoriesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesUITests.swift; sourceTree = "<group>"; };
 		05E975A22FEA71AD0078F616 /* MemoriesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		05E975A62FEA73070078F616 /* CODE_OF_CONDUCT.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CODE_OF_CONDUCT.md; sourceTree = "<group>"; };
@@ -188,6 +192,7 @@
 				05F100172FEA800000000001 /* MemoryViewMode.swift */,
 				05F100192FEA800000000001 /* MarkdownTextView.swift */,
 				05F1001D2FEA800000000001 /* ProjectPathResolver.swift */,
+				05F100212FEA800000000001 /* GitInspector.swift */,
 			);
 			path = Memories;
 			sourceTree = "<group>";
@@ -201,6 +206,7 @@
 				05F1000D2FEA800000000001 /* MemoryLoaderTests.swift */,
 				05F100132FEA800000000001 /* MarkdownRendererTests.swift */,
 				05F1001B2FEA800000000001 /* ProjectPathResolverTests.swift */,
+				05F1001F2FEA800000000001 /* GitInspectorTests.swift */,
 			);
 			path = MemoriesTests;
 			sourceTree = "<group>";
@@ -488,6 +494,7 @@
 				05F100182FEA800000000001 /* MemoryViewMode.swift in Sources */,
 				05F1001A2FEA800000000001 /* MarkdownTextView.swift in Sources */,
 				05F1001E2FEA800000000001 /* ProjectPathResolver.swift in Sources */,
+				05F100222FEA800000000001 /* GitInspector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,6 +508,7 @@
 				05F1000E2FEA800000000001 /* MemoryLoaderTests.swift in Sources */,
 				05F100142FEA800000000001 /* MarkdownRendererTests.swift in Sources */,
 				05F1001C2FEA800000000001 /* ProjectPathResolverTests.swift in Sources */,
+				05F100202FEA800000000001 /* GitInspectorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

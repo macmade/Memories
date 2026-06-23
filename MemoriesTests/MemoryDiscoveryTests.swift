@@ -56,6 +56,19 @@ struct MemoryDiscoveryTests
     }
 
     @Test
+    func titleIsTheRepositoryNameWhenAvailableOtherwiseTheLeaf() throws
+    {
+        let folder = URL( fileURLWithPath: "/private/tmp/projects/-Users-macmade-iMazing-Mac-main", isDirectory: true )
+
+        let plain = Project( folderURL: folder, decodedPath: "/Users/macmade/iMazing-Mac/main" )
+        let repo  = Project( folderURL: folder, decodedPath: "/Users/macmade/iMazing-Mac/main", repositoryName: "iMazing-Mac", branch: "main" )
+
+        #expect( plain.title == "main" )
+        #expect( repo.title  == "iMazing-Mac" )
+        #expect( repo.branch == "main" )
+    }
+
+    @Test
     func resolvedDirectoryURLIsTheRealPathWhenItExists() throws
     {
         let directory = FileManager.default.temporaryDirectory.appending( path: "MemoriesTests-real-\( UUID().uuidString )", directoryHint: .isDirectory )

@@ -36,9 +36,12 @@ enum MemoryDiscovery
     /// Scans `projectsDirectory` and returns one ``Project`` per immediate
     /// subdirectory that contains a `memory/MEMORY.md` file.
     ///
-    /// The result is sorted by display name, case-insensitively. A missing or
+    /// The result is sorted by title, case-insensitively. A missing or
     /// unreadable directory yields an empty array rather than an error.
-    static func discoverProjects( in projectsDirectory: URL = MemoryDiscovery.defaultProjectsDirectory, fileManager: FileManager = .default, resolver: ProjectPathResolver = ProjectPathResolver() ) -> [ Project ]
+    ///
+    /// For projects whose real directory exists and is a git repository, the
+    /// `origin` repository name and current branch are attached.
+    static func discoverProjects( in projectsDirectory: URL = MemoryDiscovery.defaultProjectsDirectory, fileManager: FileManager = .default, resolver: ProjectPathResolver = ProjectPathResolver(), gitInspector: GitInspecting = GitInspector() ) -> [ Project ]
     {
         let entries = ( try? fileManager.contentsOfDirectory( at: projectsDirectory, includingPropertiesForKeys: [ .isDirectoryKey ], options: [ .skipsHiddenFiles ] ) ) ?? []
 
@@ -52,20 +55,22 @@ enum MemoryDiscovery
                 return nil
             }
 
-            let project = Project( folderURL: url, decodedPath: resolver.resolvedPath( forFolder: url ) )
+            let base = Project( folderURL: url, decodedPath: resolver.resolvedPath( forFolder: url ) )
 
-            guard fileManager.fileExists( atPath: project.memoryURL.path )
+            guard fileManager.fileExists( atPath: base.memoryURL.path )
             else
             {
                 return nil
             }
 
-            return project
+            let git = base.resolvedDirectoryURL.flatMap { gitInspector.info( forDirectory: $0 ) }
+
+            return Project( folderURL: url, decodedPath: base.decodedPath, repositoryName: git?.repositoryName, branch: git?.branch )
         }
 
         return projects.sorted
         {
-            $0.displayName.localizedCaseInsensitiveCompare( $1.displayName ) == .orderedAscending
+            $0.title.localizedCaseInsensitiveCompare( $1.title ) == .orderedAscending
         }
     }
 }
