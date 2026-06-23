@@ -1,0 +1,614 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		05E9759B2FEA719E0078F616 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E975982FEA719E0078F616 /* ContentView.swift */; };
+		05E9759C2FEA719E0078F616 /* MemoriesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E975992FEA719E0078F616 /* MemoriesApp.swift */; };
+		05E9759D2FEA719E0078F616 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05E975972FEA719E0078F616 /* Assets.xcassets */; };
+		05E975A02FEA71A30078F616 /* MemoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E9759E2FEA71A30078F616 /* MemoriesTests.swift */; };
+		05E975A42FEA71AD0078F616 /* MemoriesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E975A12FEA71AD0078F616 /* MemoriesUITests.swift */; };
+		05E975A52FEA71AD0078F616 /* MemoriesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E975A22FEA71AD0078F616 /* MemoriesUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		05E9757B2FEA71990078F616 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 05E975652FEA71980078F616 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 05E9756C2FEA71980078F616;
+			remoteInfo = Memories;
+		};
+		05E975852FEA71990078F616 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 05E975652FEA71980078F616 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 05E9756C2FEA71980078F616;
+			remoteInfo = Memories;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		05E9756D2FEA71980078F616 /* Memories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memories.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		05E9757A2FEA71990078F616 /* MemoriesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MemoriesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		05E975842FEA71990078F616 /* MemoriesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MemoriesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		05E975972FEA719E0078F616 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		05E975982FEA719E0078F616 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		05E975992FEA719E0078F616 /* MemoriesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesApp.swift; sourceTree = "<group>"; };
+		05E9759E2FEA71A30078F616 /* MemoriesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesTests.swift; sourceTree = "<group>"; };
+		05E975A12FEA71AD0078F616 /* MemoriesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesUITests.swift; sourceTree = "<group>"; };
+		05E975A22FEA71AD0078F616 /* MemoriesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		05E975A62FEA73070078F616 /* CODE_OF_CONDUCT.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CODE_OF_CONDUCT.md; sourceTree = "<group>"; };
+		05E975A72FEA73070078F616 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		05E975A82FEA73070078F616 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		05E975E22FEA738B0078F616 /* FUNDING.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = FUNDING.yml; sourceTree = "<group>"; };
+		05E975E42FEA738B0078F616 /* C++.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "C++.xcconfig"; sourceTree = "<group>"; };
+		05E975E52FEA738B0078F616 /* Modules.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Modules.xcconfig; sourceTree = "<group>"; };
+		05E975E62FEA738B0078F616 /* Objective-C.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Objective-C.xcconfig"; sourceTree = "<group>"; };
+		05E975E82FEA738B0078F616 /* All-Languages.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "All-Languages.xcconfig"; sourceTree = "<group>"; };
+		05E975E92FEA738B0078F616 /* C++.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "C++.xcconfig"; sourceTree = "<group>"; };
+		05E975EA2FEA738B0078F616 /* Objective-C.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Objective-C.xcconfig"; sourceTree = "<group>"; };
+		05E975EB2FEA738B0078F616 /* Objective-C-ARC.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Objective-C-ARC.xcconfig"; sourceTree = "<group>"; };
+		05E975ED2FEA738B0078F616 /* Address-Sanitizer.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Address-Sanitizer.xcconfig"; sourceTree = "<group>"; };
+		05E975EE2FEA738B0078F616 /* Code-Generation.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Code-Generation.xcconfig"; sourceTree = "<group>"; };
+		05E975EF2FEA738B0078F616 /* Language.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Language.xcconfig; sourceTree = "<group>"; };
+		05E975F02FEA738B0078F616 /* Preprocessing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Preprocessing.xcconfig; sourceTree = "<group>"; };
+		05E975F12FEA738B0078F616 /* Undefined-Behavior-Sanitizer.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Undefined-Behavior-Sanitizer.xcconfig"; sourceTree = "<group>"; };
+		05E975F22FEA738B0078F616 /* Warning-Policies.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Warning-Policies.xcconfig"; sourceTree = "<group>"; };
+		05E975F32FEA738B0078F616 /* Warnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Warnings.xcconfig; sourceTree = "<group>"; };
+		05E975F52FEA738B0078F616 /* Analysis-Policy.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Analysis-Policy.xcconfig"; sourceTree = "<group>"; };
+		05E975F62FEA738B0078F616 /* Apple-APIs.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Apple-APIs.xcconfig"; sourceTree = "<group>"; };
+		05E975F72FEA738B0078F616 /* Generic-Issues.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Generic-Issues.xcconfig"; sourceTree = "<group>"; };
+		05E975F82FEA738B0078F616 /* Objective-C.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Objective-C.xcconfig"; sourceTree = "<group>"; };
+		05E975F92FEA738B0078F616 /* Security.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Security.xcconfig; sourceTree = "<group>"; };
+		05E975FB2FEA738B0078F616 /* Issues.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Issues.xcconfig; sourceTree = "<group>"; };
+		05E975FD2FEA738B0078F616 /* Code-Generation.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Code-Generation.xcconfig"; sourceTree = "<group>"; };
+		05E975FE2FEA738B0078F616 /* General.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = General.xcconfig; sourceTree = "<group>"; };
+		05E975FF2FEA738B0078F616 /* Language.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Language.xcconfig; sourceTree = "<group>"; };
+		05E976002FEA738B0078F616 /* Warnings-Policies.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Warnings-Policies.xcconfig"; sourceTree = "<group>"; };
+		05E976022FEA738B0078F616 /* Apple-LLVM.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Apple-LLVM.xcconfig"; sourceTree = "<group>"; };
+		05E976032FEA738B0078F616 /* Architectures.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Architectures.xcconfig; sourceTree = "<group>"; };
+		05E976042FEA738B0078F616 /* Build-Options.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Build-Options.xcconfig"; sourceTree = "<group>"; };
+		05E976052FEA738B0078F616 /* Deployment.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Deployment.xcconfig; sourceTree = "<group>"; };
+		05E976062FEA738B0078F616 /* Search-Paths.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Search-Paths.xcconfig"; sourceTree = "<group>"; };
+		05E976072FEA738B0078F616 /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
+		05E976082FEA738B0078F616 /* Static-Analyzer.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Static-Analyzer.xcconfig"; sourceTree = "<group>"; };
+		05E976092FEA738B0078F616 /* Swift-Compiler.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Swift-Compiler.xcconfig"; sourceTree = "<group>"; };
+		05E9760B2FEA738B0078F616 /* ccache.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ccache.sh; sourceTree = "<group>"; };
+		05E9760C2FEA738B0078F616 /* ccache-config.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "ccache-config.sh"; sourceTree = "<group>"; };
+		05E9760E2FEA738B0078F616 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		05E9760F2FEA738B0078F616 /* CODE_OF_CONDUCT.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CODE_OF_CONDUCT.md; sourceTree = "<group>"; };
+		05E976102FEA738B0078F616 /* Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
+		05E976112FEA738B0078F616 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		05E976122FEA738B0078F616 /* Debug - ccache.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Debug - ccache.xcconfig"; sourceTree = "<group>"; };
+		05E976132FEA738B0078F616 /* Debug - Library.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Debug - Library.xcconfig"; sourceTree = "<group>"; };
+		05E976142FEA738B0078F616 /* Debug - zld.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Debug - zld.xcconfig"; sourceTree = "<group>"; };
+		05E976152FEA738B0078F616 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		05E976162FEA738B0078F616 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		05E976172FEA738B0078F616 /* Release - ccache.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Release - ccache.xcconfig"; sourceTree = "<group>"; };
+		05E976182FEA738B0078F616 /* Release - Library.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Release - Library.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		05E9756A2FEA71980078F616 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05E975772FEA71990078F616 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05E975812FEA71990078F616 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		05E975642FEA71980078F616 = {
+			isa = PBXGroup;
+			children = (
+				05E975A82FEA73070078F616 /* README.md */,
+				05E975A72FEA73070078F616 /* LICENSE */,
+				05E975A62FEA73070078F616 /* CODE_OF_CONDUCT.md */,
+				05E976192FEA738B0078F616 /* xcconfig */,
+				05E9759A2FEA719E0078F616 /* Memories */,
+				05E9759F2FEA71A30078F616 /* MemoriesTests */,
+				05E975A32FEA71AD0078F616 /* MemoriesUITests */,
+				05E9756E2FEA71980078F616 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		05E9756E2FEA71980078F616 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				05E9756D2FEA71980078F616 /* Memories.app */,
+				05E9757A2FEA71990078F616 /* MemoriesTests.xctest */,
+				05E975842FEA71990078F616 /* MemoriesUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		05E9759A2FEA719E0078F616 /* Memories */ = {
+			isa = PBXGroup;
+			children = (
+				05E975972FEA719E0078F616 /* Assets.xcassets */,
+				05E975982FEA719E0078F616 /* ContentView.swift */,
+				05E975992FEA719E0078F616 /* MemoriesApp.swift */,
+			);
+			path = Memories;
+			sourceTree = "<group>";
+		};
+		05E9759F2FEA71A30078F616 /* MemoriesTests */ = {
+			isa = PBXGroup;
+			children = (
+				05E9759E2FEA71A30078F616 /* MemoriesTests.swift */,
+			);
+			path = MemoriesTests;
+			sourceTree = "<group>";
+		};
+		05E975A32FEA71AD0078F616 /* MemoriesUITests */ = {
+			isa = PBXGroup;
+			children = (
+				05E975A12FEA71AD0078F616 /* MemoriesUITests.swift */,
+				05E975A22FEA71AD0078F616 /* MemoriesUITestsLaunchTests.swift */,
+			);
+			path = MemoriesUITests;
+			sourceTree = "<group>";
+		};
+		05E975E32FEA738B0078F616 /* .github */ = {
+			isa = PBXGroup;
+			children = (
+				05E975E22FEA738B0078F616 /* FUNDING.yml */,
+			);
+			path = .github;
+			sourceTree = "<group>";
+		};
+		05E975E72FEA738B0078F616 /* Language */ = {
+			isa = PBXGroup;
+			children = (
+				05E975E42FEA738B0078F616 /* C++.xcconfig */,
+				05E975E52FEA738B0078F616 /* Modules.xcconfig */,
+				05E975E62FEA738B0078F616 /* Objective-C.xcconfig */,
+			);
+			path = Language;
+			sourceTree = "<group>";
+		};
+		05E975EC2FEA738B0078F616 /* Warnings */ = {
+			isa = PBXGroup;
+			children = (
+				05E975E82FEA738B0078F616 /* All-Languages.xcconfig */,
+				05E975E92FEA738B0078F616 /* C++.xcconfig */,
+				05E975EA2FEA738B0078F616 /* Objective-C.xcconfig */,
+				05E975EB2FEA738B0078F616 /* Objective-C-ARC.xcconfig */,
+			);
+			path = Warnings;
+			sourceTree = "<group>";
+		};
+		05E975F42FEA738B0078F616 /* Apple-LLVM */ = {
+			isa = PBXGroup;
+			children = (
+				05E975E72FEA738B0078F616 /* Language */,
+				05E975EC2FEA738B0078F616 /* Warnings */,
+				05E975ED2FEA738B0078F616 /* Address-Sanitizer.xcconfig */,
+				05E975EE2FEA738B0078F616 /* Code-Generation.xcconfig */,
+				05E975EF2FEA738B0078F616 /* Language.xcconfig */,
+				05E975F02FEA738B0078F616 /* Preprocessing.xcconfig */,
+				05E975F12FEA738B0078F616 /* Undefined-Behavior-Sanitizer.xcconfig */,
+				05E975F22FEA738B0078F616 /* Warning-Policies.xcconfig */,
+				05E975F32FEA738B0078F616 /* Warnings.xcconfig */,
+			);
+			path = "Apple-LLVM";
+			sourceTree = "<group>";
+		};
+		05E975FA2FEA738B0078F616 /* Issues */ = {
+			isa = PBXGroup;
+			children = (
+				05E975F52FEA738B0078F616 /* Analysis-Policy.xcconfig */,
+				05E975F62FEA738B0078F616 /* Apple-APIs.xcconfig */,
+				05E975F72FEA738B0078F616 /* Generic-Issues.xcconfig */,
+				05E975F82FEA738B0078F616 /* Objective-C.xcconfig */,
+				05E975F92FEA738B0078F616 /* Security.xcconfig */,
+			);
+			path = Issues;
+			sourceTree = "<group>";
+		};
+		05E975FC2FEA738B0078F616 /* Static-Analyzer */ = {
+			isa = PBXGroup;
+			children = (
+				05E975FA2FEA738B0078F616 /* Issues */,
+				05E975FB2FEA738B0078F616 /* Issues.xcconfig */,
+			);
+			path = "Static-Analyzer";
+			sourceTree = "<group>";
+		};
+		05E976012FEA738B0078F616 /* Swift-Compiler */ = {
+			isa = PBXGroup;
+			children = (
+				05E975FD2FEA738B0078F616 /* Code-Generation.xcconfig */,
+				05E975FE2FEA738B0078F616 /* General.xcconfig */,
+				05E975FF2FEA738B0078F616 /* Language.xcconfig */,
+				05E976002FEA738B0078F616 /* Warnings-Policies.xcconfig */,
+			);
+			path = "Swift-Compiler";
+			sourceTree = "<group>";
+		};
+		05E9760A2FEA738B0078F616 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				05E975F42FEA738B0078F616 /* Apple-LLVM */,
+				05E975FC2FEA738B0078F616 /* Static-Analyzer */,
+				05E976012FEA738B0078F616 /* Swift-Compiler */,
+				05E976022FEA738B0078F616 /* Apple-LLVM.xcconfig */,
+				05E976032FEA738B0078F616 /* Architectures.xcconfig */,
+				05E976042FEA738B0078F616 /* Build-Options.xcconfig */,
+				05E976052FEA738B0078F616 /* Deployment.xcconfig */,
+				05E976062FEA738B0078F616 /* Search-Paths.xcconfig */,
+				05E976072FEA738B0078F616 /* Signing.xcconfig */,
+				05E976082FEA738B0078F616 /* Static-Analyzer.xcconfig */,
+				05E976092FEA738B0078F616 /* Swift-Compiler.xcconfig */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		05E9760D2FEA738B0078F616 /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				05E9760B2FEA738B0078F616 /* ccache.sh */,
+				05E9760C2FEA738B0078F616 /* ccache-config.sh */,
+			);
+			path = Scripts;
+			sourceTree = "<group>";
+		};
+		05E976192FEA738B0078F616 /* xcconfig */ = {
+			isa = PBXGroup;
+			children = (
+				05E975E32FEA738B0078F616 /* .github */,
+				05E9760A2FEA738B0078F616 /* Common */,
+				05E9760D2FEA738B0078F616 /* Scripts */,
+				05E9760E2FEA738B0078F616 /* .gitignore */,
+				05E9760F2FEA738B0078F616 /* CODE_OF_CONDUCT.md */,
+				05E976102FEA738B0078F616 /* Common.xcconfig */,
+				05E976112FEA738B0078F616 /* Debug.xcconfig */,
+				05E976122FEA738B0078F616 /* Debug - ccache.xcconfig */,
+				05E976132FEA738B0078F616 /* Debug - Library.xcconfig */,
+				05E976142FEA738B0078F616 /* Debug - zld.xcconfig */,
+				05E976152FEA738B0078F616 /* README.md */,
+				05E976162FEA738B0078F616 /* Release.xcconfig */,
+				05E976172FEA738B0078F616 /* Release - ccache.xcconfig */,
+				05E976182FEA738B0078F616 /* Release - Library.xcconfig */,
+			);
+			name = xcconfig;
+			path = Submodules/xcconfig;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		05E9756C2FEA71980078F616 /* Memories */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 05E9758E2FEA71990078F616 /* Build configuration list for PBXNativeTarget "Memories" */;
+			buildPhases = (
+				05E975692FEA71980078F616 /* Sources */,
+				05E9756A2FEA71980078F616 /* Frameworks */,
+				05E9756B2FEA71980078F616 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Memories;
+			packageProductDependencies = (
+			);
+			productName = Memories;
+			productReference = 05E9756D2FEA71980078F616 /* Memories.app */;
+			productType = "com.apple.product-type.application";
+		};
+		05E975792FEA71990078F616 /* MemoriesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 05E975912FEA71990078F616 /* Build configuration list for PBXNativeTarget "MemoriesTests" */;
+			buildPhases = (
+				05E975762FEA71990078F616 /* Sources */,
+				05E975772FEA71990078F616 /* Frameworks */,
+				05E975782FEA71990078F616 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				05E9757C2FEA71990078F616 /* PBXTargetDependency */,
+			);
+			name = MemoriesTests;
+			packageProductDependencies = (
+			);
+			productName = MemoriesTests;
+			productReference = 05E9757A2FEA71990078F616 /* MemoriesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		05E975832FEA71990078F616 /* MemoriesUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 05E975942FEA71990078F616 /* Build configuration list for PBXNativeTarget "MemoriesUITests" */;
+			buildPhases = (
+				05E975802FEA71990078F616 /* Sources */,
+				05E975812FEA71990078F616 /* Frameworks */,
+				05E975822FEA71990078F616 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				05E975862FEA71990078F616 /* PBXTargetDependency */,
+			);
+			name = MemoriesUITests;
+			packageProductDependencies = (
+			);
+			productName = MemoriesUITests;
+			productReference = 05E975842FEA71990078F616 /* MemoriesUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		05E975652FEA71980078F616 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2630;
+				LastUpgradeCheck = 2630;
+				TargetAttributes = {
+					05E9756C2FEA71980078F616 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+					05E975792FEA71990078F616 = {
+						CreatedOnToolsVersion = 26.3;
+						TestTargetID = 05E9756C2FEA71980078F616;
+					};
+					05E975832FEA71990078F616 = {
+						CreatedOnToolsVersion = 26.3;
+						TestTargetID = 05E9756C2FEA71980078F616;
+					};
+				};
+			};
+			buildConfigurationList = 05E975682FEA71980078F616 /* Build configuration list for PBXProject "Memories" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 05E975642FEA71980078F616;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 05E9756E2FEA71980078F616 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				05E9756C2FEA71980078F616 /* Memories */,
+				05E975792FEA71990078F616 /* MemoriesTests */,
+				05E975832FEA71990078F616 /* MemoriesUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		05E9756B2FEA71980078F616 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05E9759D2FEA719E0078F616 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05E975782FEA71990078F616 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05E975822FEA71990078F616 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		05E975692FEA71980078F616 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05E9759B2FEA719E0078F616 /* ContentView.swift in Sources */,
+				05E9759C2FEA719E0078F616 /* MemoriesApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05E975762FEA71990078F616 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05E975A02FEA71A30078F616 /* MemoriesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05E975802FEA71990078F616 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05E975A42FEA71AD0078F616 /* MemoriesUITests.swift in Sources */,
+				05E975A52FEA71AD0078F616 /* MemoriesUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		05E9757C2FEA71990078F616 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 05E9756C2FEA71980078F616 /* Memories */;
+			targetProxy = 05E9757B2FEA71990078F616 /* PBXContainerItemProxy */;
+		};
+		05E975862FEA71990078F616 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 05E9756C2FEA71980078F616 /* Memories */;
+			targetProxy = 05E975852FEA71990078F616 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		05E9758C2FEA71990078F616 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 05E976112FEA738B0078F616 /* Debug.xcconfig */;
+			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		05E9758D2FEA71990078F616 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 05E976162FEA738B0078F616 /* Release.xcconfig */;
+			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		05E9758F2FEA71990078F616 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 XS-Labs. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.xs-labs.Memories";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		05E975902FEA71990078F616 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 XS-Labs. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.xs-labs.Memories";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		05E975922FEA71990078F616 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.xs-labs.MemoriesTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		05E975932FEA71990078F616 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.xs-labs.MemoriesTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		05E975952FEA71990078F616 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.xs-labs.MemoriesUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		05E975962FEA71990078F616 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.xs-labs.MemoriesUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		05E975682FEA71980078F616 /* Build configuration list for PBXProject "Memories" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05E9758C2FEA71990078F616 /* Debug */,
+				05E9758D2FEA71990078F616 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		05E9758E2FEA71990078F616 /* Build configuration list for PBXNativeTarget "Memories" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05E9758F2FEA71990078F616 /* Debug */,
+				05E975902FEA71990078F616 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		05E975912FEA71990078F616 /* Build configuration list for PBXNativeTarget "MemoriesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05E975922FEA71990078F616 /* Debug */,
+				05E975932FEA71990078F616 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		05E975942FEA71990078F616 /* Build configuration list for PBXNativeTarget "MemoriesUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05E975952FEA71990078F616 /* Debug */,
+				05E975962FEA71990078F616 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 05E975652FEA71980078F616 /* Project object */;
+}
