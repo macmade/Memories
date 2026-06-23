@@ -25,28 +25,6 @@
 import AppKit
 import SwiftUI
 
-/// Decides what a clicked Markdown link should do.
-///
-/// The renderer guarantees that a `.link` carrying a `file` URL is always a
-/// known memory file (relative links that do not resolve to one are dropped),
-/// so the only distinction left at click time is file versus everything else.
-enum MarkdownLinkRouter
-{
-    enum Route: Equatable
-    {
-        /// Navigate to the memory file with this identity (its path).
-        case openMemoryFile( MemoryFile.ID )
-
-        /// Let the system open the link (a web or other external destination).
-        case external
-    }
-
-    static func route( _ url: URL ) -> Route
-    {
-        url.isFileURL ? .openMemoryFile( url.path ) : .external
-    }
-}
-
 /// A read-only, selectable `NSTextView` for displaying a rendered attributed
 /// string with native scrolling.
 struct MarkdownTextView: NSViewRepresentable

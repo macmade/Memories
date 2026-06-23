@@ -36,22 +36,3 @@ enum MemoryLoadState: Equatable, Sendable
     /// The file could not be read, carrying a human-readable message.
     case failed( String )
 }
-
-/// Reads the raw contents of a memory index file.
-enum MemoryLoader
-{
-    /// Reads `url` as UTF-8 text, returning ``MemoryLoadState/loaded(_:)`` on
-    /// success or ``MemoryLoadState/failed(_:)`` (with a localized message) on
-    /// any error, including a missing file.
-    static func load( from url: URL ) -> MemoryLoadState
-    {
-        do
-        {
-            return .loaded( try String( contentsOf: url, encoding: .utf8 ) )
-        }
-        catch
-        {
-            return .failed( error.localizedDescription )
-        }
-    }
-}

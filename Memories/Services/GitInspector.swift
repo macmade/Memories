@@ -24,23 +24,6 @@
 
 import Foundation
 
-/// Git metadata about a project directory.
-struct GitInfo: Equatable, Sendable
-{
-    /// The repository name derived from the `origin` remote, if any.
-    let repositoryName: String?
-
-    /// The currently checked-out branch, if on one (`nil` when detached).
-    let branch: String?
-}
-
-/// Inspects a directory for git metadata.
-protocol GitInspecting: Sendable
-{
-    /// Returns git metadata for `url`, or `nil` if it is not a git working tree.
-    func info( forDirectory url: URL ) -> GitInfo?
-}
-
 /// A ``GitInspecting`` backed by the `git` command-line tool.
 ///
 /// Using `git` rather than parsing `.git` by hand handles worktrees, shared
@@ -117,20 +100,5 @@ struct GitInspector: GitInspecting
         }
 
         return String( data: data, encoding: .utf8 )
-    }
-}
-
-private extension String
-{
-    /// The string trimmed of surrounding whitespace and newlines.
-    var trimmed: String
-    {
-        self.trimmingCharacters( in: .whitespacesAndNewlines )
-    }
-
-    /// The string itself, or `nil` if it is empty.
-    var nonEmpty: String?
-    {
-        self.isEmpty ? nil : self
     }
 }
