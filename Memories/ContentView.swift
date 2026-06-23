@@ -115,7 +115,7 @@ struct ContentView: View
     {
         view
             .alert(
-                "Move \u{201C}\( self.projectPendingTrash?.displayName ?? "" )\u{201D} to the Trash?",
+                "Move the Claude project folder for \u{201C}\( self.projectPendingTrash?.title ?? "" )\u{201D} to the Trash?",
                 isPresented: Binding( get: { self.projectPendingTrash != nil }, set: { if $0 == false { self.projectPendingTrash = nil } } ),
                 presenting:  self.projectPendingTrash
             )
@@ -133,7 +133,7 @@ struct ContentView: View
             {
                 _ in
 
-                Text( "The entire project folder will be moved to the Trash." )
+                Text( "This moves the project's folder under ~/.claude/projects, with its stored memory, to the Trash. The real project on disk is not affected." )
             }
             .confirmationDialog(
                 "Move memory to the Trash?",
@@ -254,24 +254,38 @@ struct ContentView: View
     {
         if let directory = project.resolvedDirectoryURL
         {
-            Button( "Open Project Directory" )
+            Button
             {
                 NSWorkspace.shared.open( directory )
             }
-            .help( "Open the project's directory in Finder" )
+            label:
+            {
+                Label( "Open Project Folder", systemImage: "folder" )
+            }
+            .help( "Open the project's real folder on disk in Finder" )
         }
 
-        Button( "Reveal in Finder" )
+        Button
         {
             NSWorkspace.shared.activateFileViewerSelecting( [ project.folderURL ] )
         }
-        .help( "Reveal the Claude project folder in Finder" )
+        label:
+        {
+            Label( "Reveal Claude Project Folder in Finder", systemImage: "magnifyingglass" )
+        }
+        .help( "Reveal the project's Claude folder, under ~/.claude/projects, in Finder" )
 
-        Button( "Move to Trash", role: .destructive )
+        Divider()
+
+        Button( role: .destructive )
         {
             self.projectPendingTrash = project
         }
-        .help( "Move the entire project folder to the Trash" )
+        label:
+        {
+            Label( "Move Claude Project Folder to Trash", systemImage: "trash" )
+        }
+        .help( "Move the project's Claude folder, under ~/.claude/projects, to the Trash. The real project on disk is not affected." )
     }
 
     @ViewBuilder
