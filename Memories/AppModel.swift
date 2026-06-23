@@ -39,6 +39,12 @@ final class AppModel
     /// How the detail view presents the selected memory.
     var viewMode = MemoryViewMode.preview
 
+    /// The Markdown files of the selected project's `memory/` folder.
+    private( set ) var memoryFiles: [ MemoryFile ] = []
+
+    /// The identity of the currently selected memory file, if any.
+    var selectedFile: MemoryFile.ID?
+
     /// The directory scanned for projects.
     let projectsDirectory: URL
 
@@ -50,6 +56,12 @@ final class AppModel
     var selectedProject: Project?
     {
         self.projects.first { $0.id == self.selection }
+    }
+
+    /// The currently selected memory file, resolved from ``selectedFile``.
+    var selectedMemoryFile: MemoryFile?
+    {
+        self.memoryFiles.first { $0.id == self.selectedFile }
     }
 
     init( projectsDirectory: URL = MemoryDiscovery.defaultProjectsDirectory, trashItem: @escaping ( URL ) throws -> Void = { try FileManager.default.trashItem( at: $0, resultingItemURL: nil ) } )
@@ -110,5 +122,31 @@ final class AppModel
         {
             self.selection = nil
         }
+    }
+
+    /// Lists the memory files of the selected project off the main actor and
+    /// publishes them, defaulting the selection to the index (`MEMORY.md`) when
+    /// present, otherwise the first file. Clears the files when no project is
+    /// selected.
+    func loadMemoryFiles() async
+    {
+        guard let project = self.selectedProject
+        else
+        {
+            self.memoryFiles  = []
+            self.selectedFile = nil
+
+            return
+        }
+
+        let directory = project.memoryDirectoryURL
+        let files     = await Task.detached
+        {
+            MemoryFileLister.files( in: directory )
+        }
+        .value
+
+        self.memoryFiles  = files
+        self.selectedFile = ( files.first { $0.isIndex } ?? files.first )?.id
     }
 }

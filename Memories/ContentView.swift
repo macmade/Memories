@@ -36,9 +36,56 @@ struct ContentView: View
 
     var body: some View
     {
+        self.content
+            .frame( minWidth: 700, minHeight: 450 )
+    }
+
+    private var content: some View
+    {
         @Bindable var model = self.model
 
-        NavigationSplitView
+        let base = self.splitView
+            .task
+            {
+                await self.model.loadProjects()
+            }
+            .onChange( of: self.scenePhase )
+            {
+                _, phase in
+
+                guard phase == .active
+                else
+                {
+                    return
+                }
+
+                Task
+                {
+                    await self.model.loadProjects()
+                }
+            }
+            .onChange( of: self.model.selection )
+            {
+                _, _ in
+
+                Task
+                {
+                    await self.model.loadMemoryFiles()
+                }
+            }
+            .toolbar
+            {
+                self.toolbarContent( viewMode: $model.viewMode )
+            }
+
+        return self.withAlerts( base )
+    }
+
+    private var splitView: some View
+    {
+        @Bindable var model = self.model
+
+        return NavigationSplitView
         {
             List( selection: $model.selection )
             {
@@ -60,128 +107,125 @@ struct ContentView: View
         }
         detail:
         {
-            if let project = self.model.selectedProject
-            {
-                MemoryView( project: project, viewMode: self.model.viewMode )
-            }
-            else
-            {
-                ContentUnavailableView( "No Selection", systemImage: "sidebar.left", description: Text( "Select a project to preview its memory." ) )
-            }
+            self.detailView
         }
-        .task
-        {
-            await self.model.loadProjects()
-        }
-        .onChange( of: self.scenePhase )
-        {
-            _, phase in
+    }
 
-            guard phase == .active
-            else
+    private func withAlerts( _ view: some View ) -> some View
+    {
+        view
+            .alert(
+                "Move \u{201C}\( self.projectPendingTrash?.displayName ?? "" )\u{201D} to the Trash?",
+                isPresented: Binding( get: { self.projectPendingTrash != nil }, set: { if $0 == false { self.projectPendingTrash = nil } } ),
+                presenting:  self.projectPendingTrash
+            )
             {
-                return
-            }
+                project in
 
-            Task
-            {
-                await self.model.loadProjects()
-            }
-        }
-        .toolbar
-        {
-            if let project = self.model.selectedProject
-            {
-                ToolbarItemGroup( placement: .primaryAction )
+                Button( "Move to Trash", role: .destructive )
                 {
-                    self.openWithMenu( for: project )
-                        .help( "Open the memory file with another application" )
-
-                    Button
-                    {
-                        self.memoryPendingTrash = project
-                    }
-                    label:
-                    {
-                        Label( "Move Memory to Trash", systemImage: "trash" )
-                    }
-                    .help( "Move this project's memory file to the Trash" )
-
-                    Picker( "View Mode", selection: $model.viewMode )
-                    {
-                        ForEach( MemoryViewMode.allCases )
-                        {
-                            mode in
-
-                            Label( mode.title, systemImage: mode.systemImage )
-                                .help( mode == .preview ? "Show the rendered Markdown preview" : "Show the raw Markdown source" )
-                                .tag( mode )
-                        }
-                    }
-                    .pickerStyle( .segmented )
-                    .help( "Switch between the rendered preview and the Markdown source" )
+                    self.trash( project )
                 }
-            }
-        }
-        .alert(
-            "Move \u{201C}\( self.projectPendingTrash?.displayName ?? "" )\u{201D} to the Trash?",
-            isPresented: Binding( get: { self.projectPendingTrash != nil }, set: { if $0 == false { self.projectPendingTrash = nil } } ),
-            presenting:  self.projectPendingTrash
-        )
-        {
-            project in
 
-            Button( "Move to Trash", role: .destructive )
+                Button( "Cancel", role: .cancel ) {}
+            }
+            message:
             {
-                self.trash( project )
+                _ in
+
+                Text( "The entire project folder will be moved to the Trash." )
             }
-
-            Button( "Cancel", role: .cancel ) {}
-        }
-        message:
-        {
-            _ in
-
-            Text( "The entire project folder will be moved to the Trash." )
-        }
-        .alert(
-            "Move the memory of \u{201C}\( self.memoryPendingTrash?.displayName ?? "" )\u{201D} to the Trash?",
-            isPresented: Binding( get: { self.memoryPendingTrash != nil }, set: { if $0 == false { self.memoryPendingTrash = nil } } ),
-            presenting:  self.memoryPendingTrash
-        )
-        {
-            project in
-
-            Button( "Move to Trash", role: .destructive )
+            .alert(
+                "Move the memory of \u{201C}\( self.memoryPendingTrash?.displayName ?? "" )\u{201D} to the Trash?",
+                isPresented: Binding( get: { self.memoryPendingTrash != nil }, set: { if $0 == false { self.memoryPendingTrash = nil } } ),
+                presenting:  self.memoryPendingTrash
+            )
             {
-                self.trashMemory( project )
+                project in
+
+                Button( "Move to Trash", role: .destructive )
+                {
+                    self.trashMemory( project )
+                }
+
+                Button( "Cancel", role: .cancel ) {}
             }
+            message:
+            {
+                _ in
 
-            Button( "Cancel", role: .cancel ) {}
-        }
-        message:
+                Text( "Only the MEMORY.md file will be moved to the Trash; the project folder is left intact." )
+            }
+            .alert(
+                "Operation Failed",
+                isPresented: Binding( get: { self.errorMessage != nil }, set: { if $0 == false { self.errorMessage = nil } } ),
+                presenting:  self.errorMessage
+            )
+            {
+                _ in
+
+                Button( "OK", role: .cancel ) {}
+            }
+            message:
+            {
+                message in
+
+                Text( message )
+            }
+    }
+
+    @ToolbarContentBuilder
+    private func toolbarContent( viewMode: Binding<MemoryViewMode> ) -> some ToolbarContent
+    {
+        if let project = self.model.selectedProject
         {
-            _ in
+            ToolbarItemGroup( placement: .primaryAction )
+            {
+                self.openWithMenu( for: project )
+                    .help( "Open the memory file with another application" )
 
-            Text( "Only the MEMORY.md file will be moved to the Trash; the project folder is left intact." )
+                Button
+                {
+                    self.memoryPendingTrash = project
+                }
+                label:
+                {
+                    Label( "Move Memory to Trash", systemImage: "trash" )
+                }
+                .help( "Move this project's memory file to the Trash" )
+
+                Picker( "View Mode", selection: viewMode )
+                {
+                    ForEach( MemoryViewMode.allCases )
+                    {
+                        mode in
+
+                        Label( mode.title, systemImage: mode.systemImage )
+                            .help( mode == .preview ? "Show the rendered Markdown preview" : "Show the raw Markdown source" )
+                            .tag( mode )
+                    }
+                }
+                .pickerStyle( .segmented )
+                .help( "Switch between the rendered preview and the Markdown source" )
+            }
         }
-        .alert(
-            "Operation Failed",
-            isPresented: Binding( get: { self.errorMessage != nil }, set: { if $0 == false { self.errorMessage = nil } } ),
-            presenting:  self.errorMessage
-        )
+    }
+
+    @ViewBuilder
+    private var detailView: some View
+    {
+        if let project = self.model.selectedProject, let file = self.model.selectedMemoryFile
         {
-            _ in
-
-            Button( "OK", role: .cancel ) {}
+            MemoryView( project: project, file: file, viewMode: self.model.viewMode )
         }
-        message:
+        else if self.model.selectedProject != nil
         {
-            message in
-
-            Text( message )
+            ProgressView()
         }
-        .frame( minWidth: 700, minHeight: 450 )
+        else
+        {
+            ContentUnavailableView( "No Selection", systemImage: "sidebar.left", description: Text( "Select a project to preview its memory." ) )
+        }
     }
 
     @ViewBuilder

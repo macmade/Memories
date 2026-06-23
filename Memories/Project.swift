@@ -43,6 +43,9 @@ struct Project: Identifiable, Hashable, Sendable
     /// The project directory under `~/.claude/projects/`.
     let folderURL: URL
 
+    /// The `memory/` folder inside the project directory.
+    let memoryDirectoryURL: URL
+
     /// The `memory/MEMORY.md` index file inside the project directory.
     let memoryURL: URL
 
@@ -96,14 +99,15 @@ struct Project: Identifiable, Hashable, Sendable
     /// back to naive `-` → `/` decoding of the directory name.
     init( folderURL: URL, decodedPath: String? = nil, repositoryName: String? = nil, branch: String? = nil, isGitRepository: Bool = false )
     {
-        self.folderURL       = folderURL
-        self.encodedName     = folderURL.lastPathComponent
-        self.decodedPath     = decodedPath ?? Project.decodePath( self.encodedName )
-        self.displayName     = URL( fileURLWithPath: self.decodedPath ).lastPathComponent
-        self.memoryURL       = folderURL.appending( path: "memory", directoryHint: .isDirectory ).appending( path: "MEMORY.md" )
-        self.repositoryName  = repositoryName
-        self.branch          = branch
-        self.isGitRepository = isGitRepository
+        self.folderURL          = folderURL
+        self.encodedName        = folderURL.lastPathComponent
+        self.decodedPath        = decodedPath ?? Project.decodePath( self.encodedName )
+        self.displayName        = URL( fileURLWithPath: self.decodedPath ).lastPathComponent
+        self.memoryDirectoryURL = folderURL.appending( path: "memory", directoryHint: .isDirectory )
+        self.memoryURL          = self.memoryDirectoryURL.appending( path: "MEMORY.md" )
+        self.repositoryName     = repositoryName
+        self.branch             = branch
+        self.isGitRepository    = isGitRepository
     }
 
     /// Decodes an encoded project directory name back into a filesystem path.

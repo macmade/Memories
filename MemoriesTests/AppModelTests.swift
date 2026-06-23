@@ -273,6 +273,63 @@ struct AppModelTests
 
         #expect( model.selection == "-Users-macmade-Alpha" )
     }
+
+    @Test
+    func loadingMemoryFilesDefaultsToTheIndex() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+        try root.writeMemoryFile( "note.md", inProject: "-Users-macmade-Alpha" )
+
+        let model = AppModel( projectsDirectory: root.url )
+
+        await model.loadProjects()
+
+        model.selection = "-Users-macmade-Alpha"
+
+        await model.loadMemoryFiles()
+
+        #expect( model.memoryFiles.count == 2 )
+        #expect( model.selectedMemoryFile?.name == "MEMORY.md" )
+        #expect( model.selectedMemoryFile?.isIndex == true )
+    }
+
+    @Test
+    func loadingMemoryFilesDefaultsToTheFirstFileWhenThereIsNoIndex() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.writeMemoryFile( "zeta.md", inProject: "-Users-macmade-Beta" )
+        try root.writeMemoryFile( "alpha.md", inProject: "-Users-macmade-Beta" )
+
+        let model = AppModel( projectsDirectory: root.url )
+
+        await model.loadProjects()
+
+        model.selection = "-Users-macmade-Beta"
+
+        await model.loadMemoryFiles()
+
+        #expect( model.memoryFiles.count == 2 )
+        #expect( model.selectedMemoryFile?.name == "alpha.md" )
+    }
+
+    @Test
+    func loadingMemoryFilesWithNoSelectionClearsThem() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+
+        let model = AppModel( projectsDirectory: root.url )
+
+        await model.loadProjects()
+        await model.loadMemoryFiles()
+
+        #expect( model.memoryFiles.isEmpty )
+        #expect( model.selectedFile == nil )
+    }
 }
 
 /// A self-cleaning temporary directory used to build project-tree fixtures.
@@ -303,5 +360,13 @@ private final class TemporaryProjectTree
         {
             try "# Memory\n".data( using: .utf8 )?.write( to: memory.appending( path: "MEMORY.md" ) )
         }
+    }
+
+    func writeMemoryFile( _ name: String, inProject encodedName: String ) throws
+    {
+        let memory = self.url.appending( path: encodedName, directoryHint: .isDirectory ).appending( path: "memory", directoryHint: .isDirectory )
+
+        try FileManager.default.createDirectory( at: memory, withIntermediateDirectories: true )
+        try "content".write( to: memory.appending( path: name ), atomically: true, encoding: .utf8 )
     }
 }

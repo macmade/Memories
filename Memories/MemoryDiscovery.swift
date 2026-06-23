@@ -57,7 +57,7 @@ enum MemoryDiscovery
 
             let base = Project( folderURL: url, decodedPath: resolver.resolvedPath( forFolder: url ) )
 
-            guard fileManager.fileExists( atPath: base.memoryURL.path )
+            guard MemoryFileLister.files( in: base.memoryDirectoryURL, fileManager: fileManager ).isEmpty == false
             else
             {
                 return nil

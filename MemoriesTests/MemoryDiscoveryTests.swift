@@ -144,6 +144,20 @@ struct MemoryDiscoveryTests
     }
 
     @Test
+    func discoveryAcceptsAProjectWithAnyMarkdownFileEvenWithoutAnIndex() throws
+    {
+        let root   = try TemporaryTree()
+        let memory = root.url.appending( path: "-Users-macmade-NoIndex", directoryHint: .isDirectory ).appending( path: "memory", directoryHint: .isDirectory )
+
+        try FileManager.default.createDirectory( at: memory, withIntermediateDirectories: true )
+        try "note".write( to: memory.appending( path: "note.md" ), atomically: true, encoding: .utf8 )
+
+        let projects = MemoryDiscovery.discoverProjects( in: root.url )
+
+        #expect( projects.contains { $0.encodedName == "-Users-macmade-NoIndex" } )
+    }
+
+    @Test
     func discoveryIgnoresLooseFilesAndEmptyMemoryFolders() throws
     {
         let root = try TemporaryTree()

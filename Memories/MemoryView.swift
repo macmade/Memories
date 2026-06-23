@@ -28,6 +28,7 @@ import SwiftUI
 struct MemoryView: View
 {
     let project:  Project
+    let file:     MemoryFile
     let viewMode: MemoryViewMode
 
     @State private var state = MemoryLoadState.loading
@@ -53,7 +54,7 @@ struct MemoryView: View
         }
         .navigationTitle( self.project.title )
         .navigationSubtitle( self.project.decodedPath )
-        .task( id: self.project.id )
+        .task( id: self.file.id )
         {
             await self.load()
         }
@@ -85,7 +86,7 @@ struct MemoryView: View
     {
         self.state = .loading
 
-        let url   = self.project.memoryURL
+        let url   = self.file.url
         let state = await Task.detached
         {
             MemoryLoader.load( from: url )
