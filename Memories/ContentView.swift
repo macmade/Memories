@@ -1,7 +1,7 @@
 /*******************************************************************************
  * The MIT License (MIT)
  *
- * Copyright (c) 2026, Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2026, DigiDNA
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the Software), to deal
@@ -37,7 +37,7 @@ struct ContentView: View
     var body: some View
     {
         self.content
-            .frame( minWidth: 700, minHeight: 450 )
+            .frame( minWidth: 800, minHeight: 600 )
     }
 
     private var content: some View
@@ -104,6 +104,7 @@ struct ContentView: View
                 }
             }
             .navigationTitle( "Memories" )
+            .navigationSplitViewColumnWidth( min: 250, ideal: 250 )
         }
         detail:
         {
@@ -180,7 +181,7 @@ struct ContentView: View
     }
 
     @ToolbarContentBuilder
-    private func toolbarContent( viewMode: Binding<MemoryViewMode> ) -> some ToolbarContent
+    private func toolbarContent( viewMode: Binding< MemoryViewMode > ) -> some ToolbarContent
     {
         if let project = self.model.selectedProject
         {
@@ -219,8 +220,7 @@ struct ContentView: View
         }
     }
 
-    @ViewBuilder
-    private var detailView: some View
+    @ViewBuilder     private var detailView: some View
     {
         @Bindable var model = self.model
 
@@ -377,7 +377,7 @@ struct ContentView: View
     /// by display name.
     private func applications( toOpen url: URL ) -> [ URL ]
     {
-        var seen = Set<URL>()
+        var seen = Set< URL >()
 
         return NSWorkspace.shared.urlsForApplications( toOpen: url )
             .filter { seen.insert( $0 ).inserted }
