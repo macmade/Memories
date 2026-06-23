@@ -73,6 +73,29 @@ struct AppModelTests
 
         #expect( model.selection == "-Users-macmade-Alpha" )
     }
+
+    @Test
+    func selectedProjectResolvesFromSelection() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+        try root.makeProject( encodedName: "-Users-macmade-Beta", withMemory: true )
+
+        let model = AppModel( projectsDirectory: root.url )
+
+        await model.loadProjects()
+
+        #expect( model.selectedProject == nil )
+
+        model.selection = "-Users-macmade-Beta"
+
+        #expect( model.selectedProject?.displayName == "Beta" )
+
+        model.selection = "-does-not-exist"
+
+        #expect( model.selectedProject == nil )
+    }
 }
 
 /// A self-cleaning temporary directory used to build project-tree fixtures.

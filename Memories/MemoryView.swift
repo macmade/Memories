@@ -24,53 +24,57 @@
 
 import SwiftUI
 
-struct ContentView: View
+/// The detail pane previewing a project's `MEMORY.md` index.
+struct MemoryView: View
 {
-    @State private var model = AppModel()
+    let project: Project
+
+    @State private var state = MemoryLoadState.loading
 
     var body: some View
     {
-        @Bindable var model = self.model
-
-        NavigationSplitView
+        Group
         {
-            List( selection: $model.selection )
+            switch self.state
             {
-                ForEach( self.model.projects )
-                {
-                    project in
+                case .loading:
 
-                    ProjectRow( project: project ).tag( project.id )
-                }
-            }
-            .overlay
-            {
-                if self.model.projects.isEmpty
-                {
-                    ContentUnavailableView( "No Projects", systemImage: "tray", description: Text( "No Claude projects with a memory index were found." ) )
-                }
-            }
-            .navigationTitle( "Memories" )
-        }
-        detail:
-        {
-            if let project = self.model.selectedProject
-            {
-                MemoryView( project: project )
-            }
-            else
-            {
-                ContentUnavailableView( "No Selection", systemImage: "sidebar.left", description: Text( "Select a project to preview its memory." ) )
+                    ProgressView()
+
+                case .loaded( let text ):
+
+                    ScrollView
+                    {
+                        Text( text )
+                            .textSelection( .enabled )
+                            .frame( maxWidth: .infinity, alignment: .leading )
+                            .padding()
+                    }
+
+                case .failed( let message ):
+
+                    ContentUnavailableView( "Unable to Read Memory", systemImage: "exclamationmark.triangle", description: Text( message ) )
             }
         }
-        .task
+        .navigationTitle( self.project.displayName )
+        .navigationSubtitle( self.project.decodedPath )
+        .task( id: self.project.id )
         {
-            await self.model.loadProjects()
+            await self.load()
         }
     }
-}
 
-#Preview
-{
-    ContentView()
+    private func load() async
+    {
+        self.state = .loading
+
+        let url   = self.project.memoryURL
+        let state = await Task.detached
+        {
+            MemoryLoader.load( from: url )
+        }
+        .value
+
+        self.state = state
+    }
 }

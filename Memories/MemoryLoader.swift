@@ -22,55 +22,36 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-import SwiftUI
+import Foundation
 
-struct ContentView: View
+/// The outcome of loading a memory index file.
+enum MemoryLoadState: Equatable, Sendable
 {
-    @State private var model = AppModel()
+    /// The file is being read.
+    case loading
 
-    var body: some View
-    {
-        @Bindable var model = self.model
+    /// The file was read successfully, carrying its raw text.
+    case loaded( String )
 
-        NavigationSplitView
-        {
-            List( selection: $model.selection )
-            {
-                ForEach( self.model.projects )
-                {
-                    project in
-
-                    ProjectRow( project: project ).tag( project.id )
-                }
-            }
-            .overlay
-            {
-                if self.model.projects.isEmpty
-                {
-                    ContentUnavailableView( "No Projects", systemImage: "tray", description: Text( "No Claude projects with a memory index were found." ) )
-                }
-            }
-            .navigationTitle( "Memories" )
-        }
-        detail:
-        {
-            if let project = self.model.selectedProject
-            {
-                MemoryView( project: project )
-            }
-            else
-            {
-                ContentUnavailableView( "No Selection", systemImage: "sidebar.left", description: Text( "Select a project to preview its memory." ) )
-            }
-        }
-        .task
-        {
-            await self.model.loadProjects()
-        }
-    }
+    /// The file could not be read, carrying a human-readable message.
+    case failed( String )
 }
 
-#Preview
+/// Reads the raw contents of a memory index file.
+enum MemoryLoader
 {
-    ContentView()
+    /// Reads `url` as UTF-8 text, returning ``MemoryLoadState/loaded(_:)`` on
+    /// success or ``MemoryLoadState/failed(_:)`` (with a localized message) on
+    /// any error, including a missing file.
+    static func load( from url: URL ) -> MemoryLoadState
+    {
+        do
+        {
+            return .loaded( try String( contentsOf: url, encoding: .utf8 ) )
+        }
+        catch
+        {
+            return .failed( error.localizedDescription )
+        }
+    }
 }

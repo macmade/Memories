@@ -22,55 +22,47 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-import SwiftUI
+import Foundation
+@testable import Memories
+import Testing
 
-struct ContentView: View
+struct MemoryLoaderTests
 {
-    @State private var model = AppModel()
-
-    var body: some View
+    @Test
+    func loadingReturnsTheFileContents() throws
     {
-        @Bindable var model = self.model
+        let url = FileManager.default.temporaryDirectory.appending( path: "MemoryLoaderTests-\( UUID().uuidString ).md" )
 
-        NavigationSplitView
-        {
-            List( selection: $model.selection )
-            {
-                ForEach( self.model.projects )
-                {
-                    project in
+        try "# Title\n\nBody text.\n".write( to: url, atomically: true, encoding: .utf8 )
 
-                    ProjectRow( project: project ).tag( project.id )
-                }
-            }
-            .overlay
-            {
-                if self.model.projects.isEmpty
-                {
-                    ContentUnavailableView( "No Projects", systemImage: "tray", description: Text( "No Claude projects with a memory index were found." ) )
-                }
-            }
-            .navigationTitle( "Memories" )
-        }
-        detail:
+        defer { try? FileManager.default.removeItem( at: url ) }
+
+        #expect( MemoryLoader.load( from: url ) == .loaded( "# Title\n\nBody text.\n" ) )
+    }
+
+    @Test
+    func loadingAnEmptyFileReturnsAnEmptyString() throws
+    {
+        let url = FileManager.default.temporaryDirectory.appending( path: "MemoryLoaderTests-\( UUID().uuidString ).md" )
+
+        try Data().write( to: url )
+
+        defer { try? FileManager.default.removeItem( at: url ) }
+
+        #expect( MemoryLoader.load( from: url ) == .loaded( "" ) )
+    }
+
+    @Test
+    func loadingAMissingFileReturnsFailure() throws
+    {
+        let url = FileManager.default.temporaryDirectory.appending( path: "MemoryLoaderTests-missing-\( UUID().uuidString ).md" )
+
+        guard case .failed = MemoryLoader.load( from: url )
+        else
         {
-            if let project = self.model.selectedProject
-            {
-                MemoryView( project: project )
-            }
-            else
-            {
-                ContentUnavailableView( "No Selection", systemImage: "sidebar.left", description: Text( "Select a project to preview its memory." ) )
-            }
-        }
-        .task
-        {
-            await self.model.loadProjects()
+            Issue.record( "Expected a failure for a missing file." )
+
+            return
         }
     }
-}
-
-#Preview
-{
-    ContentView()
 }

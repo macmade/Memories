@@ -39,6 +39,12 @@ final class AppModel
     /// The directory scanned for projects.
     let projectsDirectory: URL
 
+    /// The currently selected project, resolved from ``selection``.
+    var selectedProject: Project?
+    {
+        self.projects.first { $0.id == self.selection }
+    }
+
     init( projectsDirectory: URL = MemoryDiscovery.defaultProjectsDirectory )
     {
         self.projectsDirectory = projectsDirectory
