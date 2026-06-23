@@ -25,6 +25,7 @@
 		05F100282FEA800000000001 /* NSBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100272FEA800000000001 /* NSBundle.swift */; };
 		05F1002A2FEA800000000001 /* MemoryFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100292FEA800000000001 /* MemoryFile.swift */; };
 		05F1002C2FEA800000000001 /* MemoryFileLister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F1002B2FEA800000000001 /* MemoryFileLister.swift */; };
+		05F1002F2FEA800000000001 /* FileSwitcherBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F100302FEA800000000001 /* FileSwitcherBar.swift */; };
 		05F1002E2FEA800000000001 /* MemoryFileListerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F1002D2FEA800000000001 /* MemoryFileListerTests.swift */; };
 		05E9759D2FEA719E0078F616 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05E975972FEA719E0078F616 /* Assets.xcassets */; };
 		05E975A02FEA71A30078F616 /* MemoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E9759E2FEA71A30078F616 /* MemoriesTests.swift */; };
@@ -78,6 +79,7 @@
 		05F100272FEA800000000001 /* NSBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSBundle.swift; sourceTree = "<group>"; };
 		05F100292FEA800000000001 /* MemoryFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryFile.swift; sourceTree = "<group>"; };
 		05F1002B2FEA800000000001 /* MemoryFileLister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryFileLister.swift; sourceTree = "<group>"; };
+		05F100302FEA800000000001 /* FileSwitcherBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSwitcherBar.swift; sourceTree = "<group>"; };
 		05F1002D2FEA800000000001 /* MemoryFileListerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryFileListerTests.swift; sourceTree = "<group>"; };
 		05E9759E2FEA71A30078F616 /* MemoriesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesTests.swift; sourceTree = "<group>"; };
 		05F100012FEA800000000001 /* MemoryDiscoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryDiscoveryTests.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				05F100272FEA800000000001 /* NSBundle.swift */,
 				05F100292FEA800000000001 /* MemoryFile.swift */,
 				05F1002B2FEA800000000001 /* MemoryFileLister.swift */,
+				05F100302FEA800000000001 /* FileSwitcherBar.swift */,
 			);
 			path = Memories;
 			sourceTree = "<group>";
@@ -518,6 +521,7 @@
 				05F100282FEA800000000001 /* NSBundle.swift in Sources */,
 				05F1002A2FEA800000000001 /* MemoryFile.swift in Sources */,
 				05F1002C2FEA800000000001 /* MemoryFileLister.swift in Sources */,
+				05F1002F2FEA800000000001 /* FileSwitcherBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

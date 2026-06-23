@@ -214,9 +214,11 @@ struct ContentView: View
     @ViewBuilder
     private var detailView: some View
     {
+        @Bindable var model = self.model
+
         if let project = self.model.selectedProject, let file = self.model.selectedMemoryFile
         {
-            MemoryView( project: project, file: file, viewMode: self.model.viewMode )
+            MemoryView( project: project, file: file, files: self.model.memoryFiles, viewMode: self.model.viewMode, selection: $model.selectedFile )
         }
         else if self.model.selectedProject != nil
         {

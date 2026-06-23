@@ -29,9 +29,14 @@ struct MemoryView: View
 {
     let project:  Project
     let file:     MemoryFile
+    let files:    [ MemoryFile ]
     let viewMode: MemoryViewMode
 
-    @State private var state = MemoryLoadState.loading
+    @Binding var selection: MemoryFile.ID?
+
+    @State private var state       = MemoryLoadState.loading
+    @State private var isBarVisible = true
+    @State private var hideTask:    Task<Void, Never>?
 
     var body: some View
     {
@@ -52,11 +57,62 @@ struct MemoryView: View
                     ContentUnavailableView( "Unable to Read Memory", systemImage: "exclamationmark.triangle", description: Text( message ) )
             }
         }
+        .overlay( alignment: .bottom )
+        {
+            if self.files.count > 1, self.isBarVisible
+            {
+                FileSwitcherBar( files: self.files, selection: self.$selection )
+                    .transition( .move( edge: .bottom ).combined( with: .opacity ) )
+            }
+        }
+        .onContinuousHover
+        {
+            phase in
+
+            if case .active = phase
+            {
+                self.registerInteraction()
+            }
+        }
+        .onAppear
+        {
+            self.registerInteraction()
+        }
         .navigationTitle( self.project.title )
         .navigationSubtitle( self.project.decodedPath )
         .task( id: self.file.id )
         {
             await self.load()
+        }
+    }
+
+    /// Reveals the floating bar and (re)arms a timer that hides it after two
+    /// seconds without mouse movement.
+    private func registerInteraction()
+    {
+        if self.isBarVisible == false
+        {
+            withAnimation
+            {
+                self.isBarVisible = true
+            }
+        }
+
+        self.hideTask?.cancel()
+        self.hideTask = Task
+        {
+            try? await Task.sleep( for: .seconds( 2 ) )
+
+            guard Task.isCancelled == false
+            else
+            {
+                return
+            }
+
+            withAnimation
+            {
+                self.isBarVisible = false
+            }
         }
     }
 
