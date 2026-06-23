@@ -187,6 +187,14 @@ struct ContentView: View
     @ViewBuilder
     private func contextMenu( for project: Project ) -> some View
     {
+        if let directory = project.resolvedDirectoryURL
+        {
+            Button( "Open Project Directory" )
+            {
+                NSWorkspace.shared.open( directory )
+            }
+        }
+
         Button( "Reveal in Finder" )
         {
             NSWorkspace.shared.activateFileViewerSelecting( [ project.folderURL ] )

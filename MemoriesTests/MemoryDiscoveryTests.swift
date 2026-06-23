@@ -56,6 +56,28 @@ struct MemoryDiscoveryTests
     }
 
     @Test
+    func resolvedDirectoryURLIsTheRealPathWhenItExists() throws
+    {
+        let directory = FileManager.default.temporaryDirectory.appending( path: "MemoriesTests-real-\( UUID().uuidString )", directoryHint: .isDirectory )
+
+        try FileManager.default.createDirectory( at: directory, withIntermediateDirectories: true )
+
+        defer { try? FileManager.default.removeItem( at: directory ) }
+
+        let project = Project( folderURL: URL( fileURLWithPath: "/private/tmp/projects/-encoded", isDirectory: true ), decodedPath: directory.path )
+
+        #expect( project.resolvedDirectoryURL?.path == directory.path )
+    }
+
+    @Test
+    func resolvedDirectoryURLIsNilWhenThePathDoesNotExist() throws
+    {
+        let project = Project( folderURL: URL( fileURLWithPath: "/private/tmp/projects/-x-y-z", isDirectory: true ), decodedPath: "/x/y/z-\( UUID().uuidString )" )
+
+        #expect( project.resolvedDirectoryURL == nil )
+    }
+
+    @Test
     func memoryURLPointsAtTheMemoryIndex() throws
     {
         let folder  = URL( fileURLWithPath: "/tmp/projects/-Users-macmade-Foo", isDirectory: true )

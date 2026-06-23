@@ -48,6 +48,24 @@ struct Project: Identifiable, Hashable, Sendable
 
     var id: String { self.encodedName }
 
+    /// The real project directory on disk, or `nil` when the decoded path could
+    /// not be resolved to an existing directory (e.g. it fell back to naive
+    /// decoding, or the repository has since moved or been deleted).
+    var resolvedDirectoryURL: URL?
+    {
+        let url = URL( fileURLWithPath: self.decodedPath, isDirectory: true )
+
+        var isDirectory: ObjCBool = false
+
+        guard FileManager.default.fileExists( atPath: url.path, isDirectory: &isDirectory ), isDirectory.boolValue
+        else
+        {
+            return nil
+        }
+
+        return url
+    }
+
     /// Builds a project from its directory under `~/.claude/projects/`.
     ///
     /// `decodedPath` is the resolved real filesystem path; when omitted it falls
