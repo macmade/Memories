@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05B18A312FEBC3300056553A /* SwiftUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05B18A2D2FEBC3250056553A /* SwiftUtilities.framework */; };
+		05B18A332FEBC33C0056553A /* SwiftUtilities.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 05B18A2D2FEBC3250056553A /* SwiftUtilities.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		05E9759D2FEA719E0078F616 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05E975972FEA719E0078F616 /* Assets.xcassets */; };
 		0C00B6F6445A0BA13A337FFD /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A68D952B679C1705A9A2EC0 /* AppModel.swift */; };
 		0C5B64778EAE45F24739D799 /* ProjectPathResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9108D9F3E8FD9EAB4C560ED3 /* ProjectPathResolverTests.swift */; };
@@ -46,6 +48,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		05B18A2C2FEBC3250056553A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 05B18A272FEBC3250056553A /* SwiftUtilities.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 05C527822DD8E36300843626;
+			remoteInfo = SwiftUtilities;
+		};
+		05B18A342FEBC3410056553A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 05B18A272FEBC3250056553A /* SwiftUtilities.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 05C527812DD8E36300843626;
+			remoteInfo = SwiftUtilities;
+		};
 		05E9757B2FEA71990078F616 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 05E975652FEA71980078F616 /* Project object */;
@@ -55,8 +71,22 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		05B18A322FEBC3350056553A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				05B18A332FEBC33C0056553A /* SwiftUtilities.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		0138E2B48AD03C12E7D4FD14 /* MemoryFile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryFile.swift; sourceTree = "<group>"; };
+		05B18A272FEBC3250056553A /* SwiftUtilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftUtilities.xcodeproj; path = Submodules/SwiftUtilities/SwiftUtilities.xcodeproj; sourceTree = "<group>"; };
 		05E9756D2FEA71980078F616 /* Memories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memories.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05E9757A2FEA71990078F616 /* MemoriesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MemoriesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		05E975972FEA719E0078F616 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -150,6 +180,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05B18A312FEBC3300056553A /* SwiftUtilities.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,15 +194,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05B18A282FEBC3250056553A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				05B18A2D2FEBC3250056553A /* SwiftUtilities.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		05B18A302FEBC3300056553A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		05E975642FEA71980078F616 = {
 			isa = PBXGroup;
 			children = (
 				05E975A82FEA73070078F616 /* README.md */,
 				05E975A72FEA73070078F616 /* LICENSE */,
 				05E975A62FEA73070078F616 /* CODE_OF_CONDUCT.md */,
+				05B18A272FEBC3250056553A /* SwiftUtilities.xcodeproj */,
 				05E976192FEA738B0078F616 /* xcconfig */,
 				05E9759A2FEA719E0078F616 /* Memories */,
 				05E9759F2FEA71A30078F616 /* MemoriesTests */,
+				05B18A302FEBC3300056553A /* Frameworks */,
 				05E9756E2FEA71980078F616 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -443,11 +491,13 @@
 				05E975692FEA71980078F616 /* Sources */,
 				05E9756A2FEA71980078F616 /* Frameworks */,
 				05E9756B2FEA71980078F616 /* Resources */,
+				05B18A322FEBC3350056553A /* CopyFiles */,
 				05B18A262FEBB7AA0056553A /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				05B18A352FEBC3410056553A /* PBXTargetDependency */,
 			);
 			name = Memories;
 			productName = Memories;
@@ -503,6 +553,12 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 05E9756E2FEA71980078F616 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 05B18A282FEBC3250056553A /* Products */;
+					ProjectRef = 05B18A272FEBC3250056553A /* SwiftUtilities.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				05E9756C2FEA71980078F616 /* Memories */,
@@ -510,6 +566,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		05B18A2D2FEBC3250056553A /* SwiftUtilities.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftUtilities.framework;
+			remoteRef = 05B18A2C2FEBC3250056553A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		05E9756B2FEA71980078F616 /* Resources */ = {
@@ -603,6 +669,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		05B18A352FEBC3410056553A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftUtilities;
+			targetProxy = 05B18A342FEBC3410056553A /* PBXContainerItemProxy */;
+		};
 		05E9757C2FEA71990078F616 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 05E9756C2FEA71980078F616 /* Memories */;
