@@ -23,11 +23,33 @@
  ******************************************************************************/
 
 import SwiftUI
+import SwiftUtilities
 
 @main
 struct MemoriesApp: App
 {
     @Environment( \.openWindow ) private var openWindow
+
+    /// Checks the GitHub repository for newer published releases of the app.
+    ///
+    /// `nil` only if a valid releases URL cannot be built, which the menu item
+    /// reflects by disabling itself.
+    private let updater = GitHubUpdater( owner: "macmade", repository: "Memories" )
+
+    init()
+    {
+        // Check for a newer release once at launch, silently: the user is only
+        // alerted when an update is actually available. Dispatched after a short
+        // delay so the check never competes with the app finishing launching.
+        let updater = self.updater
+
+        Task
+        {
+            try? await Task.sleep( for: .seconds( 5 ) )
+
+            updater?.checkForUpdatesInBackground()
+        }
+    }
 
     var body: some Scene
     {
@@ -43,6 +65,14 @@ struct MemoriesApp: App
                 {
                     self.openWindow( id: "AboutWindow" )
                 }
+
+                Divider()
+
+                Button( "Check for Updates\u{2026}" )
+                {
+                    self.updater?.checkForUpdates()
+                }
+                .disabled( self.updater == nil )
             }
 
             CommandGroup( after: CommandGroupPlacement.sidebar )
