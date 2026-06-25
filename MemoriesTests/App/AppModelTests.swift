@@ -439,70 +439,129 @@ struct AppModelTests
     }
 
     @Test
-    func exportingAProjectCopiesItsMemoryToTheChosenFolder() async throws
+    func exportingAProjectCopiesItsMemoryWithoutPromptingWhenThereAreNoConflicts() async throws
     {
         let root = try TemporaryProjectTree()
 
         try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+        try root.writeMemoryFile( "note.md", inProject: "-Users-macmade-Alpha" )
 
-        let recorder = ExportRecorder()
-        let model    = AppModel( projectsDirectory: root.url, exportProject: { recorder.record( $0, $1 ) } )
+        let model = AppModel( projectsDirectory: root.url )
 
         await model.loadProjects()
 
         let alpha       = try #require( model.projects.first )
         let destination = root.url.appending( path: "export", directoryHint: .isDirectory )
 
-        try await model.exportProject( alpha, to: destination )
+        var prompted: [ URL ] = []
+        let completed         = try await model.exportProject( alpha, to: destination ) { prompted.append( $0 ); return .overwrite }
 
-        #expect( recorder.calls == [ [ alpha.memoryDirectoryURL, destination ] ] )
+        #expect( completed )
+        #expect( prompted.isEmpty )
+        #expect( FileManager.default.fileExists( atPath: destination.appending( path: "MEMORY.md" ).path ) )
+        #expect( FileManager.default.fileExists( atPath: destination.appending( path: "note.md" ).path ) )
+    }
+
+    @Test
+    func exportingAProjectOverwritesAConflictWhenResolutionIsOverwrite() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+
+        let model = AppModel( projectsDirectory: root.url )
+
+        await model.loadProjects()
+
+        let alpha       = try #require( model.projects.first )
+        let destination = root.url.appending( path: "export", directoryHint: .isDirectory )
+
+        try FileManager.default.createDirectory( at: destination, withIntermediateDirectories: true )
+        try "old".write( to: destination.appending( path: "MEMORY.md" ), atomically: true, encoding: .utf8 )
+
+        var prompted: [ URL ] = []
+        let completed         = try await model.exportProject( alpha, to: destination ) { prompted.append( $0 ); return .overwrite }
+
+        #expect( completed )
+        #expect( prompted.map { $0.lastPathComponent } == [ "MEMORY.md" ] )
+        #expect( try String( contentsOf: destination.appending( path: "MEMORY.md" ), encoding: .utf8 ) == "# Memory\n" )
+    }
+
+    @Test
+    func exportingAProjectSkipsAConflictButCopiesTheRestWhenResolutionIsSkip() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+        try root.writeMemoryFile( "note.md", inProject: "-Users-macmade-Alpha" )
+
+        let model = AppModel( projectsDirectory: root.url )
+
+        await model.loadProjects()
+
+        let alpha       = try #require( model.projects.first )
+        let destination = root.url.appending( path: "export", directoryHint: .isDirectory )
+
+        try FileManager.default.createDirectory( at: destination, withIntermediateDirectories: true )
+        try "old".write( to: destination.appending( path: "MEMORY.md" ), atomically: true, encoding: .utf8 )
+
+        let completed = try await model.exportProject( alpha, to: destination ) { _ in .skip }
+
+        #expect( completed )
+        #expect( try String( contentsOf: destination.appending( path: "MEMORY.md" ), encoding: .utf8 ) == "old" )
+        #expect( try String( contentsOf: destination.appending( path: "note.md" ), encoding: .utf8 ) == "content" )
+    }
+
+    @Test
+    func cancellingAProjectExportCopiesNothingAndReturnsFalse() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+        try root.writeMemoryFile( "note.md", inProject: "-Users-macmade-Alpha" )
+
+        let model = AppModel( projectsDirectory: root.url )
+
+        await model.loadProjects()
+
+        let alpha       = try #require( model.projects.first )
+        let destination = root.url.appending( path: "export", directoryHint: .isDirectory )
+
+        try FileManager.default.createDirectory( at: destination, withIntermediateDirectories: true )
+        try "old".write( to: destination.appending( path: "MEMORY.md" ), atomically: true, encoding: .utf8 )
+
+        let completed = try await model.exportProject( alpha, to: destination ) { _ in .cancel }
+
+        #expect( completed == false )
+        #expect( try String( contentsOf: destination.appending( path: "MEMORY.md" ), encoding: .utf8 ) == "old" )
+        #expect( FileManager.default.fileExists( atPath: destination.appending( path: "note.md" ).path ) == false )
     }
 
     @Test
     func exportingAProjectFailurePropagates() async throws
     {
-        struct ExportError: Error {}
-
         let root = try TemporaryProjectTree()
 
         try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
 
-        let model = AppModel( projectsDirectory: root.url, exportProject: { _, _ in throw ExportError() } )
+        let model = AppModel( projectsDirectory: root.url )
 
         await model.loadProjects()
 
         let alpha = try #require( model.projects.first )
 
-        await #expect( throws: ExportError.self )
+        // Block the destination's parent with a regular file so creating the
+        // destination directory fails.
+        let blocker = root.url.appending( path: "blocker" )
+
+        try "x".write( to: blocker, atomically: true, encoding: .utf8 )
+
+        let destination = blocker.appending( path: "export", directoryHint: .isDirectory )
+
+        await #expect( throws: ( any Error ).self )
         {
-            try await model.exportProject( alpha, to: root.url.appending( path: "export", directoryHint: .isDirectory ) )
+            _ = try await model.exportProject( alpha, to: destination ) { _ in .overwrite }
         }
-    }
-}
-
-/// A thread-safe recorder of export calls, usable from the `@Sendable` export
-/// hook that `AppModel` runs off the main actor.
-private final class ExportRecorder: @unchecked Sendable
-{
-    private let lock              = NSLock()
-    private var storage: [ [ URL ] ] = []
-
-    var calls: [ [ URL ] ]
-    {
-        self.lock.lock()
-
-        defer { self.lock.unlock() }
-
-        return self.storage
-    }
-
-    func record( _ source: URL, _ destination: URL )
-    {
-        self.lock.lock()
-
-        defer { self.lock.unlock() }
-
-        self.storage.append( [ source, destination ] )
     }
 }
 

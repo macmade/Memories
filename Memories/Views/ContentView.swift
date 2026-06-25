@@ -447,9 +447,13 @@ struct ContentView: View
     }
 
     /// Prompts for a destination folder with an `NSOpenPanel`, then exports all
-    /// of the project's memory files there, preserving their structure. On
-    /// success the destination is revealed in Finder; failures are surfaced
-    /// through the standard error alert.
+    /// of the project's memory files there, preserving their structure.
+    ///
+    /// Each file that would overwrite an existing one prompts with a conflict
+    /// alert (Overwrite / Skip / Cancel); the "Apply to all" checkbox reuses the
+    /// chosen Overwrite/Skip decision for the remaining conflicts. On completion
+    /// the destination is revealed in Finder; a cancelled export reveals nothing,
+    /// and failures are surfaced through the standard error alert.
     private func exportMemory( for project: Project )
     {
         let panel = NSOpenPanel()
@@ -468,16 +472,68 @@ struct ContentView: View
 
         Task
         {
+            var bulkResolution: MemoryExportConflictResolution?
+
             do
             {
-                try await self.model.exportProject( project, to: destination )
+                let completed = try await self.model.exportProject( project, to: destination )
+                {
+                    existing in
 
-                NSWorkspace.shared.activateFileViewerSelecting( [ destination ] )
+                    if let bulkResolution
+                    {
+                        return bulkResolution
+                    }
+
+                    let ( resolution, applyToAll ) = self.resolveExportConflict( for: existing )
+
+                    if applyToAll, resolution != .cancel
+                    {
+                        bulkResolution = resolution
+                    }
+
+                    return resolution
+                }
+
+                if completed
+                {
+                    NSWorkspace.shared.activateFileViewerSelecting( [ destination ] )
+                }
             }
             catch
             {
                 self.errorMessage = error.localizedDescription
             }
+        }
+    }
+
+    /// Asks the user how to handle a file that already exists at the export
+    /// destination, returning the chosen resolution and whether it should apply
+    /// to all remaining conflicts.
+    private func resolveExportConflict( for existing: URL ) -> ( resolution: MemoryExportConflictResolution, applyToAll: Bool )
+    {
+        let alert = NSAlert()
+
+        alert.alertStyle      = .warning
+        alert.messageText      = "\u{201C}\( existing.lastPathComponent )\u{201D} already exists in the destination."
+        alert.informativeText  = "Do you want to overwrite the existing file, skip it, or cancel the export?"
+
+        alert.addButton( withTitle: "Overwrite" )
+        alert.addButton( withTitle: "Skip" )
+        alert.addButton( withTitle: "Cancel" )
+
+        let checkbox = NSButton( checkboxWithTitle: "Apply to all", target: nil, action: nil )
+
+        alert.accessoryView = checkbox
+
+        let response   = alert.runModal()
+        let applyToAll = checkbox.state == .on
+
+        switch response
+        {
+            case .alertFirstButtonReturn:  return ( .overwrite, applyToAll )
+            case .alertSecondButtonReturn: return ( .skip,      applyToAll )
+            default:                       return ( .cancel,    applyToAll )
         }
     }
 

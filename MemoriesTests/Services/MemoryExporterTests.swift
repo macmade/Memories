@@ -74,7 +74,7 @@ struct MemoryExporterTests
     }
 
     @Test
-    func exportingAProjectCopiesEveryMarkdownFilePreservingStructure() throws
+    func planningListsEveryMarkdownFilePreservingStructure() throws
     {
         let tree = try TemporaryDirectory()
 
@@ -86,16 +86,69 @@ struct MemoryExporterTests
         let memory      = tree.url.appending( path: "memory", directoryHint: .isDirectory )
         let destination = tree.url.appending( path: "export", directoryHint: .isDirectory )
 
-        try MemoryExporter.export( memoryDirectory: memory, to: destination )
+        let plan = MemoryExporter.plannedExports( memoryDirectory: memory, to: destination )
 
-        #expect( try String( contentsOf: destination.appending( path: "MEMORY.md" ), encoding: .utf8 ) == "# index" )
-        #expect( try String( contentsOf: destination.appending( path: "alpha.md" ), encoding: .utf8 ) == "a" )
-        #expect( try String( contentsOf: destination.appending( path: "nested/beta.md" ), encoding: .utf8 ) == "b" )
-        #expect( FileManager.default.fileExists( atPath: destination.appending( path: "notes.txt" ).path ) == false )
+        #expect( Set( plan.map { $0.source.lastPathComponent } ) == [ "MEMORY.md", "alpha.md", "beta.md" ] )
+
+        let beta = try #require( plan.first { $0.source.lastPathComponent == "beta.md" } )
+
+        #expect( Array( beta.destination.pathComponents.suffix( 2 ) ) == [ "nested", "beta.md" ] )
+
+        let index = try #require( plan.first { $0.source.lastPathComponent == "MEMORY.md" } )
+
+        #expect( index.destination.path == destination.appending( path: "MEMORY.md" ).path )
     }
 
     @Test
-    func exportingAProjectOverwritesExistingFiles() throws
+    func planningReportsWhetherEachDestinationExists() throws
+    {
+        let tree = try TemporaryDirectory()
+
+        try tree.write( "new", to: "memory/MEMORY.md" )
+        try tree.write( "a",   to: "memory/alpha.md" )
+        try tree.write( "old", to: "export/MEMORY.md" )
+
+        let memory      = tree.url.appending( path: "memory", directoryHint: .isDirectory )
+        let destination = tree.url.appending( path: "export", directoryHint: .isDirectory )
+
+        let plan = MemoryExporter.plannedExports( memoryDirectory: memory, to: destination )
+
+        #expect( plan.first { $0.source.lastPathComponent == "MEMORY.md" }?.destinationExists == true )
+        #expect( plan.first { $0.source.lastPathComponent == "alpha.md" }?.destinationExists == false )
+    }
+
+    @Test
+    func planningAProjectWithoutMarkdownIsEmpty() throws
+    {
+        let tree = try TemporaryDirectory()
+
+        try tree.write( "x", to: "memory/notes.txt" )
+
+        let memory      = tree.url.appending( path: "memory", directoryHint: .isDirectory )
+        let destination = tree.url.appending( path: "export", directoryHint: .isDirectory )
+
+        #expect( MemoryExporter.plannedExports( memoryDirectory: memory, to: destination ).isEmpty )
+    }
+
+    @Test
+    func copyingWritesEveryPlannedExportCreatingDirectories() throws
+    {
+        let tree = try TemporaryDirectory()
+
+        try tree.write( "# index", to: "memory/MEMORY.md" )
+        try tree.write( "b",       to: "memory/nested/beta.md" )
+
+        let memory      = tree.url.appending( path: "memory", directoryHint: .isDirectory )
+        let destination = tree.url.appending( path: "export", directoryHint: .isDirectory )
+
+        try MemoryExporter.copy( MemoryExporter.plannedExports( memoryDirectory: memory, to: destination ) )
+
+        #expect( try String( contentsOf: destination.appending( path: "MEMORY.md" ), encoding: .utf8 ) == "# index" )
+        #expect( try String( contentsOf: destination.appending( path: "nested/beta.md" ), encoding: .utf8 ) == "b" )
+    }
+
+    @Test
+    func copyingOverwritesExistingDestinations() throws
     {
         let tree = try TemporaryDirectory()
 
@@ -105,24 +158,9 @@ struct MemoryExporterTests
         let memory      = tree.url.appending( path: "memory", directoryHint: .isDirectory )
         let destination = tree.url.appending( path: "export", directoryHint: .isDirectory )
 
-        try MemoryExporter.export( memoryDirectory: memory, to: destination )
+        try MemoryExporter.copy( MemoryExporter.plannedExports( memoryDirectory: memory, to: destination ) )
 
         #expect( try String( contentsOf: destination.appending( path: "MEMORY.md" ), encoding: .utf8 ) == "new" )
-    }
-
-    @Test
-    func exportingAProjectWithoutMarkdownCopiesNothing() throws
-    {
-        let tree = try TemporaryDirectory()
-
-        try tree.write( "x", to: "memory/notes.txt" )
-
-        let memory      = tree.url.appending( path: "memory", directoryHint: .isDirectory )
-        let destination = tree.url.appending( path: "export", directoryHint: .isDirectory )
-
-        try MemoryExporter.export( memoryDirectory: memory, to: destination )
-
-        #expect( FileManager.default.fileExists( atPath: destination.appending( path: "notes.txt" ).path ) == false )
     }
 }
 

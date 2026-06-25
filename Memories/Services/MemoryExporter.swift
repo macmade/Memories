@@ -35,11 +35,39 @@ enum MemoryExportError: Error, Equatable
     case sourceNotFound( URL )
 }
 
+/// How to resolve a project export that would overwrite an existing file at the
+/// destination.
+enum MemoryExportConflictResolution: Sendable, Equatable
+{
+    /// Replace the existing file.
+    case overwrite
+
+    /// Leave the existing file untouched and skip the source file.
+    case skip
+
+    /// Abort the whole export, leaving the destination untouched.
+    case cancel
+}
+
 /// Copies memory files to a user-chosen destination.
 ///
 /// Existing files at the destination are overwritten.
 enum MemoryExporter
 {
+    /// A single file scheduled for export, paired with the destination it will
+    /// be copied to and whether a file already exists there.
+    struct PlannedExport: Sendable, Equatable
+    {
+        /// The source file to copy.
+        let source: URL
+
+        /// The destination the source will be copied to.
+        let destination: URL
+
+        /// Whether a file already exists at ``destination``.
+        let destinationExists: Bool
+    }
+
     /// Copies a single file to `destination`, creating any intermediate
     /// directories and overwriting an existing file there.
     ///
@@ -56,23 +84,38 @@ enum MemoryExporter
         try self.copy( source, to: destination, fileManager: fileManager )
     }
 
-    /// Copies every `.md` file under `memoryDirectory` into `destinationFolder`,
-    /// preserving each file's path relative to `memoryDirectory` so nested
-    /// subfolders are recreated. Existing files are overwritten.
+    /// Builds the export plan for a project: one ``PlannedExport`` per `.md` file
+    /// under `memoryDirectory`, each mapped to a destination under
+    /// `destinationFolder` that preserves the file's path relative to
+    /// `memoryDirectory` (nested subfolders are recreated).
     ///
     /// Discovery reuses ``MemoryFileLister``, so a missing or empty memory
-    /// directory simply copies nothing. Any filesystem failure propagates from
-    /// `FileManager`.
-    static func export( memoryDirectory: URL, to destinationFolder: URL, fileManager: FileManager = .default ) throws
+    /// directory yields an empty plan. Each entry records whether a file already
+    /// exists at its destination so the caller can resolve conflicts before
+    /// copying.
+    static func plannedExports( memoryDirectory: URL, to destinationFolder: URL, fileManager: FileManager = .default ) -> [ PlannedExport ]
     {
         let baseComponents = memoryDirectory.standardizedFileURL.pathComponents
 
-        for file in MemoryFileLister.files( in: memoryDirectory, fileManager: fileManager )
+        return MemoryFileLister.files( in: memoryDirectory, fileManager: fileManager ).map
         {
+            file in
+
             let relativeComponents = file.url.standardizedFileURL.pathComponents.dropFirst( baseComponents.count )
             let destination        = relativeComponents.reduce( destinationFolder ) { $0.appending( path: $1 ) }
 
-            try self.copy( file.url, to: destination, fileManager: fileManager )
+            return PlannedExport( source: file.url, destination: destination, destinationExists: fileManager.fileExists( atPath: destination.path ) )
+        }
+    }
+
+    /// Copies every planned export to its destination, creating intermediate
+    /// directories and overwriting any existing file. Any filesystem failure
+    /// propagates from `FileManager`.
+    static func copy( _ exports: [ PlannedExport ], fileManager: FileManager = .default ) throws
+    {
+        for export in exports
+        {
+            try self.copy( export.source, to: export.destination, fileManager: fileManager )
         }
     }
 
