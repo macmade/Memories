@@ -109,6 +109,7 @@ struct ContentView: View
         detail:
         {
             self.detailView
+                .frame( minWidth: 500 )
         }
     }
 
