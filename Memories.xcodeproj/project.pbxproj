@@ -18,6 +18,7 @@
 		3591806205A371E64259D523 /* FileSwitcherBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ED600A1545B9205848556BE /* FileSwitcherBar.swift */; };
 		38A940538DA18D1E992E61A0 /* MarkdownRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F1136338E88312A0675B1B /* MarkdownRendererTests.swift */; };
 		4371C03799DFBBD2A6F3E055 /* MemoryFileListerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFB5E5BC81A726677BC6C6C /* MemoryFileListerTests.swift */; };
+		AAAAAAAAAAAA000000000004 /* MemoryExporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000003 /* MemoryExporterTests.swift */; };
 		44614E8183B8FA3C0125BF7A /* AppModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7783FB07040AC289157D319F /* AppModelTests.swift */; };
 		4AD9BB35610B84CFF306943D /* MarkdownRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D513BE8B92368E5405A34B5 /* MarkdownRenderer.swift */; };
 		4F2FF239A538E9A0ECC40193 /* ProjectPathResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A0EA805588EDCC7D5662F /* ProjectPathResolver.swift */; };
@@ -29,6 +30,7 @@
 		773401A935E76A12E1C78383 /* GitInspecting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3B80BF4B38C95BF7BBCF6B /* GitInspecting.swift */; };
 		7ECB523CB45E2A98D457E72D /* MemoryFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0138E2B48AD03C12E7D4FD14 /* MemoryFile.swift */; };
 		83F4F4D55A869046196F9D95 /* MemoryFileLister.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD2A0B5909651FFABD99EA /* MemoryFileLister.swift */; };
+		AAAAAAAAAAAA000000000002 /* MemoryExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000001 /* MemoryExporter.swift */; };
 		89A6A7C5164619B5A0F8AB0C /* ProjectRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298289B73515CBC37E9B8BF5 /* ProjectRow.swift */; };
 		9E0AB2F2D5EA406E6BDD39FC /* MemoryLoadState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214C3E5A5C48B9451A3436F6 /* MemoryLoadState.swift */; };
 		9E27C330810796FC7DDA0475 /* PresentationIntent+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72DBAD70F4EDE4886ACFF47 /* PresentationIntent+Markdown.swift */; };
@@ -165,6 +167,7 @@
 		9108D9F3E8FD9EAB4C560ED3 /* ProjectPathResolverTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProjectPathResolverTests.swift; sourceTree = "<group>"; };
 		9B2FD7318A6A171CF4AE209C /* MemoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryView.swift; sourceTree = "<group>"; };
 		B7BD2A0B5909651FFABD99EA /* MemoryFileLister.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryFileLister.swift; sourceTree = "<group>"; };
+		AAAAAAAAAAAA000000000001 /* MemoryExporter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryExporter.swift; sourceTree = "<group>"; };
 		C27A0EA805588EDCC7D5662F /* ProjectPathResolver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProjectPathResolver.swift; sourceTree = "<group>"; };
 		DF66D88339107756A234A7F0 /* MemoryLoader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryLoader.swift; sourceTree = "<group>"; };
 		E04C78C45E5A3ABC540B0FE1 /* MemoriesTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoriesTests.swift; sourceTree = "<group>"; };
@@ -173,6 +176,7 @@
 		F7579E747BA87CA5480E5B78 /* GitInspectorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GitInspectorTests.swift; sourceTree = "<group>"; };
 		FA5FCDF216D0AE5F5472FCF3 /* ContentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FBFB5E5BC81A726677BC6C6C /* MemoryFileListerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryFileListerTests.swift; sourceTree = "<group>"; };
+		AAAAAAAAAAAA000000000003 /* MemoryExporterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryExporterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -402,6 +406,7 @@
 				F7579E747BA87CA5480E5B78 /* GitInspectorTests.swift */,
 				4BA432A558BA158033C20271 /* MemoryDiscoveryTests.swift */,
 				FBFB5E5BC81A726677BC6C6C /* MemoryFileListerTests.swift */,
+				AAAAAAAAAAAA000000000003 /* MemoryExporterTests.swift */,
 				15AB1FBE4D10D04B3977F87F /* MemoryLoaderTests.swift */,
 				9108D9F3E8FD9EAB4C560ED3 /* ProjectPathResolverTests.swift */,
 			);
@@ -413,6 +418,7 @@
 			children = (
 				12E43B28D9906A0CAED60283 /* MemoryDiscovery.swift */,
 				B7BD2A0B5909651FFABD99EA /* MemoryFileLister.swift */,
+				AAAAAAAAAAAA000000000001 /* MemoryExporter.swift */,
 				DF66D88339107756A234A7F0 /* MemoryLoader.swift */,
 				C27A0EA805588EDCC7D5662F /* ProjectPathResolver.swift */,
 				110B99770E40C1ACC143EF47 /* GitInspector.swift */,
@@ -641,6 +647,7 @@
 				DAAC84993CCA7A06BECE1160 /* MarkdownLinkRouter.swift in Sources */,
 				CE2BB0DE917DF50103F437D0 /* MemoryDiscovery.swift in Sources */,
 				83F4F4D55A869046196F9D95 /* MemoryFileLister.swift in Sources */,
+				AAAAAAAAAAAA000000000002 /* MemoryExporter.swift in Sources */,
 				FC6840519CB5D64E43E39119 /* MemoryLoader.swift in Sources */,
 				4F2FF239A538E9A0ECC40193 /* ProjectPathResolver.swift in Sources */,
 				BF6A74EA872DAB2E79570E15 /* GitInspector.swift in Sources */,
@@ -660,6 +667,7 @@
 				73BC093BB188645FE0A88D92 /* GitInspectorTests.swift in Sources */,
 				B445C5CE31CA431B4377A506 /* MemoryDiscoveryTests.swift in Sources */,
 				4371C03799DFBBD2A6F3E055 /* MemoryFileListerTests.swift in Sources */,
+				AAAAAAAAAAAA000000000004 /* MemoryExporterTests.swift in Sources */,
 				F1AD92693E2DA5692ACA2847 /* MemoryLoaderTests.swift in Sources */,
 				0C5B64778EAE45F24739D799 /* ProjectPathResolverTests.swift in Sources */,
 				111D0CC491495DAE21B05A40 /* MemoriesTests.swift in Sources */,
