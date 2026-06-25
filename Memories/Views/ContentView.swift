@@ -24,6 +24,7 @@
 
 import AppKit
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct ContentView: View
 {
@@ -77,6 +78,7 @@ struct ContentView: View
             {
                 self.toolbarContent( viewMode: $model.viewMode )
             }
+            .focusedSceneValue( \.memoryFileActions, self.fileActions )
 
         return self.withAlerts( base )
     }
@@ -192,6 +194,16 @@ struct ContentView: View
                 {
                     self.openWithMenu( for: file )
                         .help( "Open the current memory file with another application" )
+
+                    Button
+                    {
+                        self.saveCurrentFileAs()
+                    }
+                    label:
+                    {
+                        Label( "Save As\u{2026}", systemImage: "square.and.arrow.down" )
+                    }
+                    .help( "Save a copy of the current memory file to a location you choose" )
                 }
 
                 Button
@@ -367,6 +379,50 @@ struct ContentView: View
         do
         {
             try self.model.trashAllMemory( project )
+        }
+        catch
+        {
+            self.errorMessage = error.localizedDescription
+        }
+    }
+
+    /// The file actions published to the menu bar: Save As is available only
+    /// while a memory file is selected.
+    private var fileActions: MemoryFileActions
+    {
+        MemoryFileActions( saveCurrentFileAs: self.model.selectedMemoryFile == nil ? nil : { self.saveCurrentFileAs() } )
+    }
+
+    /// Prompts for a destination with an `NSSavePanel`, defaulting to the current
+    /// file's name and the Markdown type, then exports a copy there. Failures are
+    /// surfaced through the standard error alert.
+    private func saveCurrentFileAs()
+    {
+        guard let file = self.model.selectedMemoryFile
+        else
+        {
+            return
+        }
+
+        let panel = NSSavePanel()
+
+        panel.nameFieldStringValue = file.name
+        panel.canCreateDirectories = true
+
+        if let markdown = UTType( filenameExtension: "md" )
+        {
+            panel.allowedContentTypes = [ markdown ]
+        }
+
+        guard panel.runModal() == .OK, let destination = panel.url
+        else
+        {
+            return
+        }
+
+        do
+        {
+            try self.model.exportCurrentFile( to: destination )
         }
         catch
         {

@@ -75,6 +75,11 @@ struct MemoriesApp: App
                 .disabled( self.updater == nil )
             }
 
+            CommandGroup( replacing: CommandGroupPlacement.saveItem )
+            {
+                FileCommands()
+            }
+
             CommandGroup( after: CommandGroupPlacement.sidebar )
             {
                 ViewCommands()

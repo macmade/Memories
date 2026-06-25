@@ -23,6 +23,7 @@
 		4AD9BB35610B84CFF306943D /* MarkdownRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D513BE8B92368E5405A34B5 /* MarkdownRenderer.swift */; };
 		4F2FF239A538E9A0ECC40193 /* ProjectPathResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A0EA805588EDCC7D5662F /* ProjectPathResolver.swift */; };
 		4F74713955484CB2CB18C3B1 /* ViewCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52AD26F727A21C21FC05FAB /* ViewCommands.swift */; };
+		AAAAAAAAAAAA000000000005 /* FileCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000006 /* FileCommands.swift */; };
 		66BDF4ED75488C82DA9A5357 /* GitInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A183FDB9CFC4B8484193687 /* GitInfo.swift */; };
 		6D78CEE3F47A68A213295D45 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117AD241608F5C0D1ABC5F16 /* Project.swift */; };
 		73B4D6017E9559F96F8929E8 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F66674E71181CE3DFC25CF8 /* AboutView.swift */; };
@@ -172,6 +173,7 @@
 		DF66D88339107756A234A7F0 /* MemoryLoader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryLoader.swift; sourceTree = "<group>"; };
 		E04C78C45E5A3ABC540B0FE1 /* MemoriesTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoriesTests.swift; sourceTree = "<group>"; };
 		E52AD26F727A21C21FC05FAB /* ViewCommands.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewCommands.swift; sourceTree = "<group>"; };
+		AAAAAAAAAAAA000000000006 /* FileCommands.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FileCommands.swift; sourceTree = "<group>"; };
 		E72DBAD70F4EDE4886ACFF47 /* PresentationIntent+Markdown.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "PresentationIntent+Markdown.swift"; sourceTree = "<group>"; };
 		F7579E747BA87CA5480E5B78 /* GitInspectorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GitInspectorTests.swift; sourceTree = "<group>"; };
 		FA5FCDF216D0AE5F5472FCF3 /* ContentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -449,6 +451,7 @@
 			children = (
 				7F11C79AE22F047427644546 /* MemoriesApp.swift */,
 				E52AD26F727A21C21FC05FAB /* ViewCommands.swift */,
+				AAAAAAAAAAAA000000000006 /* FileCommands.swift */,
 				7A68D952B679C1705A9A2EC0 /* AppModel.swift */,
 			);
 			path = App;
@@ -629,6 +632,7 @@
 			files = (
 				F2A36C968D9AA215FFBB0F3A /* MemoriesApp.swift in Sources */,
 				4F74713955484CB2CB18C3B1 /* ViewCommands.swift in Sources */,
+				AAAAAAAAAAAA000000000005 /* FileCommands.swift in Sources */,
 				0C00B6F6445A0BA13A337FFD /* AppModel.swift in Sources */,
 				6D78CEE3F47A68A213295D45 /* Project.swift in Sources */,
 				7ECB523CB45E2A98D457E72D /* MemoryFile.swift in Sources */,

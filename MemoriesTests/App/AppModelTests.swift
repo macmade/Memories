@@ -373,6 +373,70 @@ struct AppModelTests
         #expect( model.memoryFiles.isEmpty )
         #expect( model.selectedFile == nil )
     }
+
+    @Test
+    func exportingTheCurrentFileCopiesItToTheChosenDestination() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+
+        var exported: [ [ URL ] ] = []
+        let model                 = AppModel( projectsDirectory: root.url, exportFile: { exported.append( [ $0, $1 ] ) } )
+
+        await model.loadProjects()
+
+        model.selection = "-Users-macmade-Alpha"
+
+        await model.loadMemoryFiles()
+
+        let file        = try #require( model.selectedMemoryFile )
+        let destination = root.url.appending( path: "copy/MEMORY.md" )
+
+        try model.exportCurrentFile( to: destination )
+
+        #expect( exported == [ [ file.url, destination ] ] )
+    }
+
+    @Test
+    func exportingWithNoSelectedFileDoesNothing() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+
+        var exported: [ [ URL ] ] = []
+        let model                 = AppModel( projectsDirectory: root.url, exportFile: { exported.append( [ $0, $1 ] ) } )
+
+        await model.loadProjects()
+
+        try model.exportCurrentFile( to: root.url.appending( path: "copy.md" ) )
+
+        #expect( exported.isEmpty )
+    }
+
+    @Test
+    func exportingTheCurrentFileFailurePropagates() async throws
+    {
+        struct ExportError: Error {}
+
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+
+        let model = AppModel( projectsDirectory: root.url, exportFile: { _, _ in throw ExportError() } )
+
+        await model.loadProjects()
+
+        model.selection = "-Users-macmade-Alpha"
+
+        await model.loadMemoryFiles()
+
+        #expect( throws: ExportError.self )
+        {
+            try model.exportCurrentFile( to: root.url.appending( path: "copy.md" ) )
+        }
+    }
 }
 
 /// A self-cleaning temporary directory used to build project-tree fixtures.

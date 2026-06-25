@@ -52,6 +52,11 @@ final class AppModel
     /// Trash; defaults to `FileManager.trashItem(at:resultingItemURL:)`.
     private let trashItem: ( URL ) throws -> Void
 
+    /// Copies a single memory file from a source to a destination. Injectable so
+    /// tests need not touch the filesystem; defaults to
+    /// ``MemoryExporter/export(file:to:fileManager:)``.
+    private let exportFile: ( URL, URL ) throws -> Void
+
     /// The currently selected project, resolved from ``selection``.
     var selectedProject: Project?
     {
@@ -64,10 +69,27 @@ final class AppModel
         self.memoryFiles.first { $0.id == self.selectedFile }
     }
 
-    init( projectsDirectory: URL = MemoryDiscovery.defaultProjectsDirectory, trashItem: @escaping ( URL ) throws -> Void = { try FileManager.default.trashItem( at: $0, resultingItemURL: nil ) } )
+    init( projectsDirectory: URL = MemoryDiscovery.defaultProjectsDirectory, trashItem: @escaping ( URL ) throws -> Void = { try FileManager.default.trashItem( at: $0, resultingItemURL: nil ) }, exportFile: @escaping ( URL, URL ) throws -> Void = { try MemoryExporter.export( file: $0, to: $1 ) } )
     {
         self.projectsDirectory = projectsDirectory
         self.trashItem         = trashItem
+        self.exportFile        = exportFile
+    }
+
+    /// Exports a copy of the currently selected memory file to `destination`.
+    ///
+    /// Does nothing when no file is selected (the menu and toolbar actions are
+    /// disabled in that case). Throws if the copy fails, surfacing the error to
+    /// the caller.
+    func exportCurrentFile( to destination: URL ) throws
+    {
+        guard let file = self.selectedMemoryFile
+        else
+        {
+            return
+        }
+
+        try self.exportFile( file.url, destination )
     }
 
     /// Moves a project's entire folder to the Trash, then drops it from the
