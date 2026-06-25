@@ -290,6 +290,18 @@ struct ContentView: View
 
         Divider()
 
+        Button
+        {
+            self.exportMemory( for: project )
+        }
+        label:
+        {
+            Label( "Export Memory\u{2026}", systemImage: "square.and.arrow.down.on.square" )
+        }
+        .help( "Export all of the project's memory files to a folder you choose" )
+
+        Divider()
+
         Button( role: .destructive )
         {
             self.projectPendingTrash = project
@@ -387,10 +399,14 @@ struct ContentView: View
     }
 
     /// The file actions published to the menu bar: Save As is available only
-    /// while a memory file is selected.
+    /// while a memory file is selected, and Export Memory only while a project
+    /// is selected.
     private var fileActions: MemoryFileActions
     {
-        MemoryFileActions( saveCurrentFileAs: self.model.selectedMemoryFile == nil ? nil : { self.saveCurrentFileAs() } )
+        MemoryFileActions(
+            saveCurrentFileAs:   self.model.selectedMemoryFile == nil ? nil : { self.saveCurrentFileAs() },
+            exportProjectMemory: self.model.selectedProject.map { project in { self.exportMemory( for: project ) } }
+        )
     }
 
     /// Prompts for a destination with an `NSSavePanel`, defaulting to the current
@@ -427,6 +443,41 @@ struct ContentView: View
         catch
         {
             self.errorMessage = error.localizedDescription
+        }
+    }
+
+    /// Prompts for a destination folder with an `NSOpenPanel`, then exports all
+    /// of the project's memory files there, preserving their structure. On
+    /// success the destination is revealed in Finder; failures are surfaced
+    /// through the standard error alert.
+    private func exportMemory( for project: Project )
+    {
+        let panel = NSOpenPanel()
+
+        panel.canChooseDirectories = true
+        panel.canChooseFiles       = false
+        panel.canCreateDirectories = true
+        panel.prompt               = "Export"
+        panel.message              = "Choose a folder to export the project's memory files into."
+
+        guard panel.runModal() == .OK, let destination = panel.url
+        else
+        {
+            return
+        }
+
+        Task
+        {
+            do
+            {
+                try await self.model.exportProject( project, to: destination )
+
+                NSWorkspace.shared.activateFileViewerSelecting( [ destination ] )
+            }
+            catch
+            {
+                self.errorMessage = error.localizedDescription
+            }
         }
     }
 

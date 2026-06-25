@@ -35,6 +35,10 @@ struct MemoryFileActions
     /// Exports a copy of the current memory file, or `nil` when no file is
     /// selected.
     var saveCurrentFileAs: ( () -> Void )?
+
+    /// Exports all of the selected project's memory files, or `nil` when no
+    /// project is selected.
+    var exportProjectMemory: ( () -> Void )?
 }
 
 private struct MemoryFileActionsKey: FocusedValueKey
@@ -65,5 +69,11 @@ struct FileCommands: View
         }
         .keyboardShortcut( "s", modifiers: [ .command, .shift ] )
         .disabled( self.actions?.saveCurrentFileAs == nil )
+
+        Button( "Export Memory\u{2026}" )
+        {
+            self.actions?.exportProjectMemory?()
+        }
+        .disabled( self.actions?.exportProjectMemory == nil )
     }
 }

@@ -57,6 +57,12 @@ final class AppModel
     /// ``MemoryExporter/export(file:to:fileManager:)``.
     private let exportFile: ( URL, URL ) throws -> Void
 
+    /// Copies all memory files under a source directory into a destination
+    /// folder, preserving structure. `@Sendable` because the export runs off the
+    /// main actor; injectable so tests need not touch the filesystem. Defaults to
+    /// ``MemoryExporter/export(memoryDirectory:to:fileManager:)``.
+    private let exportProject: @Sendable ( URL, URL ) throws -> Void
+
     /// The currently selected project, resolved from ``selection``.
     var selectedProject: Project?
     {
@@ -69,11 +75,12 @@ final class AppModel
         self.memoryFiles.first { $0.id == self.selectedFile }
     }
 
-    init( projectsDirectory: URL = MemoryDiscovery.defaultProjectsDirectory, trashItem: @escaping ( URL ) throws -> Void = { try FileManager.default.trashItem( at: $0, resultingItemURL: nil ) }, exportFile: @escaping ( URL, URL ) throws -> Void = { try MemoryExporter.export( file: $0, to: $1 ) } )
+    init( projectsDirectory: URL = MemoryDiscovery.defaultProjectsDirectory, trashItem: @escaping ( URL ) throws -> Void = { try FileManager.default.trashItem( at: $0, resultingItemURL: nil ) }, exportFile: @escaping ( URL, URL ) throws -> Void = { try MemoryExporter.export( file: $0, to: $1 ) }, exportProject: @escaping @Sendable ( URL, URL ) throws -> Void = { try MemoryExporter.export( memoryDirectory: $0, to: $1 ) } )
     {
         self.projectsDirectory = projectsDirectory
         self.trashItem         = trashItem
         self.exportFile        = exportFile
+        self.exportProject     = exportProject
     }
 
     /// Exports a copy of the currently selected memory file to `destination`.
@@ -90,6 +97,23 @@ final class AppModel
         }
 
         try self.exportFile( file.url, destination )
+    }
+
+    /// Exports all of `project`'s memory files into `destination`, preserving
+    /// their structure relative to the `memory/` folder.
+    ///
+    /// The copy runs off the main actor so a large export does not block the UI.
+    /// Throws if the export fails, surfacing the error to the caller.
+    func exportProject( _ project: Project, to destination: URL ) async throws
+    {
+        let source = project.memoryDirectoryURL
+        let export = self.exportProject
+
+        try await Task.detached
+        {
+            try export( source, destination )
+        }
+        .value
     }
 
     /// Moves a project's entire folder to the Trash, then drops it from the
