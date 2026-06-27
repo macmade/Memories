@@ -76,7 +76,7 @@ struct ProjectRow: View
                     .font( .caption )
                     .foregroundStyle( .secondary )
                     .lineLimit( 1 )
-                    .truncationMode( .head )
+                    .truncationMode( .tail )
             }
             .help( self.project.decodedPath )
 
