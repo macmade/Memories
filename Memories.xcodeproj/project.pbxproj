@@ -11,6 +11,8 @@
 		05B18A332FEBC33C0056553A /* SwiftUtilities.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 05B18A2D2FEBC3250056553A /* SwiftUtilities.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		05E9759D2FEA719E0078F616 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05E975972FEA719E0078F616 /* Assets.xcassets */; };
 		0C00B6F6445A0BA13A337FFD /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A68D952B679C1705A9A2EC0 /* AppModel.swift */; };
+		AAAAAAAAAAAA000000000011 /* FileNavigationHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000010 /* FileNavigationHistory.swift */; };
+		AAAAAAAAAAAA000000000013 /* FileNavigationHistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000012 /* FileNavigationHistoryTests.swift */; };
 		0C5B64778EAE45F24739D799 /* ProjectPathResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9108D9F3E8FD9EAB4C560ED3 /* ProjectPathResolverTests.swift */; };
 		111D0CC491495DAE21B05A40 /* MemoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C78C45E5A3ABC540B0FE1 /* MemoriesTests.swift */; };
 		1F4762BC219B1AA1AFD964E5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5FCDF216D0AE5F5472FCF3 /* ContentView.swift */; };
@@ -89,6 +91,8 @@
 
 /* Begin PBXFileReference section */
 		0138E2B48AD03C12E7D4FD14 /* MemoryFile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryFile.swift; sourceTree = "<group>"; };
+		AAAAAAAAAAAA000000000010 /* FileNavigationHistory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FileNavigationHistory.swift; sourceTree = "<group>"; };
+		AAAAAAAAAAAA000000000012 /* FileNavigationHistoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FileNavigationHistoryTests.swift; sourceTree = "<group>"; };
 		05B18A272FEBC3250056553A /* SwiftUtilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftUtilities.xcodeproj; path = Submodules/SwiftUtilities/SwiftUtilities.xcodeproj; sourceTree = "<group>"; };
 		05E9756D2FEA71980078F616 /* Memories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memories.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05E9757A2FEA71990078F616 /* MemoriesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MemoriesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -257,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				634DE22169D05888FB17FC98 /* App */,
+				AAAAAAAAAAAA000000000014 /* Models */,
 				E351D7F83DCD33F08B3C7C60 /* Markdown */,
 				1AAAD4899722F51993911713 /* Services */,
 				E04C78C45E5A3ABC540B0FE1 /* MemoriesTests.swift */,
@@ -437,6 +442,14 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		AAAAAAAAAAAA000000000014 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AAAAAAAAAAAA000000000012 /* FileNavigationHistoryTests.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		8257F520712BC59560BE9E64 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -461,6 +474,7 @@
 			isa = PBXGroup;
 			children = (
 				117AD241608F5C0D1ABC5F16 /* Project.swift */,
+				AAAAAAAAAAAA000000000010 /* FileNavigationHistory.swift */,
 				0138E2B48AD03C12E7D4FD14 /* MemoryFile.swift */,
 				57EBF1F78B6FC7D6D420E6DA /* MemoryViewMode.swift */,
 				214C3E5A5C48B9451A3436F6 /* MemoryLoadState.swift */,
@@ -635,6 +649,7 @@
 				AAAAAAAAAAAA000000000005 /* FileCommands.swift in Sources */,
 				0C00B6F6445A0BA13A337FFD /* AppModel.swift in Sources */,
 				6D78CEE3F47A68A213295D45 /* Project.swift in Sources */,
+				AAAAAAAAAAAA000000000011 /* FileNavigationHistory.swift in Sources */,
 				7ECB523CB45E2A98D457E72D /* MemoryFile.swift in Sources */,
 				F915C6E7106571A54CB0D4F9 /* MemoryViewMode.swift in Sources */,
 				9E0AB2F2D5EA406E6BDD39FC /* MemoryLoadState.swift in Sources */,
@@ -666,6 +681,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				44614E8183B8FA3C0125BF7A /* AppModelTests.swift in Sources */,
+				AAAAAAAAAAAA000000000013 /* FileNavigationHistoryTests.swift in Sources */,
 				38A940538DA18D1E992E61A0 /* MarkdownRendererTests.swift in Sources */,
 				B55CF93778570EA6150ED3DC /* MarkdownLinkRouterTests.swift in Sources */,
 				73BC093BB188645FE0A88D92 /* GitInspectorTests.swift in Sources */,
