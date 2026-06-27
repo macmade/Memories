@@ -11,9 +11,6 @@
 		05B18A332FEBC33C0056553A /* SwiftUtilities.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 05B18A2D2FEBC3250056553A /* SwiftUtilities.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		05E9759D2FEA719E0078F616 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05E975972FEA719E0078F616 /* Assets.xcassets */; };
 		0C00B6F6445A0BA13A337FFD /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A68D952B679C1705A9A2EC0 /* AppModel.swift */; };
-		AAAAAAAAAAAA000000000011 /* FileNavigationHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000010 /* FileNavigationHistory.swift */; };
-		AAAAAAAAAAAA000000000021 /* NavigationCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000020 /* NavigationCommands.swift */; };
-		AAAAAAAAAAAA000000000013 /* FileNavigationHistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000012 /* FileNavigationHistoryTests.swift */; };
 		0C5B64778EAE45F24739D799 /* ProjectPathResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9108D9F3E8FD9EAB4C560ED3 /* ProjectPathResolverTests.swift */; };
 		111D0CC491495DAE21B05A40 /* MemoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C78C45E5A3ABC540B0FE1 /* MemoriesTests.swift */; };
 		1F4762BC219B1AA1AFD964E5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5FCDF216D0AE5F5472FCF3 /* ContentView.swift */; };
@@ -21,12 +18,10 @@
 		3591806205A371E64259D523 /* FileSwitcherBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ED600A1545B9205848556BE /* FileSwitcherBar.swift */; };
 		38A940538DA18D1E992E61A0 /* MarkdownRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F1136338E88312A0675B1B /* MarkdownRendererTests.swift */; };
 		4371C03799DFBBD2A6F3E055 /* MemoryFileListerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFB5E5BC81A726677BC6C6C /* MemoryFileListerTests.swift */; };
-		AAAAAAAAAAAA000000000004 /* MemoryExporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000003 /* MemoryExporterTests.swift */; };
 		44614E8183B8FA3C0125BF7A /* AppModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7783FB07040AC289157D319F /* AppModelTests.swift */; };
 		4AD9BB35610B84CFF306943D /* MarkdownRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D513BE8B92368E5405A34B5 /* MarkdownRenderer.swift */; };
 		4F2FF239A538E9A0ECC40193 /* ProjectPathResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A0EA805588EDCC7D5662F /* ProjectPathResolver.swift */; };
 		4F74713955484CB2CB18C3B1 /* ViewCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52AD26F727A21C21FC05FAB /* ViewCommands.swift */; };
-		AAAAAAAAAAAA000000000005 /* FileCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000006 /* FileCommands.swift */; };
 		66BDF4ED75488C82DA9A5357 /* GitInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A183FDB9CFC4B8484193687 /* GitInfo.swift */; };
 		6D78CEE3F47A68A213295D45 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117AD241608F5C0D1ABC5F16 /* Project.swift */; };
 		73B4D6017E9559F96F8929E8 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F66674E71181CE3DFC25CF8 /* AboutView.swift */; };
@@ -34,10 +29,15 @@
 		773401A935E76A12E1C78383 /* GitInspecting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3B80BF4B38C95BF7BBCF6B /* GitInspecting.swift */; };
 		7ECB523CB45E2A98D457E72D /* MemoryFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0138E2B48AD03C12E7D4FD14 /* MemoryFile.swift */; };
 		83F4F4D55A869046196F9D95 /* MemoryFileLister.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD2A0B5909651FFABD99EA /* MemoryFileLister.swift */; };
-		AAAAAAAAAAAA000000000002 /* MemoryExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000001 /* MemoryExporter.swift */; };
 		89A6A7C5164619B5A0F8AB0C /* ProjectRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298289B73515CBC37E9B8BF5 /* ProjectRow.swift */; };
 		9E0AB2F2D5EA406E6BDD39FC /* MemoryLoadState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214C3E5A5C48B9451A3436F6 /* MemoryLoadState.swift */; };
 		9E27C330810796FC7DDA0475 /* PresentationIntent+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72DBAD70F4EDE4886ACFF47 /* PresentationIntent+Markdown.swift */; };
+		AAAAAAAAAAAA000000000002 /* MemoryExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000001 /* MemoryExporter.swift */; };
+		AAAAAAAAAAAA000000000004 /* MemoryExporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000003 /* MemoryExporterTests.swift */; };
+		AAAAAAAAAAAA000000000005 /* FileCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000006 /* FileCommands.swift */; };
+		AAAAAAAAAAAA000000000011 /* FileNavigationHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000010 /* FileNavigationHistory.swift */; };
+		AAAAAAAAAAAA000000000013 /* FileNavigationHistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000012 /* FileNavigationHistoryTests.swift */; };
+		AAAAAAAAAAAA000000000021 /* NavigationCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000020 /* NavigationCommands.swift */; };
 		AC586DFB96EB075EA319F604 /* Bundle+About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697E6D5777C34A47004572A1 /* Bundle+About.swift */; };
 		B445C5CE31CA431B4377A506 /* MemoryDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA432A558BA158033C20271 /* MemoryDiscoveryTests.swift */; };
 		B55CF93778570EA6150ED3DC /* MarkdownLinkRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7163C96AA8724EA8F05CD8DC /* MarkdownLinkRouterTests.swift */; };
@@ -92,9 +92,6 @@
 
 /* Begin PBXFileReference section */
 		0138E2B48AD03C12E7D4FD14 /* MemoryFile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryFile.swift; sourceTree = "<group>"; };
-		AAAAAAAAAAAA000000000010 /* FileNavigationHistory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FileNavigationHistory.swift; sourceTree = "<group>"; };
-		AAAAAAAAAAAA000000000020 /* NavigationCommands.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NavigationCommands.swift; sourceTree = "<group>"; };
-		AAAAAAAAAAAA000000000012 /* FileNavigationHistoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FileNavigationHistoryTests.swift; sourceTree = "<group>"; };
 		05B18A272FEBC3250056553A /* SwiftUtilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftUtilities.xcodeproj; path = Submodules/SwiftUtilities/SwiftUtilities.xcodeproj; sourceTree = "<group>"; };
 		05E9756D2FEA71980078F616 /* Memories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memories.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05E9757A2FEA71990078F616 /* MemoriesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MemoriesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,18 +170,21 @@
 		83ACA2162871577864DC1A4C /* MarkdownConverter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownConverter.swift; sourceTree = "<group>"; };
 		9108D9F3E8FD9EAB4C560ED3 /* ProjectPathResolverTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProjectPathResolverTests.swift; sourceTree = "<group>"; };
 		9B2FD7318A6A171CF4AE209C /* MemoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryView.swift; sourceTree = "<group>"; };
-		B7BD2A0B5909651FFABD99EA /* MemoryFileLister.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryFileLister.swift; sourceTree = "<group>"; };
 		AAAAAAAAAAAA000000000001 /* MemoryExporter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryExporter.swift; sourceTree = "<group>"; };
+		AAAAAAAAAAAA000000000003 /* MemoryExporterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryExporterTests.swift; sourceTree = "<group>"; };
+		AAAAAAAAAAAA000000000006 /* FileCommands.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FileCommands.swift; sourceTree = "<group>"; };
+		AAAAAAAAAAAA000000000010 /* FileNavigationHistory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FileNavigationHistory.swift; sourceTree = "<group>"; };
+		AAAAAAAAAAAA000000000012 /* FileNavigationHistoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FileNavigationHistoryTests.swift; sourceTree = "<group>"; };
+		AAAAAAAAAAAA000000000020 /* NavigationCommands.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NavigationCommands.swift; sourceTree = "<group>"; };
+		B7BD2A0B5909651FFABD99EA /* MemoryFileLister.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryFileLister.swift; sourceTree = "<group>"; };
 		C27A0EA805588EDCC7D5662F /* ProjectPathResolver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProjectPathResolver.swift; sourceTree = "<group>"; };
 		DF66D88339107756A234A7F0 /* MemoryLoader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryLoader.swift; sourceTree = "<group>"; };
 		E04C78C45E5A3ABC540B0FE1 /* MemoriesTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoriesTests.swift; sourceTree = "<group>"; };
 		E52AD26F727A21C21FC05FAB /* ViewCommands.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ViewCommands.swift; sourceTree = "<group>"; };
-		AAAAAAAAAAAA000000000006 /* FileCommands.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FileCommands.swift; sourceTree = "<group>"; };
 		E72DBAD70F4EDE4886ACFF47 /* PresentationIntent+Markdown.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "PresentationIntent+Markdown.swift"; sourceTree = "<group>"; };
 		F7579E747BA87CA5480E5B78 /* GitInspectorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GitInspectorTests.swift; sourceTree = "<group>"; };
 		FA5FCDF216D0AE5F5472FCF3 /* ContentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FBFB5E5BC81A726677BC6C6C /* MemoryFileListerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryFileListerTests.swift; sourceTree = "<group>"; };
-		AAAAAAAAAAAA000000000003 /* MemoryExporterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryExporterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -444,14 +444,6 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		AAAAAAAAAAAA000000000014 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				AAAAAAAAAAAA000000000012 /* FileNavigationHistoryTests.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		8257F520712BC59560BE9E64 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -459,6 +451,14 @@
 				4D733785E07D583C6C120AAB /* String+Trimming.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		AAAAAAAAAAAA000000000014 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AAAAAAAAAAAA000000000012 /* FileNavigationHistoryTests.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		AF4DD094F187EEBBE7A1E4D0 /* App */ = {
@@ -745,7 +745,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.xs-labs.Memories";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -764,7 +764,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.xs-labs.Memories";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

@@ -33,8 +33,17 @@ window so you can review what's stored and remove what you no longer need.
 - Switches between a project's memory files from a floating menu. Links within a
   note open the referenced memory file; external links open in the browser.
 
+- Moves back and forward through the memory files you have viewed,
+  browser-style, from toolbar buttons or the Go menu (⌘[ and ⌘]). The history
+  is scoped to each project and preserved when you switch between projects.
+
 - Opens a memory file in another application, or reveals the project folder in
   the Finder.
+
+- Saves a copy of the current memory file to a location you choose.
+
+- Exports a project's entire memory to a folder you choose, preserving the
+  layout of the files and prompting before overwriting any that already exist.
 
 - Moves a single memory file, a project's whole memory folder, or a project's
   Claude folder to the Trash. The real project on disk is left untouched.
