@@ -538,6 +538,256 @@ struct AppModelTests
     }
 
     @Test
+    func selectingAFileRecordsItInTheProjectHistory() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+        try root.writeMemoryFile( "note.md", inProject: "-Users-macmade-Alpha" )
+
+        let model = AppModel( projectsDirectory: root.url )
+
+        await model.loadProjects()
+
+        model.selection = "-Users-macmade-Alpha"
+
+        await model.loadMemoryFiles()
+
+        #expect( model.canGoBack == false )
+        #expect( model.canGoForward == false )
+
+        let note = try #require( model.memoryFiles.first { $0.name == "note.md" } )
+
+        model.selectedFile = note.id
+
+        #expect( model.canGoBack )
+        #expect( model.canGoForward == false )
+    }
+
+    @Test
+    func goingBackAndForwardMovesTheSelectedFile() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+        try root.writeMemoryFile( "note.md", inProject: "-Users-macmade-Alpha" )
+
+        let model = AppModel( projectsDirectory: root.url )
+
+        await model.loadProjects()
+
+        model.selection = "-Users-macmade-Alpha"
+
+        await model.loadMemoryFiles()
+
+        let note = try #require( model.memoryFiles.first { $0.name == "note.md" } )
+
+        model.selectedFile = note.id
+
+        model.goBack()
+
+        #expect( model.selectedMemoryFile?.name == "MEMORY.md" )
+        #expect( model.canGoForward )
+
+        model.goForward()
+
+        #expect( model.selectedMemoryFile?.name == "note.md" )
+        #expect( model.canGoForward == false )
+    }
+
+    @Test
+    func navigatingToANewFileTruncatesTheForwardHistory() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+        try root.writeMemoryFile( "a.md", inProject: "-Users-macmade-Alpha" )
+        try root.writeMemoryFile( "b.md", inProject: "-Users-macmade-Alpha" )
+        try root.writeMemoryFile( "c.md", inProject: "-Users-macmade-Alpha" )
+
+        let model = AppModel( projectsDirectory: root.url )
+
+        await model.loadProjects()
+
+        model.selection = "-Users-macmade-Alpha"
+
+        await model.loadMemoryFiles()
+
+        let a = try #require( model.memoryFiles.first { $0.name == "a.md" } )
+        let b = try #require( model.memoryFiles.first { $0.name == "b.md" } )
+        let c = try #require( model.memoryFiles.first { $0.name == "c.md" } )
+
+        model.selectedFile = a.id
+        model.selectedFile = b.id
+
+        model.goBack()
+
+        #expect( model.selectedMemoryFile?.name == "a.md" )
+
+        model.selectedFile = c.id
+
+        #expect( model.canGoForward == false )
+
+        model.goBack()
+
+        #expect( model.selectedMemoryFile?.name == "a.md" )
+
+        model.goForward()
+
+        #expect( model.selectedMemoryFile?.name == "c.md" )
+    }
+
+    @Test
+    func historyIsPreservedPerProjectAcrossSwitches() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+        try root.writeMemoryFile( "alpha-note.md", inProject: "-Users-macmade-Alpha" )
+        try root.makeProject( encodedName: "-Users-macmade-Beta", withMemory: true )
+        try root.writeMemoryFile( "beta-note.md", inProject: "-Users-macmade-Beta" )
+
+        let model = AppModel( projectsDirectory: root.url )
+
+        await model.loadProjects()
+
+        model.selection = "-Users-macmade-Alpha"
+
+        await model.loadMemoryFiles()
+
+        let alphaNote = try #require( model.memoryFiles.first { $0.name == "alpha-note.md" } )
+
+        model.selectedFile = alphaNote.id
+
+        model.selection = "-Users-macmade-Beta"
+
+        await model.loadMemoryFiles()
+
+        #expect( model.selectedMemoryFile?.name == "MEMORY.md" )
+        #expect( model.canGoBack == false )
+
+        let betaNote = try #require( model.memoryFiles.first { $0.name == "beta-note.md" } )
+
+        model.selectedFile = betaNote.id
+
+        model.selection = "-Users-macmade-Alpha"
+
+        await model.loadMemoryFiles()
+
+        #expect( model.selectedMemoryFile?.name == "alpha-note.md" )
+        #expect( model.canGoBack )
+
+        model.goBack()
+
+        #expect( model.selectedMemoryFile?.name == "MEMORY.md" )
+
+        model.selection = "-Users-macmade-Beta"
+
+        await model.loadMemoryFiles()
+
+        #expect( model.selectedMemoryFile?.name == "beta-note.md" )
+        #expect( model.canGoBack )
+    }
+
+    @Test
+    func reloadingPrunesHistoryEntriesNoLongerOnDisk() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+        try root.writeMemoryFile( "n1.md", inProject: "-Users-macmade-Alpha" )
+        try root.writeMemoryFile( "n2.md", inProject: "-Users-macmade-Alpha" )
+
+        let model = AppModel( projectsDirectory: root.url )
+
+        await model.loadProjects()
+
+        model.selection = "-Users-macmade-Alpha"
+
+        await model.loadMemoryFiles()
+
+        let n1 = try #require( model.memoryFiles.first { $0.name == "n1.md" } )
+        let n2 = try #require( model.memoryFiles.first { $0.name == "n2.md" } )
+
+        model.selectedFile = n1.id
+        model.selectedFile = n2.id
+
+        try FileManager.default.removeItem( at: n1.url )
+
+        await model.loadMemoryFiles()
+
+        #expect( model.selectedMemoryFile?.name == "n2.md" )
+        #expect( model.canGoBack )
+
+        model.goBack()
+
+        #expect( model.selectedMemoryFile?.name == "MEMORY.md" )
+        #expect( model.canGoBack == false )
+    }
+
+    @Test
+    func trashingTheCurrentFilePrunesItFromHistoryAndSelectsANeighbour() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+        try root.writeMemoryFile( "n1.md", inProject: "-Users-macmade-Alpha" )
+        try root.writeMemoryFile( "n2.md", inProject: "-Users-macmade-Alpha" )
+
+        let model = AppModel( projectsDirectory: root.url, trashItem: { _ in } )
+
+        await model.loadProjects()
+
+        model.selection = "-Users-macmade-Alpha"
+
+        await model.loadMemoryFiles()
+
+        let n1 = try #require( model.memoryFiles.first { $0.name == "n1.md" } )
+        let n2 = try #require( model.memoryFiles.first { $0.name == "n2.md" } )
+
+        model.selectedFile = n1.id
+        model.selectedFile = n2.id
+
+        try model.trashFile( n2 )
+
+        #expect( model.selectedMemoryFile?.name == "n1.md" )
+        #expect( model.canGoForward == false )
+
+        model.goBack()
+
+        #expect( model.selectedMemoryFile?.name == "MEMORY.md" )
+    }
+
+    @Test
+    func trashingAllMemoryClearsTheNavigationState() async throws
+    {
+        let root = try TemporaryProjectTree()
+
+        try root.makeProject( encodedName: "-Users-macmade-Alpha", withMemory: true )
+        try root.writeMemoryFile( "note.md", inProject: "-Users-macmade-Alpha" )
+
+        let model = AppModel( projectsDirectory: root.url, trashItem: { _ in } )
+
+        await model.loadProjects()
+
+        model.selection = "-Users-macmade-Alpha"
+
+        await model.loadMemoryFiles()
+
+        let note = try #require( model.memoryFiles.first { $0.name == "note.md" } )
+
+        model.selectedFile = note.id
+
+        let alpha = try #require( model.selectedProject )
+
+        try model.trashAllMemory( alpha )
+
+        #expect( model.selectedFile == nil )
+        #expect( model.canGoBack == false )
+        #expect( model.canGoForward == false )
+    }
+
+    @Test
     func exportingAProjectFailurePropagates() async throws
     {
         let root = try TemporaryProjectTree()

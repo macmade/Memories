@@ -52,8 +52,10 @@ struct MarkdownConverter
         let blocks = self.blocks( from: attributed )
         let output = NSMutableAttributedString()
 
-        for ( index, block ) in blocks.enumerated()
+        blocks.enumerated().forEach
         {
+            index, block in
+
             if index > 0
             {
                 output.append( NSAttributedString( string: "\n" ) )
@@ -71,8 +73,10 @@ struct MarkdownConverter
     {
         var blocks: [ Block ] = []
 
-        for run in attributed.runs
+        attributed.runs.forEach
         {
+            run in
+
             let text   = String( attributed[ run.range ].characters )
             let inline = run[ AttributeScopes.FoundationAttributes.InlinePresentationIntentAttribute.self ] ?? []
             let link   = run[ AttributeScopes.FoundationAttributes.LinkAttribute.self ]
@@ -107,8 +111,10 @@ struct MarkdownConverter
             result.append( NSAttributedString( string: prefix, attributes: [ .font: baseFont, .foregroundColor: self.textColor ] ) )
         }
 
-        for run in block.runs
+        block.runs.forEach
         {
+            run in
+
             // Code blocks keep their internal newlines but should not carry a
             // trailing one into the joined output.
             let text = isCodeBlock ? String( run.text.reversed().drop { $0 == "\n" }.reversed() ) : run.text

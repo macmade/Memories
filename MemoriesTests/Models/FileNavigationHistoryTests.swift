@@ -226,4 +226,35 @@ struct FileNavigationHistoryTests
         #expect( history.current == "b" )
         #expect( history.goBack() == "a" )
     }
+
+    @Test
+    func retainingOnlyASetDropsEveryOtherEntryAndKeepsACurrentNeighbour()
+    {
+        var history = FileNavigationHistory()
+
+        history.navigate( to: "a" )
+        history.navigate( to: "b" )
+        history.navigate( to: "c" )
+
+        history.retainOnly( [ "a", "c" ] )
+
+        #expect( history.current == "c" )
+        #expect( history.goBack() == "a" )
+        #expect( history.canGoBack == false )
+    }
+
+    @Test
+    func retainingOnlyAnEmptySetEmptiesTheHistory()
+    {
+        var history = FileNavigationHistory()
+
+        history.navigate( to: "a" )
+        history.navigate( to: "b" )
+
+        history.retainOnly( [] )
+
+        #expect( history.current == nil )
+        #expect( history.canGoBack == false )
+        #expect( history.canGoForward == false )
+    }
 }

@@ -43,7 +43,35 @@ final class AppModel
     private( set ) var memoryFiles: [ MemoryFile ] = []
 
     /// The identity of the currently selected memory file, if any.
+    ///
+    /// Changes driven by genuine user navigation (the file switcher or a
+    /// followed link) are recorded into the current project's history. Changes
+    /// the history itself makes &mdash; ``goBack()``, ``goForward()``, and the
+    /// seed/restore in ``loadMemoryFiles()`` &mdash; happen under
+    /// ``isApplyingHistory`` so they are not re-recorded.
     var selectedFile: MemoryFile.ID?
+    {
+        didSet
+        {
+            guard self.isApplyingHistory == false,
+                  let id      = self.selectedFile,
+                  let project = self.selection
+            else
+            {
+                return
+            }
+
+            self.histories[ project, default: FileNavigationHistory() ].navigate( to: id )
+        }
+    }
+
+    /// The per-project navigation histories, keyed by project identity, so each
+    /// project keeps and restores its own back / next state.
+    private var histories: [ Project.ID : FileNavigationHistory ] = [ : ]
+
+    /// Set while the model writes ``selectedFile`` on the history's behalf, to
+    /// keep those programmatic changes from being recorded as new navigation.
+    private var isApplyingHistory = false
 
     /// The directory scanned for projects.
     let projectsDirectory: URL
@@ -67,6 +95,76 @@ final class AppModel
     var selectedMemoryFile: MemoryFile?
     {
         self.memoryFiles.first { $0.id == self.selectedFile }
+    }
+
+    /// Whether the current project's history has an earlier file to go back to.
+    var canGoBack: Bool
+    {
+        guard let project = self.selection
+        else
+        {
+            return false
+        }
+
+        return self.histories[ project ]?.canGoBack ?? false
+    }
+
+    /// Whether the current project's history has a later file to go forward to.
+    var canGoForward: Bool
+    {
+        guard let project = self.selection
+        else
+        {
+            return false
+        }
+
+        return self.histories[ project ]?.canGoForward ?? false
+    }
+
+    /// Steps the current project's history back one entry and selects that file.
+    /// Does nothing when there is no earlier entry.
+    func goBack()
+    {
+        guard let project = self.selection, var history = self.histories[ project ], history.canGoBack
+        else
+        {
+            return
+        }
+
+        let target = history.goBack()
+
+        self.histories[ project ] = history
+
+        self.applyingHistory { self.selectedFile = target }
+    }
+
+    /// Steps the current project's history forward one entry and selects that
+    /// file. Does nothing when there is no later entry.
+    func goForward()
+    {
+        guard let project = self.selection, var history = self.histories[ project ], history.canGoForward
+        else
+        {
+            return
+        }
+
+        let target = history.goForward()
+
+        self.histories[ project ] = history
+
+        self.applyingHistory { self.selectedFile = target }
+    }
+
+    /// Runs `body` with ``isApplyingHistory`` set, so any ``selectedFile`` write
+    /// it makes is treated as a history-driven move and not recorded anew.
+    private func applyingHistory( _ body: () -> Void )
+    {
+        let previous           = self.isApplyingHistory
+        self.isApplyingHistory = true
+
+        body()
+
+        self.isApplyingHistory = previous
     }
 
     init( projectsDirectory: URL = MemoryDiscovery.defaultProjectsDirectory, trashItem: @escaping ( URL ) throws -> Void = { try FileManager.default.trashItem( at: $0, resultingItemURL: nil ) }, exportFile: @escaping ( URL, URL ) throws -> Void = { try MemoryExporter.export( file: $0, to: $1 ) } )
@@ -167,9 +265,21 @@ final class AppModel
 
         self.memoryFiles.removeAll { $0.id == file.id }
 
+        if let project = self.selection
+        {
+            self.histories[ project ]?.remove( file.id )
+        }
+
         if self.selectedFile == file.id
         {
-            self.selectedFile = ( self.memoryFiles.first { $0.isIndex } ?? self.memoryFiles.first )?.id
+            if let project = self.selection, let current = self.histories[ project ]?.current
+            {
+                self.applyingHistory { self.selectedFile = current }
+            }
+            else
+            {
+                self.selectedFile = ( self.memoryFiles.first { $0.isIndex } ?? self.memoryFiles.first )?.id
+            }
         }
 
         if self.memoryFiles.isEmpty, let project = self.selectedProject
@@ -187,8 +297,9 @@ final class AppModel
     {
         try self.trashItem( project.memoryDirectoryURL )
 
-        self.memoryFiles  = []
-        self.selectedFile = nil
+        self.memoryFiles = []
+
+        self.applyingHistory { self.selectedFile = nil }
 
         self.forget( project )
     }
@@ -198,6 +309,8 @@ final class AppModel
     private func forget( _ project: Project )
     {
         self.projects.removeAll { $0.id == project.id }
+
+        self.histories[ project.id ] = nil
 
         if self.selection == project.id
         {
@@ -233,8 +346,9 @@ final class AppModel
         guard let project = self.selectedProject
         else
         {
-            self.memoryFiles  = []
-            self.selectedFile = nil
+            self.memoryFiles = []
+
+            self.applyingHistory { self.selectedFile = nil }
 
             return
         }
@@ -246,7 +360,26 @@ final class AppModel
         }
         .value
 
-        self.memoryFiles  = files
-        self.selectedFile = ( files.first { $0.isIndex } ?? files.first )?.id
+        self.memoryFiles = files
+
+        let availableIDs = Set( files.map { $0.id } )
+        let defaultID    = ( files.first { $0.isIndex } ?? files.first )?.id
+
+        var history = self.histories[ project.id ] ?? FileNavigationHistory()
+
+        // Drop any visited files that no longer exist on disk, then make sure
+        // the history still points at something: a project seen for the first
+        // time (or one whose every visited file is gone) is seeded with the
+        // default file.
+        history.retainOnly( availableIDs )
+
+        if history.current == nil, let defaultID
+        {
+            history.navigate( to: defaultID )
+        }
+
+        self.histories[ project.id ] = history
+
+        self.applyingHistory { self.selectedFile = history.current }
     }
 }

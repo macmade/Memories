@@ -108,12 +108,32 @@ struct FileNavigationHistory
     /// is removed, clamped to the last entry).
     mutating func remove( _ id: MemoryFile.ID )
     {
+        self.removeEntries { $0 == id }
+    }
+
+    /// Drops every entry whose id is not in `ids`, keeping the current index
+    /// pointing at a valid entry (used to discard files that no longer exist on
+    /// disk).
+    mutating func retainOnly( _ ids: Set<MemoryFile.ID> )
+    {
+        self.removeEntries { ids.contains( $0 ) == false }
+    }
+
+    /// Removes every entry matching `shouldRemove`, adjusting the current index
+    /// so it keeps pointing at a valid entry: each removed entry before the
+    /// current one shifts the index back, and the result is clamped into range
+    /// (so removing the current entry falls to the following file, or the
+    /// previous one when it was last).
+    private mutating func removeEntries( where shouldRemove: ( MemoryFile.ID ) -> Bool )
+    {
         var kept     = [ MemoryFile.ID ]()
         var newIndex = self.index
 
-        for ( offset, entry ) in self.entries.enumerated()
+        self.entries.enumerated().forEach
         {
-            if entry == id
+            offset, entry in
+
+            if shouldRemove( entry )
             {
                 if offset < self.index
                 {
