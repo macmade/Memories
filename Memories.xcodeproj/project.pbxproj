@@ -12,6 +12,7 @@
 		05E9759D2FEA719E0078F616 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05E975972FEA719E0078F616 /* Assets.xcassets */; };
 		0C00B6F6445A0BA13A337FFD /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A68D952B679C1705A9A2EC0 /* AppModel.swift */; };
 		AAAAAAAAAAAA000000000011 /* FileNavigationHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000010 /* FileNavigationHistory.swift */; };
+		AAAAAAAAAAAA000000000021 /* NavigationCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000020 /* NavigationCommands.swift */; };
 		AAAAAAAAAAAA000000000013 /* FileNavigationHistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000012 /* FileNavigationHistoryTests.swift */; };
 		0C5B64778EAE45F24739D799 /* ProjectPathResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9108D9F3E8FD9EAB4C560ED3 /* ProjectPathResolverTests.swift */; };
 		111D0CC491495DAE21B05A40 /* MemoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C78C45E5A3ABC540B0FE1 /* MemoriesTests.swift */; };
@@ -92,6 +93,7 @@
 /* Begin PBXFileReference section */
 		0138E2B48AD03C12E7D4FD14 /* MemoryFile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryFile.swift; sourceTree = "<group>"; };
 		AAAAAAAAAAAA000000000010 /* FileNavigationHistory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FileNavigationHistory.swift; sourceTree = "<group>"; };
+		AAAAAAAAAAAA000000000020 /* NavigationCommands.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NavigationCommands.swift; sourceTree = "<group>"; };
 		AAAAAAAAAAAA000000000012 /* FileNavigationHistoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FileNavigationHistoryTests.swift; sourceTree = "<group>"; };
 		05B18A272FEBC3250056553A /* SwiftUtilities.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftUtilities.xcodeproj; path = Submodules/SwiftUtilities/SwiftUtilities.xcodeproj; sourceTree = "<group>"; };
 		05E9756D2FEA71980078F616 /* Memories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memories.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -465,6 +467,7 @@
 				7F11C79AE22F047427644546 /* MemoriesApp.swift */,
 				E52AD26F727A21C21FC05FAB /* ViewCommands.swift */,
 				AAAAAAAAAAAA000000000006 /* FileCommands.swift */,
+				AAAAAAAAAAAA000000000020 /* NavigationCommands.swift */,
 				7A68D952B679C1705A9A2EC0 /* AppModel.swift */,
 			);
 			path = App;
@@ -647,6 +650,7 @@
 				F2A36C968D9AA215FFBB0F3A /* MemoriesApp.swift in Sources */,
 				4F74713955484CB2CB18C3B1 /* ViewCommands.swift in Sources */,
 				AAAAAAAAAAAA000000000005 /* FileCommands.swift in Sources */,
+				AAAAAAAAAAAA000000000021 /* NavigationCommands.swift in Sources */,
 				0C00B6F6445A0BA13A337FFD /* AppModel.swift in Sources */,
 				6D78CEE3F47A68A213295D45 /* Project.swift in Sources */,
 				AAAAAAAAAAAA000000000011 /* FileNavigationHistory.swift in Sources */,

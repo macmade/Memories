@@ -84,6 +84,11 @@ struct MemoriesApp: App
             {
                 ViewCommands()
             }
+
+            CommandMenu( "Go" )
+            {
+                NavigationCommands()
+            }
         }
 
         Window( "About \( Bundle.main.title )", id: "AboutWindow" )

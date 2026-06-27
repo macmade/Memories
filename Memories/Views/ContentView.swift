@@ -79,6 +79,7 @@ struct ContentView: View
                 self.toolbarContent( viewMode: $model.viewMode )
             }
             .focusedSceneValue( \.memoryFileActions, self.fileActions )
+            .focusedSceneValue( \.memoryNavigationActions, self.navigationActions )
 
         return self.withAlerts( base )
     }
@@ -431,6 +432,17 @@ struct ContentView: View
         MemoryFileActions(
             saveCurrentFileAs:   self.model.selectedMemoryFile == nil ? nil : { self.saveCurrentFileAs() },
             exportProjectMemory: self.model.selectedProject.map { project in { self.exportMemory( for: project ) } }
+        )
+    }
+
+    /// The navigation actions published to the menu bar: each move is `nil`
+    /// when it is unavailable, so the Go menu items disable themselves in step
+    /// with the toolbar buttons.
+    private var navigationActions: MemoryNavigationActions
+    {
+        MemoryNavigationActions(
+            goBack:    self.model.canGoBack ? { self.model.goBack() } : nil,
+            goForward: self.model.canGoForward ? { self.model.goForward() } : nil
         )
     }
 
