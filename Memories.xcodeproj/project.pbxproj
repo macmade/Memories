@@ -24,7 +24,6 @@
 		4F74713955484CB2CB18C3B1 /* ViewCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52AD26F727A21C21FC05FAB /* ViewCommands.swift */; };
 		66BDF4ED75488C82DA9A5357 /* GitInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A183FDB9CFC4B8484193687 /* GitInfo.swift */; };
 		6D78CEE3F47A68A213295D45 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117AD241608F5C0D1ABC5F16 /* Project.swift */; };
-		73B4D6017E9559F96F8929E8 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F66674E71181CE3DFC25CF8 /* AboutView.swift */; };
 		73BC093BB188645FE0A88D92 /* GitInspectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7579E747BA87CA5480E5B78 /* GitInspectorTests.swift */; };
 		773401A935E76A12E1C78383 /* GitInspecting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3B80BF4B38C95BF7BBCF6B /* GitInspecting.swift */; };
 		7ECB523CB45E2A98D457E72D /* MemoryFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0138E2B48AD03C12E7D4FD14 /* MemoryFile.swift */; };
@@ -38,7 +37,6 @@
 		AAAAAAAAAAAA000000000011 /* FileNavigationHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000010 /* FileNavigationHistory.swift */; };
 		AAAAAAAAAAAA000000000013 /* FileNavigationHistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000012 /* FileNavigationHistoryTests.swift */; };
 		AAAAAAAAAAAA000000000021 /* NavigationCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAAAAAAAAAA000000000020 /* NavigationCommands.swift */; };
-		AC586DFB96EB075EA319F604 /* Bundle+About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697E6D5777C34A47004572A1 /* Bundle+About.swift */; };
 		B445C5CE31CA431B4377A506 /* MemoryDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA432A558BA158033C20271 /* MemoryDiscoveryTests.swift */; };
 		B55CF93778570EA6150ED3DC /* MarkdownLinkRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7163C96AA8724EA8F05CD8DC /* MarkdownLinkRouterTests.swift */; };
 		B65FB02D664E2855255B83BD /* MarkdownTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412AB8364F4591617E4B5BEF /* MarkdownTextView.swift */; };
@@ -151,7 +149,6 @@
 		117AD241608F5C0D1ABC5F16 /* Project.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		12E43B28D9906A0CAED60283 /* MemoryDiscovery.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryDiscovery.swift; sourceTree = "<group>"; };
 		15AB1FBE4D10D04B3977F87F /* MemoryLoaderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryLoaderTests.swift; sourceTree = "<group>"; };
-		1F66674E71181CE3DFC25CF8 /* AboutView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		214C3E5A5C48B9451A3436F6 /* MemoryLoadState.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryLoadState.swift; sourceTree = "<group>"; };
 		24F1136338E88312A0675B1B /* MarkdownRendererTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownRendererTests.swift; sourceTree = "<group>"; };
 		298289B73515CBC37E9B8BF5 /* ProjectRow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProjectRow.swift; sourceTree = "<group>"; };
@@ -161,7 +158,6 @@
 		4D733785E07D583C6C120AAB /* String+Trimming.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "String+Trimming.swift"; sourceTree = "<group>"; };
 		57EBF1F78B6FC7D6D420E6DA /* MemoryViewMode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemoryViewMode.swift; sourceTree = "<group>"; };
 		5A183FDB9CFC4B8484193687 /* GitInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GitInfo.swift; sourceTree = "<group>"; };
-		697E6D5777C34A47004572A1 /* Bundle+About.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Bundle+About.swift"; sourceTree = "<group>"; };
 		6DA16B74319B6E4D074DF807 /* MarkdownLinkRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownLinkRouter.swift; sourceTree = "<group>"; };
 		7163C96AA8724EA8F05CD8DC /* MarkdownLinkRouterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownLinkRouterTests.swift; sourceTree = "<group>"; };
 		7783FB07040AC289157D319F /* AppModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppModelTests.swift; sourceTree = "<group>"; };
@@ -447,7 +443,6 @@
 		8257F520712BC59560BE9E64 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				697E6D5777C34A47004572A1 /* Bundle+About.swift */,
 				4D733785E07D583C6C120AAB /* String+Trimming.swift */,
 			);
 			path = Extensions;
@@ -502,7 +497,6 @@
 				9B2FD7318A6A171CF4AE209C /* MemoryView.swift */,
 				298289B73515CBC37E9B8BF5 /* ProjectRow.swift */,
 				0ED600A1545B9205848556BE /* FileSwitcherBar.swift */,
-				1F66674E71181CE3DFC25CF8 /* AboutView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -662,7 +656,6 @@
 				31D9B57BAAB7420E4820F83D /* MemoryView.swift in Sources */,
 				89A6A7C5164619B5A0F8AB0C /* ProjectRow.swift in Sources */,
 				3591806205A371E64259D523 /* FileSwitcherBar.swift in Sources */,
-				73B4D6017E9559F96F8929E8 /* AboutView.swift in Sources */,
 				4AD9BB35610B84CFF306943D /* MarkdownRenderer.swift in Sources */,
 				E83C7DD6AA9880AAF7BFB760 /* MarkdownConverter.swift in Sources */,
 				9E27C330810796FC7DDA0475 /* PresentationIntent+Markdown.swift in Sources */,
@@ -675,7 +668,6 @@
 				4F2FF239A538E9A0ECC40193 /* ProjectPathResolver.swift in Sources */,
 				BF6A74EA872DAB2E79570E15 /* GitInspector.swift in Sources */,
 				773401A935E76A12E1C78383 /* GitInspecting.swift in Sources */,
-				AC586DFB96EB075EA319F604 /* Bundle+About.swift in Sources */,
 				FF590DE1F188E177C1DC4134 /* String+Trimming.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

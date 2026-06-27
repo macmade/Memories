@@ -29,8 +29,6 @@ import SwiftUtilities
 @main
 struct MemoriesApp: App
 {
-    @Environment( \.openWindow ) private var openWindow
-
     /// Checks the GitHub repository for newer published releases of the app.
     ///
     /// `nil` only if a valid releases URL cannot be built, which the menu item
@@ -64,7 +62,12 @@ struct MemoriesApp: App
             {
                 Button( "About \( Bundle.main.title )\u{2026}" )
                 {
-                    self.openWindow( id: "AboutWindow" )
+                    AboutWindowController.show(
+                        applicationName: Bundle.main.title,
+                        version:         Bundle.main.version,
+                        copyright:       Bundle.main.copyright,
+                        icon:            NSImage( named: NSImage.applicationIconName ) ?? NSImage()
+                    )
                 }
 
                 Divider()
@@ -100,19 +103,5 @@ struct MemoriesApp: App
                 NavigationCommands()
             }
         }
-
-        Window( "About \( Bundle.main.title )", id: "AboutWindow" )
-        {
-            AboutView()
-                .padding()
-                .fixedSize()
-        }
-        .windowStyle( .hiddenTitleBar )
-        .windowResizability( .contentSize )
-        .restorationBehavior( .disabled )
-        // Open centered on screen rather than cascaded as an "additional" window.
-        // This is only the initial default: while the window is open, re-issuing
-        // the About command just brings it forward without moving it.
-        .defaultPosition( .center )
     }
 }
