@@ -62,12 +62,7 @@ struct MemoriesApp: App
             {
                 Button( "About \( Bundle.main.title )\u{2026}" )
                 {
-                    AboutWindowController.show(
-                        applicationName: Bundle.main.title,
-                        version:         Bundle.main.version,
-                        copyright:       Bundle.main.copyright,
-                        icon:            NSImage( named: NSImage.applicationIconName ) ?? NSImage()
-                    )
+                    AboutWindowController.show()
                 }
 
                 Divider()
