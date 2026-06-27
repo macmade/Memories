@@ -22,6 +22,7 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
+import AppKit
 import SwiftUI
 import SwiftUtilities
 
@@ -73,6 +74,15 @@ struct MemoriesApp: App
                     self.updater?.checkForUpdates()
                 }
                 .disabled( self.updater == nil )
+            }
+
+            CommandGroup( after: CommandGroupPlacement.newItem )
+            {
+                Button( "Close" )
+                {
+                    NSApp.keyWindow?.performClose( nil )
+                }
+                .keyboardShortcut( "w", modifiers: .command )
             }
 
             CommandGroup( replacing: CommandGroupPlacement.saveItem )
