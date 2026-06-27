@@ -188,6 +188,31 @@ struct ContentView: View
     {
         if let project = self.model.selectedProject
         {
+            ToolbarItemGroup( placement: .navigation )
+            {
+                Button
+                {
+                    self.model.goBack()
+                }
+                label:
+                {
+                    Label( "Back", systemImage: "chevron.left" )
+                }
+                .disabled( self.model.canGoBack == false )
+                .help( "Go to the previous memory file" )
+
+                Button
+                {
+                    self.model.goForward()
+                }
+                label:
+                {
+                    Label( "Next", systemImage: "chevron.right" )
+                }
+                .disabled( self.model.canGoForward == false )
+                .help( "Go to the next memory file" )
+            }
+
             ToolbarItemGroup( placement: .primaryAction )
             {
                 if let file = self.model.selectedMemoryFile
